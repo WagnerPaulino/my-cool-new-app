@@ -5,10 +5,15 @@ import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { increment } from './reducers/reducers';
 
-const rootReducer = combineReducers({})
+const rootReducer = combineReducers({
+    counter: increment
+})
 
 const store = createStore(rootReducer)
+
+export type AppState = ReturnType<typeof rootReducer>;
 
 ReactDOM.render(
     <Provider store={store}>

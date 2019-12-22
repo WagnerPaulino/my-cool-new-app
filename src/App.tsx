@@ -1,13 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux'
 import './App.css';
+import { AppState } from '.';
+import { increment } from './actions/actions';
 
 interface State {
   counter: number;
 }
 
-interface Props {}
+interface Props {
+  increment: typeof increment
+}
 
-export default class App extends React.Component<Props, State> {
+class App extends React.Component<Props, State> {
 
   public state: State;
 
@@ -18,8 +23,12 @@ export default class App extends React.Component<Props, State> {
     };
   }
 
+
+
   increment = () => {
-    this.setState({counter: (this.state.counter + 1)})
+    this.setState({
+      counter: this.props.increment(this.state.counter).counter
+    });
   }
 
 
@@ -28,9 +37,17 @@ export default class App extends React.Component<Props, State> {
       <div>
         <h1>Hello World</h1>
         <p>Counter: {this.state.counter}</p>
-        <button onClick={this.increment}>Adicione um</button>
+        <button onClick={this.increment}>Incrementar</button>
       </div>
     )
   }
 
 }
+
+const mapStateToProps = (state: AppState) => {
+  return {
+     ...state.counter
+  }
+};
+
+export default connect(mapStateToProps,{increment})(App);
