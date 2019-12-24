@@ -1,53 +1,44 @@
 import React from 'react';
-import { connect } from 'react-redux'
 import './App.css';
-import { AppState } from '.';
-import { increment } from './actions/actions';
+import Counter from './pages/Counter';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
-interface State {
-  counter: number;
-}
+interface State { }
 
-interface Props {
-  increment: typeof increment
-}
+interface Props { }
 
-class App extends React.Component<Props, State> {
-
-  public state: State;
-
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      counter: 0
-    };
-  }
-
-
-
-  increment = () => {
-    this.setState({
-      counter: this.props.increment(this.state.counter).counter
-    });
-  }
-
+export default class App extends React.Component<Props, State> {
 
   render() {
     return (
-      <div>
-        <h1>Hello World</h1>
-        <p>Counter: {this.state.counter}</p>
-        <button onClick={this.increment}>Incrementar</button>
-      </div>
+      <Router>
+        <div>
+          <nav>
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/counter">Counter</Link>
+              </li>
+            </ul>
+          </nav>
+
+          {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+          <Switch>
+            <Route path="/counter">
+              <Counter />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
     )
   }
 
 }
-
-const mapStateToProps = (state: AppState) => {
-  return {
-     ...state.counter
-  }
-};
-
-export default connect(mapStateToProps,{increment})(App);
