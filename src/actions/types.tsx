@@ -1,12 +1,14 @@
+import { ListaDesejos } from "../models/ListaDesejos"
+
 export const LISTA_DESEJOS_LIST = 'LISTA_DESEJOS_LIST'
 
 interface ListaDesejosList {
     type: typeof LISTA_DESEJOS_LIST
-    listaDesejosList: []
+    listaDesejosList: Array<ListaDesejos>
 }
 
 export interface ListaDesejosListState {
-    listaDesejosList: [];
+    listaDesejosList: Array<ListaDesejos>;
 }
 
 export type ListaDesejosListType = ListaDesejosList
