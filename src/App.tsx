@@ -18,26 +18,17 @@ export default class App extends React.Component<Props, State> {
     return (
       <Router>
         <div>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/counter">Counter</Link>
-              </li>
-            </ul>
-          </nav>
-
-          {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
+          <div className="card-top">
+            <Link className="text-card" to="/">Home</Link>
+            <Link className="text-card" to="/counter">Counter</Link>
+          </div>
           <Switch>
             <Route path="/counter">
               <Counter />
             </Route>
           </Switch>
         </div>
-      </Router>
+      </Router >
     )
   }
 
