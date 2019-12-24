@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Counter from './pages/Counter';
+import ListaDesejosListComponent from './pages/lista-desejos-list-component';
 import {
   BrowserRouter as Router,
   Switch,
@@ -19,12 +19,11 @@ export default class App extends React.Component<Props, State> {
       <Router>
         <div>
           <div className="card-top">
-            <Link className="text-card" to="/">Home</Link>
-            <Link className="text-card" to="/counter">Counter</Link>
+            <Link className="text-card" to="/">Lista de Desejos</Link>
           </div>
           <Switch>
-            <Route path="/counter">
-              <Counter />
+            <Route path="/">
+              <ListaDesejosListComponent />
             </Route>
           </Switch>
         </div>

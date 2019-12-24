@@ -1,13 +1,13 @@
-import { IncrementState, CounterTypes, INCREMENT } from "../actions/types";
-const initialState: IncrementState = {
-    counter: 0
+import { ListaDesejosListState, ListaDesejosListType, LISTA_DESEJOS_LIST } from "../actions/types";
+const initialState: ListaDesejosListState = {
+    listaDesejosList: []
 }
 
-export function increment(state = initialState, action: CounterTypes): IncrementState {
+export function listaDesejosList(state = initialState, action: ListaDesejosListType): ListaDesejosListState {
     switch(action.type) {
-        case INCREMENT:
+        case LISTA_DESEJOS_LIST:
             return {
-                counter: state.counter
+                listaDesejosList: state.listaDesejosList
             }
         default:
             return initialState;

@@ -1,12 +1,12 @@
-export const INCREMENT = 'INCREMENT'
+export const LISTA_DESEJOS_LIST = 'LISTA_DESEJOS_LIST'
 
-interface Increment {
-    type: typeof INCREMENT
-    counter: number
+interface ListaDesejosList {
+    type: typeof LISTA_DESEJOS_LIST
+    listaDesejosList: []
 }
 
-export interface IncrementState {
-    counter: number;
+export interface ListaDesejosListState {
+    listaDesejosList: [];
 }
 
-export type CounterTypes = Increment
+export type ListaDesejosListType = ListaDesejosList

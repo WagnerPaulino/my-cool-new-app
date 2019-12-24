@@ -1,8 +1,8 @@
-import { CounterTypes, INCREMENT } from "./types";
+import { ListaDesejosListType, LISTA_DESEJOS_LIST } from "./types";
 
-export function increment(counter: number): CounterTypes {
+export function findAll(lista: []): ListaDesejosListType {
     return {
-        type: INCREMENT,
-        counter: counter + 1
+        type: LISTA_DESEJOS_LIST,
+        listaDesejosList: lista
     }
 }

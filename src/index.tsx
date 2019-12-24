@@ -5,10 +5,10 @@ import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { increment } from './reducers/reducers';
+import { listaDesejosList } from './reducers/reducers';
 
 const rootReducer = combineReducers({
-    counter: increment
+    listaDesejos: listaDesejosList
 })
 
 const store = createStore(rootReducer)
