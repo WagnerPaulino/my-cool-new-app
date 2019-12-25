@@ -11,19 +11,31 @@ interface State {
 interface Props {
     listaDesejos: ListaDesejos;
     findOne: typeof findOne;
+    match: any
 }
 
 class ListaDesejosEditComponent extends React.Component<Props, State> {
 
-    public state: State;
-    private desejo: any = { nome: 'Les paul' };
+    private desejo: any = new ListaDesejos();
 
     constructor(props: any) {
         super(props);
-        this.onChanceValueForm = this.onChanceValueForm.bind(this);
         this.state = {
-            listaDesejos: this.desejo
-        };
+            listaDesejos: {key: 0,nome: '', melhoresPrecos: []}
+        }
+        this.onChanceValueForm = this.onChanceValueForm.bind(this);
+    }
+
+    componentDidMount() {
+        if (this.props.match.params.key) {
+            this.setState({
+                ...this.props.findOne(this.props.match.params.key)
+            });
+        } else {
+            this.setState({
+                listaDesejos: {key: 0,nome: '', melhoresPrecos: []}
+            });
+        }
     }
 
     onChanceValueForm(event: any) {
@@ -38,15 +50,15 @@ class ListaDesejosEditComponent extends React.Component<Props, State> {
         return (
             <div>
                 <h3>Desejo</h3>
-                <input name="nome" placeholder="Nome" value={this.state.listaDesejos.nome} onChange={(e) => this.onChanceValueForm(e.nativeEvent)}></input>
+                <input name="nome" placeholder="Nome" value={this.state?.listaDesejos?.nome} onChange={(e) => this.onChanceValueForm(e.nativeEvent)}></input>
             </div>
         )
     }
 }
 const mapStateToProps = (state: AppState) => {
     return {
-      ...state.desejo
+        ...state.desejo
     }
-  };
-  
-  export default connect(mapStateToProps, { findOne })(ListaDesejosEditComponent);
+};
+
+export default connect(mapStateToProps, { findOne })(ListaDesejosEditComponent);

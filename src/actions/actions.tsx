@@ -21,8 +21,9 @@ export function findAll(): ListaDesejosListType {
 }
 
 export function findOne(key: number): ListaDesejosEditType {
+    console.log(lista.filter(desejo => desejo.key == key)[0])
     return {
         type: LISTA_DESEJOS_EDIT,
-        listaDesejos: lista.filter(desejo => desejo.key === key)[0]
+        listaDesejos: lista.filter(desejo => desejo.key == key)[0]
     }
 }

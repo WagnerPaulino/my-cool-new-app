@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import PropTypes from 'prop-types'
 import ListaDesejosListComponent from './pages/lista-desejos-list-component';
 import {
   BrowserRouter as Router,
@@ -8,32 +9,26 @@ import {
   Link
 } from "react-router-dom";
 import ListaDesejosEditComponent from './pages/lista-desejos-edit-component';
+import { Provider } from 'react-redux';
 
-interface State { }
-
-interface Props { }
-
-export default class App extends React.Component<Props, State> {
-
-  render() {
-    return (
-      <Router>
-        <div>
-          <div className="card-top">
-            <Link className="text-card" to="/">Lista de Desejos</Link>
-            <Link className="text-card" to="/desejo">Desejos</Link>
-          </div>
-          <Switch>
-            <Route path="/" exact>
-              <ListaDesejosListComponent />
-            </Route>
-            <Route path="/desejo">
-              <ListaDesejosEditComponent />
-            </Route>
-          </Switch>
+const App = ({ store }: any) => (
+  <Provider store={store}>
+    <Router>
+      <div>
+        <div className="card-top">
+          <Link className="text-card" to="/">Lista de Desejos</Link>
         </div>
-      </Router >
-    )
-  }
+        <Switch>
+          <Route path="/" exact component={ListaDesejosListComponent} />
+          <Route path="/desejo/:key?" component={ListaDesejosEditComponent} />
+        </Switch>
+      </div>
+    </Router >
+  </Provider>
+)
 
+App.propTypes = {
+  store: PropTypes.object.isRequired
 }
+
+export default App;

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { AppState } from '..';
 import { findAll } from '../actions/actions';
 import { ListaDesejos } from '../models/ListaDesejos';
+import { NavLink } from 'react-router-dom';
 
 interface State {
   listaDesejosList: Array<ListaDesejos>;
@@ -27,17 +28,18 @@ class ListaDesejosListComponent extends React.Component<Props, State> {
   }
 
   detail(key: number) {
-    console.log(key);
   }
 
 
   render() {
     this.lista = this.state.listaDesejosList.map((desejo) =>
-      <li key={desejo.key}>
-        {desejo.nome}
-      </li>
-  );
-      return (
+      <NavLink key={desejo.key} to={`/desejo/${desejo.key}`} >
+        <li>
+          {desejo.nome}
+        </li>
+      </NavLink>
+    );
+    return (
       <div>
         <h1>Desejos</h1>
         <ul>
