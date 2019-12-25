@@ -32,6 +32,7 @@ class ListaDesejosListComponent extends React.Component<Props, State> {
 
 
   render() {
+    console.log(this.state);
     this.lista = this.state.listaDesejosList.map((desejo) =>
       <NavLink key={desejo.key} to={`/desejo/${desejo.key}`} >
         <li>
@@ -45,6 +46,9 @@ class ListaDesejosListComponent extends React.Component<Props, State> {
         <ul>
           {this.lista}
         </ul>
+        <NavLink to={`/desejo`} >
+          <button>Novo</button>
+        </NavLink>
       </div>
     )
   }

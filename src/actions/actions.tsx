@@ -1,4 +1,4 @@
-import { ListaDesejosListType, LISTA_DESEJOS_LIST, ListaDesejosEditType, LISTA_DESEJOS_EDIT } from "./types";
+import { ListaDesejosListType, LISTA_DESEJOS_LIST, ListaDesejosEditType, LISTA_DESEJOS_EDIT, LISTA_DESEJOS_LOAD } from "./types";
 import { ListaDesejos } from '../models/ListaDesejos';
 
 var lista: Array<ListaDesejos> = [
@@ -21,9 +21,17 @@ export function findAll(): ListaDesejosListType {
 }
 
 export function findOne(key: number): ListaDesejosEditType {
-    console.log(lista.filter(desejo => desejo.key == key)[0])
+    return {
+        type: LISTA_DESEJOS_LOAD,
+        listaDesejos: lista.filter(desejo => desejo.key == key)[0]
+    }
+}
+
+export function save(desejo: ListaDesejos): ListaDesejosEditType {
+    desejo.key = Math.random();
+    lista.push(desejo);
     return {
         type: LISTA_DESEJOS_EDIT,
-        listaDesejos: lista.filter(desejo => desejo.key == key)[0]
+        listaDesejos: desejo
     }
 }
