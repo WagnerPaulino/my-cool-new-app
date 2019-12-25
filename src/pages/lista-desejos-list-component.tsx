@@ -26,6 +26,10 @@ class ListaDesejosListComponent extends React.Component<Props, State> {
     };
   }
 
+  detail(key: number) {
+    console.log(key);
+  }
+
 
   render() {
     this.lista = this.state.listaDesejosList.map((desejo) =>

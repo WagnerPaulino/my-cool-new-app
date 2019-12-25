@@ -5,10 +5,11 @@ import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { listaDesejosList } from './reducers/reducers';
+import { listaDesejosList, listaDesejosEdit } from './reducers/reducers';
 
 const rootReducer = combineReducers({
-    listaDesejos: listaDesejosList
+    listaDesejos: listaDesejosList,
+    desejo: listaDesejosEdit
 })
 
 const store = createStore(rootReducer)

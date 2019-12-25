@@ -1,4 +1,4 @@
-import { ListaDesejosListType, LISTA_DESEJOS_LIST } from "./types";
+import { ListaDesejosListType, LISTA_DESEJOS_LIST, ListaDesejosEditType, LISTA_DESEJOS_EDIT } from "./types";
 import { ListaDesejos } from '../models/ListaDesejos';
 
 var lista: Array<ListaDesejos> = [
@@ -17,5 +17,12 @@ export function findAll(): ListaDesejosListType {
     return {
         type: LISTA_DESEJOS_LIST,
         listaDesejosList: lista
+    }
+}
+
+export function findOne(key: number): ListaDesejosEditType {
+    return {
+        type: LISTA_DESEJOS_EDIT,
+        listaDesejos: lista.filter(desejo => desejo.key === key)[0]
     }
 }

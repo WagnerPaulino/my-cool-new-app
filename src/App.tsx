@@ -7,6 +7,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import ListaDesejosEditComponent from './pages/lista-desejos-edit-component';
 
 interface State { }
 
@@ -20,10 +21,14 @@ export default class App extends React.Component<Props, State> {
         <div>
           <div className="card-top">
             <Link className="text-card" to="/">Lista de Desejos</Link>
+            <Link className="text-card" to="/desejo">Desejos</Link>
           </div>
           <Switch>
-            <Route path="/">
+            <Route path="/" exact>
               <ListaDesejosListComponent />
+            </Route>
+            <Route path="/desejo">
+              <ListaDesejosEditComponent />
             </Route>
           </Switch>
         </div>
