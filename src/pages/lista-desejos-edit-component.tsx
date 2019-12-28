@@ -13,7 +13,8 @@ interface Props {
     listaDesejos: ListaDesejos;
     findOne: typeof findOne;
     save: typeof save;
-    match: any
+    match: any;
+    history: any;
 }
 
 class ListaDesejosEditComponent extends React.Component<Props, State> {
@@ -57,10 +58,10 @@ class ListaDesejosEditComponent extends React.Component<Props, State> {
                 <h3>Desejo</h3>
                 <input name="nome" placeholder="Nome" value={this.state?.listaDesejos?.nome} onChange={(e) => this.onChanceValueForm(e.nativeEvent)}></input>
                 {
-                    this.state.isNew ? 
-                        <button onClick={() => this.props.save(this.state.listaDesejos)}>
+                    this.state.isNew ?
+                        <button onClick={() => this.props.save(this.state.listaDesejos, this.props.history)}>
                             Salvar
-                        </button> 
+                        </button>
                         : <div></div>
                 }
             </div>

@@ -23,13 +23,14 @@ export function findAll(): ListaDesejosListType {
 export function findOne(key: number): ListaDesejosEditType {
     return {
         type: LISTA_DESEJOS_LOAD,
-        listaDesejos: lista.filter(desejo => desejo.key == key)[0]
+        listaDesejos: lista.filter(desejo => desejo.key?.toString() === key?.toString())[0]
     }
 }
 
-export function save(desejo: ListaDesejos): ListaDesejosEditType {
+export function save(desejo: ListaDesejos, history: any): ListaDesejosEditType {
     desejo.key = Math.random();
     lista.push(desejo);
+    history.push('/')
     return {
         type: LISTA_DESEJOS_EDIT,
         listaDesejos: desejo
