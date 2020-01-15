@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { AppState } from '..';
-import { findAll } from '../actions/actions';
+import { findAll, findQuestionarios } from '../actions/actions';
 import { ListaDesejos } from '../models/ListaDesejos';
 import { NavLink } from 'react-router-dom';
 
@@ -12,6 +12,7 @@ interface State {
 interface Props {
   listaDesejosList: Array<ListaDesejos>;
   findAll: typeof findAll;
+  findQuestionarios: typeof findQuestionarios;
   match: any;
   history: any;
 }
@@ -24,6 +25,7 @@ class ListaDesejosListComponent extends React.Component<Props, State> {
 
   constructor(props: any) {
     super(props);
+    console.log(this.props.findQuestionarios().questionarios);
     this.state = {
       listaDesejosList: this.props.findAll().listaDesejosList
     };
@@ -58,8 +60,9 @@ class ListaDesejosListComponent extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => {
   return {
-    ...state.listaDesejos
+    ...state.listaDesejos,
+    ...state.questionarios
   }
 };
 
-export default connect(mapStateToProps, { findAll })(ListaDesejosListComponent);
+export default connect(mapStateToProps, { findAll, findQuestionarios  })(ListaDesejosListComponent);

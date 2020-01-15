@@ -33,3 +33,15 @@ export function listaDesejosEdit(state = initialEditState, action: ListaDesejosE
             return initialEditState;
     }
 }
+
+export function findQuestionarios(state = null, action: any): any {
+    switch (action.type) {
+        case 'findQuestionarios':
+            console.log(action);
+            return {
+                questionarios: action.questionarios
+            }
+        default:
+            return state;
+    }
+}

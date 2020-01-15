@@ -36,3 +36,10 @@ export function save(desejo: ListaDesejos, history: any): ListaDesejosEditType {
         listaDesejos: desejo
     }
 }
+
+export function findQuestionarios(): any {
+    return {
+        questionarios: fetch('https://question-for-study-service.herokuapp.com/api/questionarios-simples'),
+        type: 'findQuestionarios'
+    }    
+}

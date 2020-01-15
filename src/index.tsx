@@ -1,17 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { createStore, combineReducers } from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { listaDesejosList, listaDesejosEdit } from './reducers/reducers';
+import { listaDesejosList, listaDesejosEdit, findQuestionarios } from './reducers/reducers';
 
 const rootReducer = combineReducers({
     listaDesejos: listaDesejosList,
-    desejo: listaDesejosEdit
+    desejo: listaDesejosEdit,
+    questionarios: findQuestionarios
 })
 
-const store = createStore(rootReducer)
+const customMiddleWare = (store: any) => (next: any) => (action: any) => {
+    return next(action);
+  }
+
+const store = createStore(rootReducer, applyMiddleware(customMiddleWare))
 
 export type AppState = ReturnType<typeof rootReducer>;
 
