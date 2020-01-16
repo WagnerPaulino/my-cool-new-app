@@ -25,15 +25,19 @@ class ListaDesejosListComponent extends React.Component<Props, State> {
 
   constructor(props: any) {
     super(props);
-    console.log(this.props.findQuestionarios().questionarios);
     this.state = {
       listaDesejosList: this.props.findAll().listaDesejosList
     };
   }
-
+  
+  
+  
   detail(key: number) {
   }
-
+  
+  componentDidMount() {
+    console.log(this.props.findQuestionarios());
+  }
 
   render() {
     this.lista = this.state.listaDesejosList.map((desejo) =>
@@ -58,10 +62,9 @@ class ListaDesejosListComponent extends React.Component<Props, State> {
 
 }
 
-const mapStateToProps = (state: AppState) => {
+const mapStateToProps = (state: AppState) => {  
   return {
-    ...state.listaDesejos,
-    ...state.questionarios
+    ...state
   }
 };
 

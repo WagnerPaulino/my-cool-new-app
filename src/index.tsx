@@ -12,14 +12,9 @@ const rootReducer = combineReducers({
     questionarios: findQuestionarios
 })
 
-function triggerFunction(params: any) {
-    console.log(params)
-    return params;
-}
-
 const customMiddleWare = ({ dispatch, getState }: any) => (next: any) => (action: any) => {
     if (typeof action === 'function') {
-        action({ dispatch, getState, ...triggerFunction })
+        return  action({ dispatch, getState});
     }
     return next(action);
 }

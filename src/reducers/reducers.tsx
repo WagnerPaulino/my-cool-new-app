@@ -37,11 +37,12 @@ export function listaDesejosEdit(state = initialEditState, action: ListaDesejosE
 export function findQuestionarios(state = null, action: any): any {
     switch (action.type) {
         case 'findQuestionarios':
-            console.log(action);
             return {
-                questionarios: action.questionarios
+                ...action.questionarios
             }
         default:
-            return state;
+            return {
+                questionarios: []
+            };
     }
 }
