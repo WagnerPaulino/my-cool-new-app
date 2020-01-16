@@ -23,7 +23,7 @@ export function findAll(): ListaDesejosListType {
 export function findOne(key: number): ListaDesejosEditType {
     return {
         type: LISTA_DESEJOS_LOAD,
-        listaDesejos: lista.filter(desejo => desejo.key?.toString() === key?.toString())[0]
+        listaDesejos: lista.filter(desejo => desejo.key ?.toString() === key ?.toString())[0]
     }
 }
 
@@ -38,8 +38,12 @@ export function save(desejo: ListaDesejos, history: any): ListaDesejosEditType {
 }
 
 export function findQuestionarios(): any {
-    return {
-        questionarios: fetch('https://question-for-study-service.herokuapp.com/api/questionarios-simples'),
-        type: 'findQuestionarios'
-    }    
+    return (dispatch: any) => fetch('https://question-for-study-service.herokuapp.com/api/questionarios-simples')
+        .then(value => dispatch(
+            {
+                questionarios: value,
+                type: 'findQuestionarios'
+            }
+        )
+        )
 }

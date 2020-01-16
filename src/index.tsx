@@ -12,9 +12,17 @@ const rootReducer = combineReducers({
     questionarios: findQuestionarios
 })
 
-const customMiddleWare = (store: any) => (next: any) => (action: any) => {
+function triggerFunction(params: any) {
+    console.log(params)
+    return params;
+}
+
+const customMiddleWare = ({ dispatch, getState }: any) => (next: any) => (action: any) => {
+    if (typeof action === 'function') {
+        action({ dispatch, getState, ...triggerFunction })
+    }
     return next(action);
-  }
+}
 
 const store = createStore(rootReducer, applyMiddleware(customMiddleWare))
 
