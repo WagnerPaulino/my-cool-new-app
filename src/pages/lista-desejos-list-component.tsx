@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom';
 
 interface State {
   listaDesejosList: Array<ListaDesejos>;
+  questionarios: Array<any>;
 }
 
 interface Props {
@@ -26,7 +27,8 @@ class ListaDesejosListComponent extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
     this.state = {
-      listaDesejosList: this.props.findAll().listaDesejosList
+      listaDesejosList: this.props.findAll().listaDesejosList,
+      questionarios: []
     };
   }
   
@@ -36,7 +38,13 @@ class ListaDesejosListComponent extends React.Component<Props, State> {
   }
   
   componentDidMount() {
-    console.log(this.props.findQuestionarios());
+    this.props.findQuestionarios()
+  }
+  // Substitui o componentWillReceiveProps
+  static getDerivedStateFromProps(props:any, state: any) {
+    return {
+      questionarios: props.questionarios
+    }
   }
 
   render() {
