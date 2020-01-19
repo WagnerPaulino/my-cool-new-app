@@ -1,19 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { AppState } from '..';
-import { findAll, findQuestionarios } from '../actions/actions';
+import { findAll } from '../actions/actions';
 import { ListaDesejos } from '../models/ListaDesejos';
 import { NavLink } from 'react-router-dom';
 
 interface State {
-  listaDesejosList: Array<ListaDesejos>;
-  questionarios: Array<any>;
+  listaDesejos: Array<ListaDesejos>;
 }
 
 interface Props {
-  listaDesejosList: Array<ListaDesejos>;
+  listaDesejos: Array<ListaDesejos>;
   findAll: typeof findAll;
-  findQuestionarios: typeof findQuestionarios;
   match: any;
   history: any;
 }
@@ -27,29 +25,29 @@ class ListaDesejosListComponent extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
     this.state = {
-      listaDesejosList: this.props.findAll().listaDesejosList,
-      questionarios: []
+      listaDesejos: []
     };
   }
-  
-  
-  
+
+
+
   detail(key: number) {
   }
-  
+
   componentDidMount() {
-    this.props.findQuestionarios()
+    this.props.findAll();
   }
+
   // Substitui o componentWillReceiveProps
-  static getDerivedStateFromProps(props:any, state: any) {
+  static getDerivedStateFromProps(props: any, state: any) {
     return {
-      questionarios: props.questionarios
+      ...props.state.listaDesejos
     }
   }
 
   render() {
-    this.lista = this.state.listaDesejosList.map((desejo) =>
-      <NavLink key={desejo.key} to={`/desejo/${desejo.key}`} >
+    this.lista = this.state.listaDesejos.map((desejo) =>
+      <NavLink key={desejo._id} to={`/desejo/${desejo._id}`} >
         <li>
           {desejo.nome}
         </li>
@@ -70,10 +68,10 @@ class ListaDesejosListComponent extends React.Component<Props, State> {
 
 }
 
-const mapStateToProps = (state: AppState) => {  
+const mapStateToProps = (state: AppState) => {
   return {
-    ...state
+    state
   }
 };
 
-export default connect(mapStateToProps, { findAll, findQuestionarios  })(ListaDesejosListComponent);
+export default connect(mapStateToProps, { findAll })(ListaDesejosListComponent);

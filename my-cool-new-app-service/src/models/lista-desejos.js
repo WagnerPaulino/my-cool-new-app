@@ -16,5 +16,10 @@ const ListaDesejoSchema = new mongoose.Schema({
    }
 });
 
+ListaDesejoSchema.pre('save', function (next) {
+    console.log(this); // this: se refere ao objeto que está sendo salvo
+    next();
+})
+
 const ListaDesejo = mongoose.model('ListaDesejo', ListaDesejoSchema);
 module.exports = ListaDesejo;

@@ -4,12 +4,11 @@ import './index.css';
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { listaDesejosList, listaDesejosEdit, findQuestionarios } from './reducers/reducers';
+import { listaDesejosList, listaDesejosEdit } from './reducers/reducers';
 
 const rootReducer = combineReducers({
     listaDesejos: listaDesejosList,
-    desejo: listaDesejosEdit,
-    questionarios: findQuestionarios
+    desejo: listaDesejosEdit
 })
 
 const customMiddleWare = ({ dispatch, getState }: any) => (next: any) => (action: any) => {

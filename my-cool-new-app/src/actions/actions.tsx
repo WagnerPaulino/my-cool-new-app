@@ -1,52 +1,35 @@
-import { ListaDesejosListType, LISTA_DESEJOS_LIST, ListaDesejosEditType, LISTA_DESEJOS_EDIT, LISTA_DESEJOS_LOAD } from "./types";
+import { LISTA_DESEJOS_LIST, LISTA_DESEJOS_EDIT, LISTA_DESEJOS_LOAD } from "./types";
 import { ListaDesejos } from '../models/ListaDesejos';
 
-var lista: Array<ListaDesejos> = [
-    {
-        key: 1, nome: 'Monitor curvo'
-    },
-    {
-        key: 2, nome: 'Guitarra Lespaul'
-    },
-    {
-        key: 3, nome: 'Notebook'
-    }
-];
+export function findAll(): (store: any) => void {
 
-export function findAll(): ListaDesejosListType {
-    return {
-        type: LISTA_DESEJOS_LIST,
-        listaDesejosList: lista
+    return (store: any) => {
+        fetch('http://localhost:4000/api/lista-desejos/').then(response => response.json().then(value => store.dispatch(
+            {
+                listaDesejos: value,
+                type: LISTA_DESEJOS_LIST
+            }
+        )));
     }
 }
 
-export function findOne(key: number): ListaDesejosEditType {
-    return {
-        type: LISTA_DESEJOS_LOAD,
-        listaDesejos: lista.filter(desejo => desejo.key?.toString() === key ?.toString())[0]
+export function findOne(key: number): (store: any) => void {
+    return (store: any) => {
+        fetch(`http://localhost:4000/api/lista-desejos/${key}`).then(response => response.json().then(value => store.dispatch(
+            {
+                type: LISTA_DESEJOS_LOAD,
+                listaDesejos: value
+            }
+        )));
     }
 }
 
-export function save(desejo: ListaDesejos, history: any): ListaDesejosEditType {
-    desejo.key = Math.random();
-    lista.push(desejo);
-    history.push('/')
-    return {
-        type: LISTA_DESEJOS_EDIT,
-        listaDesejos: desejo
-    }
-}
-
-export function findQuestionarios(): any {
-    return ({dispatch}: any) => {
-        fetch('https://question-for-study-service.herokuapp.com/api/questionarios-simples')
-            .then(response => response.json().then(value => {
-                dispatch(
-                    {
-                        questionarios: value,
-                        type: 'findQuestionarios'
-                    }
-                )
-            }));
+export function save(desejo: ListaDesejos, history: any): (store: any) => void {
+    return (store: any) => {
+        fetch(`http://localhost:4000/api/lista-desejos/`, { method: 'POST', body: JSON.stringify(desejo) }).then(response => response.json().then(value => store.dispatch(
+            {
+                type: LISTA_DESEJOS_EDIT,
+                listaDesejos: value
+            })))
     }
 }

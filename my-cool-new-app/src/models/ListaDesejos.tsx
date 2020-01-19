@@ -1,5 +1,5 @@
 export class ListaDesejos {
-    key?: number;
+    _id?: number;
     nome?: string;
     melhoresPrecos?: Array<any>
 }

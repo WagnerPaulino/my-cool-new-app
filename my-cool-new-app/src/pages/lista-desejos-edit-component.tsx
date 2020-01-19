@@ -24,7 +24,7 @@ class ListaDesejosEditComponent extends React.Component<Props, State> {
     constructor(props: any) {
         super(props);
         this.state = {
-            listaDesejos: { key: 0, nome: '', melhoresPrecos: [] },
+            listaDesejos: new ListaDesejos(),
             isNew: true
         }
         this.onChanceValueForm = this.onChanceValueForm.bind(this);
@@ -32,15 +32,7 @@ class ListaDesejosEditComponent extends React.Component<Props, State> {
 
     componentDidMount() {
         if (this.props.match.params.key) {
-            this.setState({
-                ...this.props.findOne(this.props.match.params.key),
-                isNew: false
-            });
         } else {
-            this.setState({
-                listaDesejos: { key: 0, nome: '', melhoresPrecos: [] },
-                isNew: true
-            });
         }
     }
 
