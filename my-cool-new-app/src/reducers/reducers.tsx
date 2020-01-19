@@ -23,13 +23,11 @@ export function listaDesejosEdit(state = initialEditState, action: ListaDesejosE
     switch (action.type) {
         case LISTA_DESEJOS_LOAD:
             return {
-                ...action,
-                ...state
+                ...action
             }
         case LISTA_DESEJOS_EDIT:
             return {
-                ...action,
-                ...state
+                ...action
             }
         default:
             return initialEditState;

@@ -21,7 +21,7 @@ export type ListaDesejosListType = ListaDesejosList
 
 interface ListaDesejosEdit {
     type?: typeof LISTA_DESEJOS_EDIT | typeof LISTA_DESEJOS_LOAD;
-    listaDesejos?: ListaDesejos;
+    listaDesejo?: ListaDesejos;
 }
 
 export interface ListaDesejosEditState {

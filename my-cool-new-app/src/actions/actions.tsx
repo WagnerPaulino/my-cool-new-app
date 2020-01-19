@@ -18,7 +18,7 @@ export function findOne(key: number): (store: any) => void {
         fetch(`http://localhost:4000/api/lista-desejos/${key}`).then(response => response.json().then(value => store.dispatch(
             {
                 type: LISTA_DESEJOS_LOAD,
-                listaDesejos: value
+                listaDesejo: value
             }
         )));
     }
@@ -29,7 +29,7 @@ export function save(desejo: ListaDesejos, history: any): (store: any) => void {
         fetch(`http://localhost:4000/api/lista-desejos/`, { method: 'POST', body: JSON.stringify(desejo) }).then(response => response.json().then(value => store.dispatch(
             {
                 type: LISTA_DESEJOS_EDIT,
-                listaDesejos: value
+                listaDesejo: value
             })))
     }
 }

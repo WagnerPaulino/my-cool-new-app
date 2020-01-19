@@ -12,7 +12,12 @@ router.post('/lista-desejos', async (req, res) => {
 });
 
 router.get('/lista-desejos', async (req, res) => {
-    listaDesejos = await listaDesejo.find({});
+    let listaDesejos = await listaDesejo.find({});
+    res.status(200).send(listaDesejos);
+});
+
+router.get('/lista-desejos/:id', async (req, res) => {
+    let listaDesejos = await listaDesejo.findOne({_id: req.params.id});
     res.status(200).send(listaDesejos);
 });
 
