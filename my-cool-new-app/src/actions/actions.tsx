@@ -26,10 +26,12 @@ export function findOne(key: number): (store: any) => void {
 
 export function save(desejo: ListaDesejos, history: any): (store: any) => void {
     return (store: any) => {
-        fetch(`http://localhost:4000/api/lista-desejos/`, { method: 'POST', body: JSON.stringify(desejo) }).then(response => response.json().then(value => store.dispatch(
-            {
+        fetch(`http://localhost:4000/api/lista-desejos/`, { method: 'POST', body: JSON.stringify(desejo), headers: { "Content-Type": "application/json" } }).then(response => response.json().then(value => {
+            store.dispatch({
                 type: LISTA_DESEJOS_EDIT,
                 listaDesejo: value
-            })))
+            })
+            history.push('/')
+        }))
     }
 }

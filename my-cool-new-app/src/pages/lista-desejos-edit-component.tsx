@@ -42,6 +42,7 @@ class ListaDesejosEditComponent extends React.Component<Props, State> {
         this.setState({
             listaDesejo: this.desejo
         });
+        
     }
 
     // Substitui o componentWillReceiveProps
@@ -61,7 +62,7 @@ class ListaDesejosEditComponent extends React.Component<Props, State> {
                 <input name="preco" placeholder="Preço" value={this.state?.listaDesejo?.preco} onChange={(e) => this.onChanceValueForm(e.nativeEvent)}></input>
                 {
                     this.state.isNew ?
-                        <button onClick={() => this.props.save(this.state.listaDesejo, this.props.history)}>
+                        <button onClick={() => this.props.save(this.desejo, this.props.history)}>
                             Salvar
                         </button>
                         : <div></div>
