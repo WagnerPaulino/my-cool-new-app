@@ -6,6 +6,8 @@ export const LISTA_DESEJOS_EDIT = 'LISTA_DESEJOS_EDIT'
 
 export const LISTA_DESEJOS_LOAD = 'LISTA_DESEJOS_LOAD'
 
+export const LISTA_DESEJOS_DELETE = 'LISTA_DESEJOS_DELETE'
+
 interface ListaDesejosList {
     type?: typeof LISTA_DESEJOS_LIST
     listaDesejos?: Array<ListaDesejos>
@@ -20,7 +22,7 @@ export type ListaDesejosListType = ListaDesejosList
 
 
 interface ListaDesejosEdit {
-    type?: typeof LISTA_DESEJOS_EDIT | typeof LISTA_DESEJOS_LOAD;
+    type?: typeof LISTA_DESEJOS_EDIT | typeof LISTA_DESEJOS_LOAD | typeof LISTA_DESEJOS_DELETE;
     listaDesejo?: ListaDesejos;
 }
 

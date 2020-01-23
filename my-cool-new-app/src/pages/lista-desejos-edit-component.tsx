@@ -1,6 +1,6 @@
 import React from 'react';
 import { ListaDesejos } from '../models/ListaDesejos';
-import { findOne, save } from '../actions/actions';
+import { findOne, save, excluir } from '../actions/actions';
 import { AppState } from '..';
 import { connect } from 'react-redux';
 
@@ -13,6 +13,7 @@ interface Props {
     listaDesejos: ListaDesejos;
     findOne: typeof findOne;
     save: typeof save;
+    excluir: typeof excluir;
     match: any;
     history: any;
 }
@@ -42,7 +43,7 @@ class ListaDesejosEditComponent extends React.Component<Props, State> {
         this.setState({
             listaDesejo: this.desejo
         });
-        
+
     }
 
     // Substitui o componentWillReceiveProps
@@ -65,7 +66,11 @@ class ListaDesejosEditComponent extends React.Component<Props, State> {
                         <button onClick={() => this.props.save(this.desejo, this.props.history)}>
                             Salvar
                         </button>
-                        : <div></div>
+                        : <div>
+                            <button onClick={() => this.props.excluir(this.state.listaDesejo, this.props.history)}>
+                                Realizado
+                        </button>
+                        </div>
                 }
             </div>
         )
@@ -77,4 +82,4 @@ const mapStateToProps = (state: AppState) => {
     }
 };
 
-export default connect(mapStateToProps, { findOne, save })(ListaDesejosEditComponent);
+export default connect(mapStateToProps, { findOne, save, excluir })(ListaDesejosEditComponent);

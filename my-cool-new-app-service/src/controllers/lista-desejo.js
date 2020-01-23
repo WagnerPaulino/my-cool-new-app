@@ -11,6 +11,15 @@ router.post('/lista-desejos', async (req, res) => {
     }
 });
 
+router.delete('/lista-desejos/:id', async (req, res) => {
+    try{
+        const desejo = await listaDesejo.deleteOne({_id: req.params.id});
+        return res.status(200).send({});
+    } catch (err) {
+        return res.status(400).send({...err});
+    }
+});
+
 router.get('/lista-desejos', async (req, res) => {
     let listaDesejos = await listaDesejo.find({});
     res.status(200).send(listaDesejos);

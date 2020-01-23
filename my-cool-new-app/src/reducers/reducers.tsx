@@ -1,4 +1,4 @@
-import { ListaDesejosListState, ListaDesejosListType, LISTA_DESEJOS_LIST, ListaDesejosEditType, LISTA_DESEJOS_LOAD, ListaDesejosEditState, LISTA_DESEJOS_EDIT } from "../actions/types";
+import { ListaDesejosListState, ListaDesejosListType, LISTA_DESEJOS_LIST, ListaDesejosEditType, LISTA_DESEJOS_LOAD, ListaDesejosEditState, LISTA_DESEJOS_EDIT, LISTA_DESEJOS_DELETE } from "../actions/types";
 import { ListaDesejos } from "../models/ListaDesejos";
 const initialListState: ListaDesejosListState = {
     listaDesejos: []
@@ -26,6 +26,10 @@ export function listaDesejosEdit(state = initialEditState, action: ListaDesejosE
                 ...action
             }
         case LISTA_DESEJOS_EDIT:
+            return {
+                ...action
+            }
+        case LISTA_DESEJOS_DELETE: 
             return {
                 ...action
             }
