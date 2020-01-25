@@ -9,6 +9,6 @@ const mongodbConfig = {
     dbName: 'mydb'
 }
 
-mongoose.connect('mongodb://localhost:27017/mydb',mongodbConfig);
+mongoose.connect('mongodb://db:27017/mydb',mongodbConfig).then(r => console.log('conectado com sucesso ao banco de dados!')).catch(e => console.log(e));
 
 module.exports = mongoose;
