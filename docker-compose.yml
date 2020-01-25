@@ -6,22 +6,26 @@ services:
       context: ./mongo-docker-image
       dockerfile: Dockerfile
     ports:
-      - 27017:27017
+      - "27017:27017"
+    networks:
+      - mynet
   service:
     build:
       context: ./my-cool-new-app-service
       dockerfile: Dockerfile
     ports:
-      - 3000:3000
+      - "3000:3000"
     depends_on:
       - db
-    links:
-      - "db:localhost"
+    networks:
+      - mynet
   web:
     build:
       context: ./my-cool-new-app
       dockerfile: Dockerfile
     ports:
-      - 4000:4000
-    links:
-      - "service:localhost"
+      - "4000:4000"
+    networks:
+      - mynet
+networks:
+  mynet:
