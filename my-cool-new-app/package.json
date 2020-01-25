@@ -1,7 +1,6 @@
 {
   "name": "my-cool-new-app",
   "version": "0.1.0",
-  "proxy": "http://service:3000",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "~4.2.4",

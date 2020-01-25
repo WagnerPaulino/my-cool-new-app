@@ -9,12 +9,14 @@ services:
       - "27017:27017"
     networks:
       - mynet
+    container_name: db
   service:
     build:
       context: ./my-cool-new-app-service
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    container_name: service
     depends_on:
       - db
     networks:
@@ -25,7 +27,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4000:4000"
+    container_name: web
     networks:
       - mynet
+    links:
+      - service
 networks:
   mynet:
