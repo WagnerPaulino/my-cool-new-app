@@ -5,39 +5,56 @@ import { ListaDesejos } from './models/ListaDesejos';
 import { findAll } from './actions/actions';
 
 interface State {
-    listaDesejos: Array<ListaDesejos>;
-  }
-  
-  interface Props {
-    listaDesejos: Array<ListaDesejos>;
-    findAll: typeof findAll;
-    match: any;
-    history: any;
-  }
+  listaDesejos: Array<ListaDesejos>;
+}
+
+interface Props {
+  listaDesejos: Array<ListaDesejos>;
+  findAll: typeof findAll;
+  match: any;
+  history: any;
+}
 
 class DesejosList extends React.Component<Props, State> {
 
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text>desejos-list works!</Text>
-            </View>
-        );
+  constructor(props) {
+    super(props);
+    this.state = {
+      listaDesejos: []
     }
+  }
+
+  componentDidMount() {
+    this.props.findAll();
+  }
+
+  static getDerivedStateFromProps(props: any, state: any) {
+    return {
+      ...props.state.listaDesejos
+    }
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text>desejos-list works!</Text>
+      </View>
+    );
+  }
 }
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
-  const mapStateToProps = (state) => {
-    return {
-      state
-    }
-  };
-  
-  export default connect(mapStateToProps, { findAll })(DesejosList);
+const mapStateToProps = (state) => {
+  return {
+    state
+  }
+};
+
+export default connect(mapStateToProps, { findAll })(DesejosList);
