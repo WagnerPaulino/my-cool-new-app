@@ -1,8 +1,8 @@
 import React from 'react';
 import { ListaDesejos } from '../models/ListaDesejos';
 import { findOne, save, excluir } from '../actions/actions';
-import { AppState } from '..';
 import { connect } from 'react-redux';
+import { AppState } from '../App';
 
 interface State {
     listaDesejo: ListaDesejos;

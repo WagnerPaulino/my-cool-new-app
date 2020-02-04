@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import PropTypes from 'prop-types'
 import ListaDesejosListComponent from './pages/lista-desejos-list-component';
 import {
   BrowserRouter as Router,
@@ -8,10 +7,29 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { listaDesejosList, listaDesejosEdit } from './reducers/reducers';
 import ListaDesejosEditComponent from './pages/lista-desejos-edit-component';
 import { Provider } from 'react-redux';
 
-const App = ({ store }: any) => (
+
+const rootReducer = combineReducers({
+  listaDesejos: listaDesejosList,
+  desejo: listaDesejosEdit
+})
+
+const customMiddleWare = ({ dispatch, getState }: any) => (next: any) => (action: any) => {
+  if (typeof action === 'function') {
+      return  action({ dispatch, getState});
+  }
+  return next(action);
+}
+
+const store = createStore(rootReducer, applyMiddleware(customMiddleWare))
+
+export type AppState = ReturnType<typeof rootReducer>;
+
+const App = () => (
   <Provider store={store}>
     <Router>
       <div>
@@ -26,9 +44,5 @@ const App = ({ store }: any) => (
     </Router >
   </Provider>
 )
-
-App.propTypes = {
-  store: PropTypes.object.isRequired
-}
 
 export default App;

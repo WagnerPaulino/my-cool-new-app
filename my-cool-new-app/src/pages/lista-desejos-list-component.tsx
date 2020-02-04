@@ -1,9 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux'
-import { AppState } from '..';
+import { connect } from 'react-redux';
 import { findAll } from '../actions/actions';
 import { ListaDesejos } from '../models/ListaDesejos';
 import { NavLink } from 'react-router-dom';
+import { AppState } from '../App';
 
 interface State {
   listaDesejos: Array<ListaDesejos>;

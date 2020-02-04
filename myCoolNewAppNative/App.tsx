@@ -1,19 +1,29 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import DesejosList from './src/desejos-list';
+import { Provider } from 'react-redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { listaDesejosList, listaDesejosEdit } from './src/reducers/reducers';
 
-export default function App() {
+const rootReducer = combineReducers({
+  listaDesejos: listaDesejosList,
+  desejo: listaDesejosEdit
+})
+
+const customMiddleWare = ({ dispatch, getState }) => (next) => (action) => {
+  if (typeof action === 'function') {
+    return action({ dispatch, getState });
+  }
+  return next(action);
+}
+
+export const store = createStore(rootReducer, applyMiddleware(customMiddleWare))
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Hello World!</Text>
-    </View>
+    <Provider store={store}>
+      <DesejosList></DesejosList>
+    </Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
