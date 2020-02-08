@@ -17,6 +17,8 @@ interface Props {
 
 class DesejosList extends React.Component<Props, State> {
 
+  private lista: any = [];
+
   constructor(props) {
     super(props);
     this.state = {
@@ -29,15 +31,19 @@ class DesejosList extends React.Component<Props, State> {
   }
 
   static getDerivedStateFromProps(props: any, state: any) {
+    console.log(props);
     return {
       ...props.state.listaDesejos
     }
   }
 
   render() {
+    this.lista = this.state.listaDesejos.map((desejo) =>
+      <Text key={desejo._id}>{desejo.nome}</Text>
+    );
     return (
       <View style={styles.container}>
-        <Text>desejos-list works!</Text>
+        {this.lista}
       </View>
     );
   }
@@ -46,8 +52,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   },
 });
 
