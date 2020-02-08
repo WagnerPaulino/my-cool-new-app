@@ -31,7 +31,6 @@ class DesejosList extends React.Component<Props, State> {
   }
 
   static getDerivedStateFromProps(props: any, state: any) {
-    console.log(props);
     return {
       ...props.state.listaDesejos
     }

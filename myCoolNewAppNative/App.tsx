@@ -1,6 +1,7 @@
 import React from 'react';
 import DesejosList from './src/desejos-list';
 import { Provider } from 'react-redux';
+import { Router, Scene } from 'react-native-router-flux'
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { listaDesejosList, listaDesejosEdit } from './src/reducers/reducers';
 
@@ -21,7 +22,11 @@ export const store = createStore(rootReducer, applyMiddleware(customMiddleWare))
 const App = () => {
   return (
     <Provider store={store}>
-      <DesejosList></DesejosList>
+      <Router>
+        <Scene key="root">
+          <Scene key="desejos" component={DesejosList} title="Lista de Desejos" initial={true} />
+        </Scene>
+      </Router>
     </Provider>
   );
 }
