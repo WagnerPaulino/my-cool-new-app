@@ -21,6 +21,7 @@ class DesejosList extends React.Component<Props, State> {
 
   constructor(props) {
     super(props);
+    this.detail = this.detail.bind(this);
     this.state = {
       listaDesejos: []
     }
@@ -36,9 +37,13 @@ class DesejosList extends React.Component<Props, State> {
     }
   }
 
+  detail(desejo: ListaDesejos) {
+    console.log(desejo);
+  }
+
   render() {
     this.lista = this.state.listaDesejos.map((desejo) =>
-      <Text key={desejo._id}>{desejo.nome}</Text>
+      <Text key={desejo._id} onPress={() => this.detail(desejo)}>{desejo.nome}</Text>
     );
     return (
       <View style={styles.container}>
@@ -55,6 +60,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
 });
+
 
 const mapStateToProps = (state) => {
   return {
