@@ -47,7 +47,7 @@ class ListaDesejosEditComponent extends React.Component<Props, State> {
     }
 
     // Substitui o componentWillReceiveProps
-    static getDerivedStateFromProps(props: any, state: any) {
+    static getDerivedStateFromProps(props: any, state: any): State {
         return {
             listaDesejo: props.listaDesejo,
             isNew: props.listaDesejo._id ? false : true

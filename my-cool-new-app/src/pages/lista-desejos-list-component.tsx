@@ -39,7 +39,7 @@ class ListaDesejosListComponent extends React.Component<Props, State> {
   }
 
   // Substitui o componentWillReceiveProps
-  static getDerivedStateFromProps(props: any, state: any) {
+  static getDerivedStateFromProps(props: any, state: any): State {
     return {
       ...props.state.listaDesejos
     }
