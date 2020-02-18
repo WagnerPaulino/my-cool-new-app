@@ -1,54 +1,48 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Text, View, StyleSheet } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+// import { Actions } from 'react-native-router-flux';
 import { ListaDesejos } from './models/ListaDesejos';
-import { findAll } from './actions/actions';
+import { findOne, save, excluir } from './actions/actions';
 
 interface State {
-  listaDesejos: Array<ListaDesejos>;
+  listaDesejo: ListaDesejos;
+  isNew: boolean;
 }
 
 interface Props {
-  listaDesejos: Array<ListaDesejos>;
-  findAll: typeof findAll;
+  listaDesejos: ListaDesejos;
+  findOne: typeof findOne;
+  save: typeof save;
+  excluir: typeof excluir;
   match: any;
   history: any;
 }
 
-class DesejosList extends React.Component<Props, State> {
-
-  private lista: any = [];
+class DesejosEdit extends React.Component<Props, State> {
 
   constructor(props) {
     super(props);
-    this.detail = this.detail.bind(this);
     this.state = {
-      listaDesejos: []
+      listaDesejo: new ListaDesejos(),
+      isNew: false
     }
   }
 
   componentDidMount() {
-    this.props.findAll();
   }
 
   static getDerivedStateFromProps(props: any, state: any): State {
     return {
-      ...props.state.listaDesejos
+      listaDesejo: props.desejo,
+      isNew: props.desejo._id ? false : true
     }
   }
 
-  detail(desejo: ListaDesejos) {
-    Actions.push('desejo-edit', { desejo: desejo });
-  }
-
   render() {
-    this.lista = this.state.listaDesejos.map((desejo) =>
-      <Text key={desejo._id} onPress={() => this.detail(desejo)}>{desejo.nome}</Text>
-    );
     return (
       <View style={styles.container}>
-        {this.lista}
+        <Text key={this.state.listaDesejo._id}>{this.state.listaDesejo.nome}</Text>
       </View>
     );
   }
@@ -65,8 +59,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-    state
+    ...state.desejo
   }
 };
 
-export default connect(mapStateToProps, { findAll })(DesejosList);
+export default connect(mapStateToProps, { findOne, save, excluir })(DesejosEdit);
