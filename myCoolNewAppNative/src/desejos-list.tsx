@@ -32,14 +32,14 @@ class DesejosList extends React.Component<Props, State> {
     this.props.findAll();
   }
 
-  static getDerivedStateFromProps(props: any, state: any): State {    
+  static getDerivedStateFromProps(props: any, state: any): State {
     return {
       ...props.state.listaDesejos
     }
   }
 
   detail(desejo: ListaDesejos) {
-    Actions["desejo-edit"]({ listaDesejo: desejo });
+    Actions["desejo-edit"]({ listaDesejo: Object.assign({}, desejo) });
   }
 
   render() {

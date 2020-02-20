@@ -27,22 +27,12 @@ class DesejosEdit extends React.Component<Props, State> {
       isNew: false
     }
   }
-
-  componentDidMount() {
-  }
-
+  
   static getDerivedStateFromProps(props: any, state: any): State {
     return {
       listaDesejo: Object.values(state.listaDesejo).filter(v => !!v).length > 0 ? state.listaDesejo : props.listaDesejo,
-      isNew: props.listaDesejo._id ? false : true
+      isNew: !!props.listaDesejo._id ? false : true
     }
-  }
-
-  componentWillUnmount() {
-    this.setState({
-      listaDesejo: new ListaDesejos(),
-      isNew: true
-    })
   }
 
   handleChange(value, field) {
