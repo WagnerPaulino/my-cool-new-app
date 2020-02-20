@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Text, View, StyleSheet } from 'react-native';
-// import { Actions } from 'react-native-router-flux';
+import { Text, View, StyleSheet, TextInput } from 'react-native';
 import { ListaDesejos } from './models/ListaDesejos';
 import { findOne, save, excluir } from './actions/actions';
 
@@ -11,7 +10,7 @@ interface State {
 }
 
 interface Props {
-  listaDesejos: ListaDesejos;
+  listaDesejo: ListaDesejos;
   findOne: typeof findOne;
   save: typeof save;
   excluir: typeof excluir;
@@ -34,15 +33,31 @@ class DesejosEdit extends React.Component<Props, State> {
 
   static getDerivedStateFromProps(props: any, state: any): State {
     return {
-      listaDesejo: props.desejo,
-      isNew: props.desejo._id ? false : true
+      listaDesejo: Object.values(state.listaDesejo).filter(v => !!v).length > 0 ? state.listaDesejo : props.listaDesejo,
+      isNew: props.listaDesejo._id ? false : true
     }
+  }
+
+  componentWillUnmount() {
+    this.setState({
+      listaDesejo: new ListaDesejos(),
+      isNew: true
+    })
+  }
+
+  handleChange(value, field) {
+    let desejo = this.state.listaDesejo;
+    desejo[field] = value;
+    this.setState({ listaDesejo: desejo })
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text key={this.state.listaDesejo._id}>{this.state.listaDesejo.nome}</Text>
+        <Text>Desejo</Text>
+        <TextInput key="nome" value={this.state.listaDesejo.nome} onChangeText={e => this.handleChange(e, 'nome')}></TextInput>
+        <Text>Preço</Text>
+        <TextInput key="preço" value={this.state.listaDesejo.preco.toString()} onChangeText={e => this.handleChange(e, 'preco')}></TextInput>
       </View>
     );
   }
@@ -59,7 +74,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-    ...state.desejo
+    ...state
   }
 };
 

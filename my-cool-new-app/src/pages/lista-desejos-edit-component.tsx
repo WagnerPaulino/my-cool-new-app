@@ -21,20 +21,19 @@ interface Props {
 class ListaDesejosEditComponent extends React.Component<Props, State> {
 
     private desejo: any = new ListaDesejos();
+    state = {
+        listaDesejo: new ListaDesejos(),
+        isNew: true
+    }
 
     constructor(props: any) {
         super(props);
-        this.state = {
-            listaDesejo: new ListaDesejos(),
-            isNew: true
-        }
         this.onChanceValueForm = this.onChanceValueForm.bind(this);
     }
 
     componentDidMount() {
         if (this.props.match.params.key) {
             this.props.findOne(this.props.match.params.key)
-        } else {
         }
     }
 
@@ -49,7 +48,7 @@ class ListaDesejosEditComponent extends React.Component<Props, State> {
     // Substitui o componentWillReceiveProps
     static getDerivedStateFromProps(props: any, state: any): State {
         return {
-            listaDesejo: props.listaDesejo,
+            listaDesejo: Object.values(state.listaDesejo).filter(v => !!v).length > 0 ? state.listaDesejo : props.listaDesejo,
             isNew: props.listaDesejo._id ? false : true
         }
     }
@@ -63,7 +62,7 @@ class ListaDesejosEditComponent extends React.Component<Props, State> {
                 <input name="preco" placeholder="Preço" value={this.state?.listaDesejo?.preco} onChange={(e) => this.onChanceValueForm(e.nativeEvent)}></input>
                 {
                     this.state.isNew ?
-                        <button onClick={() => this.props.save(this.desejo, this.props.history)}>
+                        <button onClick={() => this.props.save(this.state.listaDesejo, this.props.history)}>
                             Salvar
                         </button>
                         : <div>
