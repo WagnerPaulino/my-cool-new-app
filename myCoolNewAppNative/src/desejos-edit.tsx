@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Text, View, StyleSheet, TextInput } from 'react-native';
+import { Text, View, StyleSheet, TextInput, Button } from 'react-native';
 import { ListaDesejos } from './models/ListaDesejos';
 import { findOne, save, excluir } from './actions/actions';
+import { Actions } from 'react-native-router-flux';
 
 interface State {
   listaDesejo: ListaDesejos;
@@ -27,11 +28,11 @@ class DesejosEdit extends React.Component<Props, State> {
       isNew: false
     }
   }
-  
+
   static getDerivedStateFromProps(props: any, state: any): State {
     return {
       listaDesejo: Object.values(state.listaDesejo).filter(v => !!v).length > 0 ? state.listaDesejo : props.listaDesejo,
-      isNew: !!props.listaDesejo._id ? false : true
+      isNew: !!props.listaDesejo._id && !!props.listaDesejo ? false : true
     }
   }
 
@@ -41,13 +42,33 @@ class DesejosEdit extends React.Component<Props, State> {
     this.setState({ listaDesejo: desejo })
   }
 
+  save(listaDesejo: ListaDesejos) {
+    this.props.save(listaDesejo)
+    Actions.reset('desejo-edit');
+    Actions.pop();
+    Actions.reset('desejos');
+  }
+
+  excluir(listaDesejo: ListaDesejos) {
+    this.props.excluir(listaDesejo)
+    Actions.reset('desejo-edit');
+    Actions.pop();
+    Actions.reset('desejos');
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Text>Desejo</Text>
         <TextInput key="nome" value={this.state.listaDesejo.nome} onChangeText={e => this.handleChange(e, 'nome')}></TextInput>
         <Text>Preço</Text>
-        <TextInput key="preço" value={this.state.listaDesejo.preco.toString()} onChangeText={e => this.handleChange(e, 'preco')}></TextInput>
+        <TextInput key="preço" value={this.state.listaDesejo.preco?.toString()} onChangeText={e => this.handleChange(e, 'preco')}></TextInput>
+        {
+          this.state.isNew ?
+            <Button onPress={() => this.save(this.state.listaDesejo)} title="Salvar"></Button>
+            :
+            <Button onPress={() => this.excluir(this.state.listaDesejo)} title="Realizado"></Button>
+        }
       </View>
     );
   }
@@ -58,6 +79,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
+    width: '100%'
   },
 });
 

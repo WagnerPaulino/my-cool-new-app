@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Button } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { ListaDesejos } from './models/ListaDesejos';
 import { findAll } from './actions/actions';
@@ -28,7 +28,7 @@ class DesejosList extends React.Component<Props, State> {
     }
   }
 
-  componentDidMount() {
+  componentDidMount() {   
     this.props.findAll();
   }
 
@@ -48,6 +48,7 @@ class DesejosList extends React.Component<Props, State> {
     );
     return (
       <View style={styles.container}>
+        <Button onPress={() => Actions["desejo-edit"]({ listaDesejo: new ListaDesejos() })} title="Novo" ></Button>
         {this.lista}
       </View>
     );
@@ -59,7 +60,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
+    width: '100%'
   },
+  headerCard: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+    width: '100%',
+    height: '5%'
+  }
 });
 
 
