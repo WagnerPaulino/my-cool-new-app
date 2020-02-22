@@ -32,7 +32,7 @@ class DesejosEdit extends React.Component<Props, State> {
   static getDerivedStateFromProps(props: any, state: any): State {
     return {
       listaDesejo: Object.values(state.listaDesejo).filter(v => !!v).length > 0 ? state.listaDesejo : props.listaDesejo,
-      isNew: !!props.listaDesejo._id && !!props.listaDesejo ? false : true
+      isNew: !!props.listaDesejo?._id && !!props.listaDesejo ? false : true
     }
   }
 
@@ -44,25 +44,19 @@ class DesejosEdit extends React.Component<Props, State> {
 
   save(listaDesejo: ListaDesejos) {
     this.props.save(listaDesejo)
-    Actions.reset('desejo-edit');
-    Actions.pop();
-    Actions.reset('desejos');
   }
 
   excluir(listaDesejo: ListaDesejos) {
     this.props.excluir(listaDesejo)
-    Actions.reset('desejo-edit');
-    Actions.pop();
-    Actions.reset('desejos');
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Text>Desejo</Text>
-        <TextInput key="nome" value={this.state.listaDesejo.nome} onChangeText={e => this.handleChange(e, 'nome')}></TextInput>
+        <TextInput key="nome" value={this.state.listaDesejo?.nome} onChangeText={e => this.handleChange(e, 'nome')}></TextInput>
         <Text>Preço</Text>
-        <TextInput key="preço" value={this.state.listaDesejo.preco?.toString()} onChangeText={e => this.handleChange(e, 'preco')}></TextInput>
+        <TextInput key="preço" value={this.state.listaDesejo?.preco?.toString()} onChangeText={e => this.handleChange(e, 'preco')}></TextInput>
         {
           this.state.isNew ?
             <Button onPress={() => this.save(this.state.listaDesejo)} title="Salvar"></Button>
