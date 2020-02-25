@@ -11,7 +11,7 @@ export function ListaDesejosListComponent() {
 
   useEffect(() => {
     dispatch(findAll());
-  },[dispatch])
+  }, [dispatch])
 
   const lista = listaDesejos.map((desejo: ListaDesejos) =>
     <NavLink key={desejo._id} to={`/desejo/${desejo._id}`} >

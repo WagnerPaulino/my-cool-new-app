@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { listaDesejosList, listaDesejosEdit } from './reducers/reducers';
-import ListaDesejosEditComponent from './pages/lista-desejos-edit-component';
+import { ListaDesejosEditComponent } from './pages/lista-desejos-edit-component';
 import { Provider } from 'react-redux';
 
 
@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
 
 const customMiddleWare = ({ dispatch, getState, store }: any) => (next: any) => (action: any) => {
   if (typeof action === 'function') {
-      return  action({ dispatch, getState, store});
+    return action({ dispatch, getState, store });
   }
   return next(action);
 }

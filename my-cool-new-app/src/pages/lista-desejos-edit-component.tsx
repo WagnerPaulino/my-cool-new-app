@@ -1,84 +1,45 @@
-import React from 'react';
-import { ListaDesejos } from '../models/ListaDesejos';
+import React, { useEffect, useState } from 'react';
 import { findOne, save, excluir } from '../actions/actions';
-import { connect } from 'react-redux';
-import { AppState } from '../App';
+import { useDispatch, useSelector } from 'react-redux';
 
-interface State {
-    listaDesejo: ListaDesejos;
-    isNew: boolean;
-}
+export function ListaDesejosEditComponent({ match, history }: any) {
 
-interface Props {
-    listaDesejos: ListaDesejos;
-    findOne: typeof findOne;
-    save: typeof save;
-    excluir: typeof excluir;
-    match: any;
-    history: any;
-}
+    const listaDesejo = useSelector((state: any) => state.desejo.listaDesejo);
 
-class ListaDesejosEditComponent extends React.Component<Props, State> {
+    const dispatch = useDispatch()
+    const [desejo, setDesejo] = useState(listaDesejo);
 
-    private desejo: any = new ListaDesejos();
-    state = {
-        listaDesejo: new ListaDesejos(),
-        isNew: true
-    }
-
-    constructor(props: any) {
-        super(props);
-        this.onChanceValueForm = this.onChanceValueForm.bind(this);
-    }
-
-    componentDidMount() {
-        if (this.props.match.params.key) {
-            this.props.findOne(this.props.match.params.key)
+    useEffect(() => {
+        if (match.params.key) {
+            dispatch(findOne(match.params.key));
         }
-    }
+    }, [match, dispatch])
+    
+    useEffect(() => {
+        setDesejo(listaDesejo);
+    }, [listaDesejo]);
 
-    onChanceValueForm(event: any) {
-        this.desejo[event.target.name] = event.target.value
-        this.setState({
-            listaDesejo: this.desejo
-        });
-
-    }
-
-    // Substitui o componentWillReceiveProps
-    static getDerivedStateFromProps(props: any, state: any): State {
-        return {
-            listaDesejo: Object.values(state.listaDesejo).filter(v => !!v).length > 0 ? state.listaDesejo : props.listaDesejo,
-            isNew: props.listaDesejo._id ? false : true
-        }
+    function onChanceValueForm(event: any) {
+        setDesejo({ ...desejo, [event.target.name]: event.target.value });
     }
 
 
-    render() {
-        return (
-            <div>
-                <h3>Desejo</h3>
-                <input name="nome" placeholder="Nome" value={this.state?.listaDesejo?.nome} onChange={(e) => this.onChanceValueForm(e.nativeEvent)}></input>
-                <input name="preco" placeholder="Preço" value={this.state?.listaDesejo?.preco} onChange={(e) => this.onChanceValueForm(e.nativeEvent)}></input>
-                {
-                    this.state.isNew ?
-                        <button onClick={() => this.props.save(this.state.listaDesejo, this.props.history)}>
-                            Salvar
+    return (
+        <div>
+            <h3>Desejo</h3>
+            <input name="nome" placeholder="Nome" value={desejo?.nome} onChange={(e) => onChanceValueForm(e.nativeEvent)}></input>
+            <input name="preco" placeholder="Preço" value={desejo?.preco} onChange={(e) => onChanceValueForm(e.nativeEvent)}></input>
+            {
+                !desejo._id ?
+                    <button onClick={() => dispatch(save(desejo, history))}>
+                        Salvar
                         </button>
-                        : <div>
-                            <button onClick={() => this.props.excluir(this.state.listaDesejo, this.props.history)}>
-                                Realizado
+                    : <div>
+                        <button onClick={() => dispatch(excluir(desejo, history))}>
+                            Realizado
                         </button>
-                        </div>
-                }
-            </div>
-        )
-    }
+                    </div>
+            }
+        </div>
+    )
 }
-const mapStateToProps = (state: AppState) => {
-    return {
-        ...state.desejo
-    }
-};
-
-export default connect(mapStateToProps, { findOne, save, excluir })(ListaDesejosEditComponent);
