@@ -1,77 +1,34 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { findAll } from '../actions/actions';
 import { ListaDesejos } from '../models/ListaDesejos';
 import { NavLink } from 'react-router-dom';
-import { AppState } from '../App';
 
-interface State {
-  listaDesejos: Array<ListaDesejos>;
-}
+export function ListaDesejosListComponent() {
 
-interface Props {
-  listaDesejos: Array<ListaDesejos>;
-  findAll: typeof findAll;
-  match: any;
-  history: any;
-}
+  const listaDesejos = useSelector((state: any) => state.listaDesejos.listaDesejos)
+  const dispatch = useDispatch()
 
-class ListaDesejosListComponent extends React.Component<Props, State> {
+  useEffect(() => {
+    dispatch(findAll());
+  },[dispatch])
 
-  public state: State;
-
-  private lista: any = [];
-
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      listaDesejos: []
-    };
-  }
-
-
-
-  detail(key: number) {
-  }
-
-  componentDidMount() {
-    this.props.findAll();
-  }
-
-  // Substitui o componentWillReceiveProps
-  static getDerivedStateFromProps(props: any, state: any): State {
-    return {
-      ...props.state.listaDesejos
-    }
-  }
-
-  render() {
-    this.lista = this.state.listaDesejos.map((desejo) =>
-      <NavLink key={desejo._id} to={`/desejo/${desejo._id}`} >
-        <li>
-          {desejo.nome}
-        </li>
+  const lista = listaDesejos.map((desejo: ListaDesejos) =>
+    <NavLink key={desejo._id} to={`/desejo/${desejo._id}`} >
+      <li>
+        {desejo.nome}
+      </li>
+    </NavLink>
+  );
+  return (
+    <div>
+      <h1>Desejos</h1>
+      <ul>
+        {lista}
+      </ul>
+      <NavLink to={`/desejo`} >
+        <button>Novo</button>
       </NavLink>
-    );
-    return (
-      <div>
-        <h1>Desejos</h1>
-        <ul>
-          {this.lista}
-        </ul>
-        <NavLink to={`/desejo`} >
-          <button>Novo</button>
-        </NavLink>
-      </div>
-    )
-  }
-
+    </div>
+  );
 }
-
-const mapStateToProps = (state: AppState) => {
-  return {
-    state
-  }
-};
-
-export default connect(mapStateToProps, { findAll })(ListaDesejosListComponent);

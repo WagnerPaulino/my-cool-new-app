@@ -2,7 +2,6 @@ import { LISTA_DESEJOS_LIST, LISTA_DESEJOS_EDIT, LISTA_DESEJOS_LOAD, LISTA_DESEJ
 import { ListaDesejos } from '../models/ListaDesejos';
 
 export function findAll(): (store: any) => void {
-
     return (store: any) => {
         fetch(`http://localhost:3000/api/lista-desejos/`).then(response => response.json().then(value => store.dispatch(
             {

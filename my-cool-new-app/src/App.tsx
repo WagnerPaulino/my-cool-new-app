@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import ListaDesejosListComponent from './pages/lista-desejos-list-component';
+import { ListaDesejosListComponent } from './pages/lista-desejos-list-component';
 import {
   BrowserRouter as Router,
   Switch,
@@ -18,9 +18,9 @@ const rootReducer = combineReducers({
   desejo: listaDesejosEdit
 })
 
-const customMiddleWare = ({ dispatch, getState }: any) => (next: any) => (action: any) => {
+const customMiddleWare = ({ dispatch, getState, store }: any) => (next: any) => (action: any) => {
   if (typeof action === 'function') {
-      return  action({ dispatch, getState});
+      return  action({ dispatch, getState, store});
   }
   return next(action);
 }
