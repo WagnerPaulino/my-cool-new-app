@@ -1,6 +1,6 @@
 import React from 'react';
-import DesejosList from './src/desejos-list';
-import DesejosEdit from './src/desejos-edit';
+import { DesejosList } from './src/desejos-list';
+import { DesejosEdit } from './src/desejos-edit';
 import { Provider } from 'react-redux';
 import { Router, Scene } from 'react-native-router-flux'
 import { createStore, combineReducers, applyMiddleware } from 'redux';

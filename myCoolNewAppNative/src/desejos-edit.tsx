@@ -1,5 +1,5 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Text, View, StyleSheet, TextInput, Button } from 'react-native';
 import { ListaDesejos } from './models/ListaDesejos';
 import { findOne, save, excluir } from './actions/actions';
@@ -19,53 +19,35 @@ interface Props {
   history: any;
 }
 
-class DesejosEdit extends React.Component<Props, State> {
+export function DesejosEdit({ listaDesejo }: any) {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      listaDesejo: new ListaDesejos(),
-      isNew: false
+  const [desejo, setDesejo] = useState(new ListaDesejos());
+  useEffect(() => {
+    if (listaDesejo?._id) {
+      setDesejo(listaDesejo);
     }
+  }, [listaDesejo])
+
+  const dispatch = useDispatch();
+
+  function handleChange(value, field) {
+    setDesejo({ ...desejo, [field]: value });
   }
 
-  static getDerivedStateFromProps(props: any, state: any): State {
-    return {
-      listaDesejo: Object.values(state.listaDesejo).filter(v => !!v).length > 0 ? state.listaDesejo : props.listaDesejo,
-      isNew: !!props.listaDesejo?._id && !!props.listaDesejo ? false : true
-    }
-  }
-
-  handleChange(value, field) {
-    let desejo = this.state.listaDesejo;
-    desejo[field] = value;
-    this.setState({ listaDesejo: desejo })
-  }
-
-  save(listaDesejo: ListaDesejos) {
-    this.props.save(listaDesejo)
-  }
-
-  excluir(listaDesejo: ListaDesejos) {
-    this.props.excluir(listaDesejo)
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Desejo</Text>
-        <TextInput key="nome" value={this.state.listaDesejo?.nome} onChangeText={e => this.handleChange(e, 'nome')}></TextInput>
-        <Text>Preço</Text>
-        <TextInput key="preço" value={this.state.listaDesejo?.preco?.toString()} onChangeText={e => this.handleChange(e, 'preco')}></TextInput>
-        {
-          this.state.isNew ?
-            <Button onPress={() => this.save(this.state.listaDesejo)} title="Salvar"></Button>
-            :
-            <Button onPress={() => this.excluir(this.state.listaDesejo)} title="Realizado"></Button>
-        }
-      </View>
-    );
-  }
+  return (
+    <View style={styles.container}>
+      <Text>Desejo</Text>
+      <TextInput key="nome" value={desejo?.nome} onChangeText={e => handleChange(e, 'nome')}></TextInput>
+      <Text>Preço</Text>
+      <TextInput key="preço" value={desejo?.preco?.toString()} onChangeText={e => handleChange(e, 'preco')}></TextInput>
+      {
+        !desejo?._id ?
+          <Button onPress={() => dispatch(save(desejo))} title="Salvar"></Button>
+          :
+          <Button onPress={() => dispatch(excluir(desejo))} title="Realizado"></Button>
+      }
+    </View>
+  );
 }
 const styles = StyleSheet.create({
   container: {
@@ -76,12 +58,3 @@ const styles = StyleSheet.create({
     width: '100%'
   },
 });
-
-
-const mapStateToProps = (state) => {
-  return {
-    ...state
-  }
-};
-
-export default connect(mapStateToProps, { findOne, save, excluir })(DesejosEdit);
