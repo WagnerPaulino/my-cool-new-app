@@ -1,4 +1,5 @@
 import mongoose from "../database/index";
+import Usuario from "./usuario";
 
 const ListaDesejoSchema = new mongoose.Schema({
     nome: {
@@ -13,6 +14,10 @@ const ListaDesejoSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    usuario: {
+        type: Usuario.schema,
+        required: false
     }
 });
 
