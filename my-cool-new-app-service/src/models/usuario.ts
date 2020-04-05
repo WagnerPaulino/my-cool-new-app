@@ -6,7 +6,7 @@ const UsuarioSchema = new mongoose.Schema({
         unique: true,
         required: true
     },
-    updateAt: {
+    lastLoginAt: {
         type: Date,
         default: Date.now
     }
