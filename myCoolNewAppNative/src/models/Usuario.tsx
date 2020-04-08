@@ -1,4 +1,4 @@
-export class ListaDesejos {
+export class Usuario {
     _id?: number;
     nome?: string;
     lastLoginAt?: Date;

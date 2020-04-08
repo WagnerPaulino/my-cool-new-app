@@ -13,7 +13,8 @@ const ListaDesejoSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
-    }
+    },
+    usuario: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario', required: false }
 });
 
 ListaDesejoSchema.pre('save', function (next) {
