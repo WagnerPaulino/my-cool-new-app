@@ -22,7 +22,6 @@ export function DesejosList() {
   );
   return (
     <View style={styles.container}>
-      <Button onPress={() => Actions["desejo-edit"]({ listaDesejo: new ListaDesejos() })} title="Novo" ></Button>
       {lista}
     </View>
   );
@@ -35,13 +34,5 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     width: '100%'
-  },
-  headerCard: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end',
-    width: '100%',
-    height: '5%'
   }
 });
