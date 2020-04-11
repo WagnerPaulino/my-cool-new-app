@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 25174,
-  "expoServerNgrokUrl": "https://hy-mnx.anonymous.mycoolnewappnative.exp.direct",
-  "packagerNgrokUrl": "https://packager.hy-mnx.anonymous.mycoolnewappnative.exp.direct",
-  "ngrokPid": 25245,
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "webpackServerPort": null
 }
