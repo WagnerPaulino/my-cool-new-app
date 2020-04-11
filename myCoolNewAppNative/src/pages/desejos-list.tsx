@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { ListaDesejos } from './models/ListaDesejos';
-import { findAll } from './actions/actions';
+import { ListaDesejos } from '../models/ListaDesejos';
+import { findAll } from '../actions/actions';
 
 export function DesejosList() {
 

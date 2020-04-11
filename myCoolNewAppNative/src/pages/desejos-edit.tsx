@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Text, View, StyleSheet, TextInput, Button } from 'react-native';
-import { ListaDesejos } from './models/ListaDesejos';
-import { findOne, save, excluir } from './actions/actions';
+import { ListaDesejos } from '../models/ListaDesejos';
+import { findOne, save, excluir } from '../actions/actions';
 import { Actions } from 'react-native-router-flux';
 
 interface State {

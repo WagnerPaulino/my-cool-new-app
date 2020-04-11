@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { getHostDataBase } from "../environment/environment";
 
 const mongodbConfig = { 
     useNewUrlParser: true,
@@ -9,6 +10,6 @@ const mongodbConfig = {
     dbName: 'mydb'
 }
 
-mongoose.connect('mongodb://db:27017/mydb',mongodbConfig).then(() => console.log('conectado com sucesso ao banco de dados!')).catch(e => console.log(e));
+mongoose.connect(`mongodb://${getHostDataBase()}/mydb`,mongodbConfig).then(() => console.log('conectado com sucesso ao banco de dados!')).catch(e => console.log(e));
 
 export default mongoose

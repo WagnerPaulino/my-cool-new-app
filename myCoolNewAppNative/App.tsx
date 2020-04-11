@@ -1,12 +1,12 @@
 import React from 'react';
-import { DesejosList } from './src/desejos-list';
-import { DesejosEdit } from './src/desejos-edit';
 import { Provider } from 'react-redux';
 import { Router, Scene, Actions } from 'react-native-router-flux'
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { listaDesejosList, listaDesejosEdit } from './src/reducers/reducers';
 import { Button } from 'react-native';
 import { ListaDesejos } from './src/models/ListaDesejos';
+import { DesejosList } from './src/pages/desejos-list';
+import { DesejosEdit } from './src/pages/desejos-edit';
 
 const rootReducer = combineReducers({
   listaDesejos: listaDesejosList,
