@@ -7,6 +7,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "firebase": "~7.14.0",
     "expo": "~36.0.0",
     "react": "16.9.0",
     "react-dom": "16.9.0",
@@ -21,6 +22,7 @@
     "redux": "~4.0.5"
   },
   "devDependencies": {
+    "@types/firebase": "~3.2.1",
     "@babel/core": "~7.6.0",
     "@types/react": "^16.9.11",
     "@types/react-native": "^0.60.22",
