@@ -6,6 +6,11 @@ const UsuarioSchema = new mongoose.Schema({
         unique: true,
         required: true
     },
+    senha: {
+        type: String,
+        unique: false,
+        required: false
+    },
     lastLoginAt: {
         type: Date,
         default: Date.now

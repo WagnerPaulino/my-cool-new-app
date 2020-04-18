@@ -11,6 +11,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { listaDesejosList, listaDesejosEdit } from './reducers/reducers';
 import { ListaDesejosEditComponent } from './pages/lista-desejos-edit-component';
 import { Provider } from 'react-redux';
+import { LoginComponent } from './pages/login.component';
 
 
 const rootReducer = combineReducers({
@@ -38,6 +39,7 @@ const App = () => (
         </div>
         <Switch>
           <Route path="/" exact component={ListaDesejosListComponent} />
+          <Route path="/login" exact component={LoginComponent} />
           <Route path="/desejo/:key?" component={ListaDesejosEditComponent} />
         </Switch>
       </div>
