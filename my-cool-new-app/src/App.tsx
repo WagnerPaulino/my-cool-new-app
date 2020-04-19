@@ -12,6 +12,8 @@ import { listaDesejosList, listaDesejosEdit } from './reducers/reducers';
 import { ListaDesejosEditComponent } from './pages/lista-desejos-edit-component';
 import { Provider } from 'react-redux';
 import { LoginComponent } from './pages/login.component';
+import PrivateRoute from './commons/private-router';
+import customMiddleware from './commons/custom-middleware';
 
 
 const rootReducer = combineReducers({
@@ -19,14 +21,7 @@ const rootReducer = combineReducers({
   desejo: listaDesejosEdit
 })
 
-const customMiddleWare = ({ dispatch, getState, store }: any) => (next: any) => (action: any) => {
-  if (typeof action === 'function') {
-    return action({ dispatch, getState, store });
-  }
-  return next(action);
-}
-
-const store = createStore(rootReducer, applyMiddleware(customMiddleWare))
+const store = createStore(rootReducer, applyMiddleware(customMiddleware))
 
 export type AppState = ReturnType<typeof rootReducer>;
 
@@ -38,9 +33,9 @@ const App = () => (
           <Link className="text-card" to="/">Lista de Desejos</Link>
         </div>
         <Switch>
-          <Route path="/" exact component={ListaDesejosListComponent} />
-          <Route path="/login" exact component={LoginComponent} />
-          <Route path="/desejo/:key?" component={ListaDesejosEditComponent} />
+          <PrivateRoute path="/" exact component={ListaDesejosListComponent} />
+          <Route path="/login" component={LoginComponent} />
+          <PrivateRoute path="/desejo/:key?" component={ListaDesejosEditComponent} />
         </Switch>
       </div>
     </Router >

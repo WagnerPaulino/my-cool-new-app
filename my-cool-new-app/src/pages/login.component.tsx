@@ -13,8 +13,8 @@ export function LoginComponent() {
     return (
         <div>
             <h1>Fazer Login</h1>
-            <input name="nome" onChange={(e) => onChanceValueForm(e.nativeEvent)}></input>
-            <input name="senha" onChange={(e) => onChanceValueForm(e.nativeEvent)} type="password"></input>
+            <input name="nome" placeholder="Usuario" onChange={(e) => onChanceValueForm(e.nativeEvent)}></input>
+            <input name="senha" placeholder="Senha" onChange={(e) => onChanceValueForm(e.nativeEvent)} type="password"></input>
             <button onClick={() => console.log(usuario)}>Entrar</button>
             <button onClick={() => console.log("Entrar com google")}>Entrar usando o google</button>
         </div>

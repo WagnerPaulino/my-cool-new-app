@@ -7,20 +7,14 @@ import { Button } from 'react-native';
 import { ListaDesejos } from './src/models/ListaDesejos';
 import { DesejosList } from './src/pages/desejos-list';
 import { DesejosEdit } from './src/pages/desejos-edit';
+import customMiddleware from './src/commons/custom-middleware';
 
 const rootReducer = combineReducers({
   listaDesejos: listaDesejosList,
   desejo: listaDesejosEdit
 })
 
-const customMiddleWare = ({ dispatch, getState }) => (next) => (action) => {
-  if (typeof action === 'function') {
-    return action({ dispatch, getState });
-  }
-  return next(action);
-}
-
-export const store = createStore(rootReducer, applyMiddleware(customMiddleWare))
+export const store = createStore(rootReducer, applyMiddleware(customMiddleware))
 
 const App = () => {
   return (

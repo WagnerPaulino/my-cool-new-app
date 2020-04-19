@@ -14,3 +14,4 @@ export function getFirebaseConfig() {
         measurementId: "G-8CL21547L3"
     };
 }
+
