@@ -12,7 +12,6 @@ import { listaDesejosList, listaDesejosEdit } from './reducers/reducers';
 import { ListaDesejosEditComponent } from './pages/lista-desejos-edit-component';
 import { Provider } from 'react-redux';
 import { LoginComponent } from './pages/login.component';
-import PrivateRoute from './commons/private-router';
 import customMiddleware from './commons/custom-middleware';
 
 
@@ -33,9 +32,9 @@ const App = () => (
           <Link className="text-card" to="/">Lista de Desejos</Link>
         </div>
         <Switch>
-          <PrivateRoute path="/" exact component={ListaDesejosListComponent} />
+          <Route path="/" exact component={ListaDesejosListComponent} />
           <Route path="/login" component={LoginComponent} />
-          <PrivateRoute path="/desejo/:key?" component={ListaDesejosEditComponent} />
+          <Route path="/desejo/:key?" component={ListaDesejosEditComponent} />
         </Switch>
       </div>
     </Router >
