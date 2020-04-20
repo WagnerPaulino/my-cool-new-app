@@ -1,4 +1,4 @@
-import { LISTA_DESEJOS_LIST, LISTA_DESEJOS_EDIT, LISTA_DESEJOS_LOAD, LISTA_DESEJOS_DELETE } from "./types";
+import { LISTA_DESEJOS_LIST, LISTA_DESEJOS_EDIT, LISTA_DESEJOS_LOAD, LISTA_DESEJOS_DELETE } from "./desejos-types";
 import { ListaDesejos } from '../models/ListaDesejos';
 import { getHostBackend } from "../environment/environment";
 

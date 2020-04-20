@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { findAll } from '../actions/actions';
+import { findAll } from '../actions/desejos-actions';
 import { ListaDesejos } from '../models/ListaDesejos';
 import { NavLink } from 'react-router-dom';
 

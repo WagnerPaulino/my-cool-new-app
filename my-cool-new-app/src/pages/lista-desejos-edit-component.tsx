@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { findOne, save, excluir } from '../actions/actions';
+import { findOne, save, excluir } from '../actions/desejos-actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 export function ListaDesejosEditComponent({ match, history }: any) {
