@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import './App.css';
 import { ListaDesejosListComponent } from './pages/lista-desejos-list-component';
 import {
@@ -31,6 +31,10 @@ export type AppState = ReturnType<typeof rootReducer>;
 const App = () => {
 
   const firebase = useContext(FirebaseContext);
+  var user: any = null;
+  useEffect(() => {
+    user = firebase.getCurrentUser()
+  })
 
   return (
     <Provider store={store}>
