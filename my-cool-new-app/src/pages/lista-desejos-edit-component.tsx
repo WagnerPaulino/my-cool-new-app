@@ -10,7 +10,7 @@ export function ListaDesejosEditComponent({ match, history }: any) {
     const [desejo, setDesejo] = useState(listaDesejo);
 
     useEffect(() => {
-        if (match.params.key) {
+        if (match?.params?.key) {
             dispatch(findOne(match.params.key));
         }
     }, [match, dispatch])

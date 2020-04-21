@@ -39,8 +39,8 @@ class Firebase {
     }
 
     isLogged() {
-        return true;
-        // return !(this.auth.currentUser === null || this.auth.currentUser === undefined)
+        // return true;
+        return !(this.auth.currentUser === null || this.auth.currentUser === undefined)
     }
 
 }

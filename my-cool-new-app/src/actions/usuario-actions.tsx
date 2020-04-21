@@ -64,3 +64,14 @@ export function isLogged(): (store: any) => void {
         })
     }
 }
+
+export function redirectIfLogged(history: any): (store: any) => void {
+    return (store: any) => {
+        setTimeout(() => {
+            if (firebase.isLogged()) {
+                history.push('/');
+            }
+            store.dispatch({ type: null });
+        }, 1000);
+    }
+}

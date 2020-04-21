@@ -22,6 +22,7 @@ interface UsuarioLogin {
 
 export interface UsuarioLoginState {
     usuario?: Usuario;
+    logged: boolean;
 }
 
 export type UsuarioLoginType = UsuarioLogin;

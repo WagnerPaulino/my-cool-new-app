@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './App.css';
 import { ListaDesejosListComponent } from './pages/lista-desejos-list-component';
 import {
@@ -14,6 +14,8 @@ import { Provider } from 'react-redux';
 import { LoginComponent } from './pages/login.component';
 import customMiddleware from './commons/custom-middleware';
 import { usuarioReducer } from './reducers/usuarios-reducers';
+import PrivateRoute from './commons/private-router';
+import { FirebaseContext } from './environment/context';
 
 
 const rootReducer = combineReducers({
@@ -27,6 +29,9 @@ const store = createStore(rootReducer, applyMiddleware(customMiddleware))
 export type AppState = ReturnType<typeof rootReducer>;
 
 const App = () => {
+
+  const firebase = useContext(FirebaseContext);
+
   return (
     <Provider store={store}>
       <Router>
@@ -35,9 +40,9 @@ const App = () => {
             <Link className="text-card" to="/">Lista de Desejos</Link>
           </div>
           <Switch>
-            <Route path="/" exact component={ListaDesejosListComponent} />
+            <PrivateRoute predicate={() => firebase.isLogged()} path="/" exact><ListaDesejosListComponent /></PrivateRoute>
             <Route path="/login" component={LoginComponent} />
-            <Route path="/desejo/:key?" component={ListaDesejosEditComponent} />
+            <PrivateRoute predicate={() => firebase.isLogged()} path="/desejo/:key?" ><ListaDesejosEditComponent /></PrivateRoute>
           </Switch>
         </div>
       </Router >
