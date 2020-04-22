@@ -14,7 +14,7 @@ class Firebase {
         if (!app.apps.length) {
             app.initializeApp(getFirebaseConfig());
         }
-        this.auth = app.auth();
+        this.auth = app.auth(app.app());
         this.googleProvider = new app.auth.GoogleAuthProvider();
     }
 
@@ -39,8 +39,7 @@ class Firebase {
     }
 
     isLogged() {
-        // return true;
-        return !(this.auth.currentUser === null || this.auth.currentUser === undefined)
+        return !!this.getCurrentUser();
     }
 
 }

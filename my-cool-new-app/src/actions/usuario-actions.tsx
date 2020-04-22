@@ -8,8 +8,8 @@ export function createUserWithEmailAndPassword(username: string, password: strin
     return (store: any) => {
         firebase.doCreateUserWithEmailAndPassword(username, password).then(usuario => store.dispatch(
             {
-                usuario: usuario.user,
-                type: USUARIO_CREATE
+                type: USUARIO_CREATE,
+                usuario: usuario.user
             }
         ));
     }
@@ -31,7 +31,7 @@ export function signInWithGoogleAccount(): (store: any) => void {
         firebase.doSignInWithGoogleAccount().then(usuario =>
             store.dispatch({
                 type: USUARIO_LOGIN_GOOGLE,
-                listaDesejo: usuario.user
+                usuario: usuario.user
             }))
     }
 }
@@ -60,7 +60,7 @@ export function isLogged(): (store: any) => void {
     return (store: any) => {
         store.dispatch({
             type: USUARIO_IS_LOGGED,
-            usuario: { logged: firebase.isLogged() }
+            usuario: firebase.getCurrentUser()
         })
     }
 }
@@ -71,7 +71,6 @@ export function redirectIfLogged(history: any): (store: any) => void {
             if (firebase.isLogged()) {
                 history.push('/');
             }
-            store.dispatch({ type: null });
         }, 1000);
     }
 }

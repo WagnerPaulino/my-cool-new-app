@@ -1,56 +1,34 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+import { getCurrentUser } from './actions/usuario-actions';
 import './App.css';
-import { ListaDesejosListComponent } from './pages/lista-desejos-list-component';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-import { listaDesejosList, listaDesejosEdit } from './reducers/desejos-reducers';
-import { ListaDesejosEditComponent } from './pages/lista-desejos-edit-component';
-import { Provider } from 'react-redux';
-import { LoginComponent } from './pages/login.component';
-import customMiddleware from './commons/custom-middleware';
-import { usuarioReducer } from './reducers/usuarios-reducers';
 import PrivateRoute from './commons/private-router';
-import { FirebaseContext } from './environment/context';
-
-
-const rootReducer = combineReducers({
-  listaDesejos: listaDesejosList,
-  desejo: listaDesejosEdit,
-  usuario: usuarioReducer
-})
-
-const store = createStore(rootReducer, applyMiddleware(customMiddleware))
-
-export type AppState = ReturnType<typeof rootReducer>;
+import { ListaDesejosEditComponent } from './pages/lista-desejos-edit-component';
+import { ListaDesejosListComponent } from './pages/lista-desejos-list-component';
+import { LoginComponent } from './pages/login.component';
 
 const App = () => {
 
-  const firebase = useContext(FirebaseContext);
-  var user: any = null;
+  const user = useSelector((store: any) => store.usuario)
+  const dispatch = useDispatch();
   useEffect(() => {
-    user = firebase.getCurrentUser()
-  })
+    dispatch(getCurrentUser());
+  }, [dispatch])
 
   return (
-    <Provider store={store}>
-      <Router>
-        <div>
-          <div className="card-top">
-            <Link className="text-card" to="/">Lista de Desejos</Link>
-          </div>
-          <Switch>
-            <PrivateRoute predicate={() => firebase.isLogged()} path="/" exact><ListaDesejosListComponent /></PrivateRoute>
-            <Route path="/login" component={LoginComponent} />
-            <PrivateRoute predicate={() => firebase.isLogged()} path="/desejo/:key?" ><ListaDesejosEditComponent /></PrivateRoute>
-          </Switch>
+    <Router>
+      <div>
+        <div className="card-top">
+          <Link className="text-card" to="/">Lista de Desejos {user.logged ? <span>- {user.usuario.displayName}</span> : <span></span>}</Link>
         </div>
-      </Router >
-    </Provider>
+        <Switch>
+          <PrivateRoute predicate={() => user?.logged} path="/" exact><ListaDesejosListComponent /></PrivateRoute>
+          <Route path="/login" component={LoginComponent} />
+          <PrivateRoute predicate={() => user?.logged} path="/desejo/:key?" ><ListaDesejosEditComponent /></PrivateRoute>
+        </Switch>
+      </div>
+    </Router >
   )
 }
 

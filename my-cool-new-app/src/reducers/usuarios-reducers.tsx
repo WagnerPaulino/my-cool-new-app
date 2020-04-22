@@ -3,8 +3,7 @@ import { Usuario } from "../models/Usuario";
 import Firebase from "../environment/context";
 
 const initialState: UsuarioLoginState = {
-    usuario: new Usuario(),
-    logged: true
+    usuario: new Usuario()
 }
 
 export function usuarioReducer(_state = initialState, action: UsuarioLoginType): UsuarioLoginState {
@@ -41,6 +40,6 @@ export function usuarioReducer(_state = initialState, action: UsuarioLoginType):
                 logged: firebase.isLogged()
             }
         default:
-            return initialState;
+            return { usuario: { ...firebase.getCurrentUser() }, logged: firebase.isLogged() };
     }
 }

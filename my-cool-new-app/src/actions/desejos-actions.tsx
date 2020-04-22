@@ -1,7 +1,6 @@
-import { LISTA_DESEJOS_LIST, LISTA_DESEJOS_EDIT, LISTA_DESEJOS_LOAD, LISTA_DESEJOS_DELETE } from "./desejos-types";
-import { ListaDesejos } from '../models/ListaDesejos';
 import { getHostBackend } from "../environment/environment";
-import Firebase from "../environment/context";
+import { ListaDesejos } from '../models/ListaDesejos';
+import { LISTA_DESEJOS_DELETE, LISTA_DESEJOS_EDIT, LISTA_DESEJOS_LIST, LISTA_DESEJOS_LOAD } from "./desejos-types";
 
 export function findAll(): (store: any) => void {
     return (store: any) => {

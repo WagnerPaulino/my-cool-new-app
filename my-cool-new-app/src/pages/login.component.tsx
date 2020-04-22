@@ -5,9 +5,9 @@ import { redirectIfLogged, signInWithEmailAndPassword, signInWithGoogleAccount }
 
 export function LoginComponent({ history }: any) {
 
-    const usuarioState = useSelector((store: any) => store.usuario.usuario);
+    const usuarioState = useSelector((store: any) => store.usuario);
 
-    const [usuario, setUsuario] = useState(usuarioState);
+    const [usuario, setUsuario] = useState(usuarioState.usuario);
 
     const dispatch = useDispatch();
 
