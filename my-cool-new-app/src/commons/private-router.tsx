@@ -1,18 +1,18 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
-export default function PrivateRoute({ children, predicate, ...rest }: any) {
+export default function PrivateRoute({ component: Component, predicate, ...rest }: any) {
     return (
         <Route
             {...rest}
-            render={({ location }) =>
+            render={(props) =>
                 predicate() ?
-                    (children)
+                    <Component {...props} />
                     : (
                         <Redirect
                             to={{
                                 pathname: "/login",
-                                state: { from: location }
+                                state: { from: props.location }
                             }}
                         />
                     )

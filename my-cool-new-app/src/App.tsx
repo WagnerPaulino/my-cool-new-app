@@ -23,9 +23,9 @@ const App = () => {
           <Link className="text-card" to="/">Lista de Desejos {user.logged ? <span>- {user.usuario.displayName}</span> : <span></span>}</Link>
         </div>
         <Switch>
-          <PrivateRoute predicate={() => user?.logged} path="/" exact><ListaDesejosListComponent /></PrivateRoute>
+          <PrivateRoute predicate={() => user?.logged} path="/" component={ListaDesejosListComponent} exact></PrivateRoute>
           <Route path="/login" component={LoginComponent} />
-          <PrivateRoute predicate={() => user?.logged} path="/desejo/:key?" ><ListaDesejosEditComponent /></PrivateRoute>
+          <PrivateRoute predicate={() => user?.logged} path="/desejo/:key?" component={ListaDesejosEditComponent} ></PrivateRoute>
         </Switch>
       </div>
     </Router >
