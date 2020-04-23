@@ -16,22 +16,28 @@ const rootReducer = combineReducers({
 
 export const store = createStore(rootReducer, applyMiddleware(customMiddleware))
 
-const App = () => {
-  return (
-    <Provider store={store}>
-      <Router>
-        <Scene key="root">
-          <Scene key="desejos" component={DesejosList} title="Lista de Desejos" initial={true} renderRightButton={ButtomBar} />
-          <Scene key="desejo-edit" component={DesejosEdit} title="Desejos" />
-        </Scene>
-      </Router>
-    </Provider>
-  );
-}
-
 function ButtomBar() {
   return (
     <Button onPress={() => Actions["desejo-edit"]({ listaDesejo: new ListaDesejos() })} title="Novo" ></Button>
+  );
+}
+
+const RouterDefinition = () => {
+  return (
+    <Router>
+      <Scene key="root">
+        <Scene key="desejos" component={DesejosList} title="Lista de Desejos" initial={true} renderRightButton={ButtomBar} />
+        <Scene key="desejo-edit" component={DesejosEdit} title="Desejos" />
+      </Scene>
+    </Router>
+  )
+}
+
+const App = () => {
+  return (
+    <Provider store={store}>
+      <RouterDefinition />
+    </Provider>
   );
 }
 
