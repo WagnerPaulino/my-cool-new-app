@@ -1,6 +1,7 @@
 import Firebase from "../environment/context";
 import { USUARIO_CREATE, USUARIO_LOGIN_USERNAME_PASSWORD, USUARIO_LOGIN_GOOGLE, USUARIO_LOGOUT, GET_CURRENT_USUARIO, USUARIO_IS_LOGGED } from "./usuarios-types";
 import { Usuario } from "../models/Usuario";
+import { getHostBackend } from "../environment/environment";
 
 const firebase = new Firebase();
 
@@ -28,11 +29,14 @@ export function signInWithEmailAndPassword(username: string, password: string): 
 
 export function signInWithGoogleAccount(): (store: any) => void {
     return (store: any) => {
-        firebase.doSignInWithGoogleAccount().then(usuario =>
-            store.dispatch({
-                type: USUARIO_LOGIN_GOOGLE,
-                usuario: usuario.user
-            }))
+        firebase.doSignInWithGoogleAccount().then(usuario => {
+            userLogin().then(() => {
+                store.dispatch({
+                    type: USUARIO_LOGIN_GOOGLE,
+                    usuario: usuario.user
+                })
+            })
+        })
     }
 }
 
@@ -66,11 +70,16 @@ export function isLogged(): (store: any) => void {
 }
 
 export function redirectIfLogged(history: any): (store: any) => void {
-    return (store: any) => {
+    return (_store: any) => {
         setTimeout(() => {
             if (firebase.isLogged()) {
                 history.push('/');
             }
         }, 1000);
     }
+}
+
+function userLogin() {
+    return fetch(`http://${getHostBackend()}/api/login`,
+        { method: 'POST', body: JSON.stringify({ nome: firebase.getCurrentUser()?.displayName }), headers: { "Content-Type": "application/json" } })
 }

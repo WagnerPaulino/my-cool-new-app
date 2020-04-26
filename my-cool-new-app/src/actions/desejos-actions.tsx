@@ -5,12 +5,14 @@ import Firebase from "../environment/context";
 const firebase = new Firebase()
 export function findAll(): (store: any) => void {
     return (store: any) => {
-        fetch(`http://${getHostBackend()}/api/lista-desejos/`).then(response => response.json().then(value => store.dispatch(
-            {
-                listaDesejos: value,
-                type: LISTA_DESEJOS_LIST
-            }
-        )));
+        fetch(`http://${getHostBackend()}/api/lista-desejos/findAll`,
+            { method: 'POST', body: JSON.stringify({ nome: firebase.getCurrentUser()?.displayName }), headers: { "Content-Type": "application/json" } })
+            .then(response => response.json().then(value => store.dispatch(
+                {
+                    listaDesejos: value,
+                    type: LISTA_DESEJOS_LIST
+                }
+            )));
     }
 }
 
