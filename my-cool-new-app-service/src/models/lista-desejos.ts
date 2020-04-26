@@ -4,7 +4,7 @@ import Usuario from "./usuario";
 const ListaDesejoSchema = new mongoose.Schema({
     nome: {
         type: String,
-        unique: true,
+        unique: false,
         required: true
     },
     preco: {
