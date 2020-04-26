@@ -1,4 +1,5 @@
 import mongoose from "../database/index";
+import Usuario from "./usuario";
 
 const ListaDesejoSchema = new mongoose.Schema({
     nome: {
@@ -14,11 +15,11 @@ const ListaDesejoSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    usuario: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario', required: false }
+    usuario: Usuario.schema
 });
 
 ListaDesejoSchema.pre('save', function (next) {
-    console.log(this); // this: se refere ao objeto que está sendo salvo
+    console.log(this);
     next();
 })
 

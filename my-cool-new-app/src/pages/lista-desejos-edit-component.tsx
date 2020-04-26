@@ -5,16 +5,16 @@ import { useDispatch, useSelector } from 'react-redux';
 export function ListaDesejosEditComponent({ match, history }: any) {
 
     const listaDesejo = useSelector((state: any) => state.desejo.listaDesejo);
-
     const dispatch = useDispatch()
     const [desejo, setDesejo] = useState(listaDesejo);
+    let id = match?.params?.key ? match?.params?.key : undefined;
 
     useEffect(() => {
-        if (match?.params?.key) {
-            dispatch(findOne(match.params.key));
+        if (id) {
+            dispatch(findOne(id));
         }
-    }, [match, dispatch])
-    
+    }, [id, dispatch])
+
     useEffect(() => {
         setDesejo(listaDesejo);
     }, [listaDesejo]);

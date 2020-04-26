@@ -1,11 +1,14 @@
 import express, { Request, Response } from "express";
 import ListaDesejo from "../models/lista-desejos";
+import Usuario from '../models/usuario';
 // const listaDesejo = require('../models/lista-desejos');
 const router = express.Router();
 
 router.post('/lista-desejos', async (req: Request, res: Response) => {
     try {
-        const desejo = await ListaDesejo.create(req.body);
+        let { desejo, usuario } = req.body;
+        desejo.usuario = await Usuario.findOneAndUpdate(usuario, usuario, { upsert: true });
+        desejo = await ListaDesejo.create(desejo);
         return res.send({ desejo });
     } catch (err) {
         return res.status(400).send({ ...err });
@@ -22,7 +25,7 @@ router.delete('/lista-desejos/:id', async (req: Request, res: Response) => {
 });
 
 router.get('/lista-desejos', async (_req: Request, res: Response) => {
-    let listaDesejos = await ListaDesejo.find({});
+    let listaDesejos = await ListaDesejo.find();
     res.status(200).send(listaDesejos);
 });
 
