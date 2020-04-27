@@ -51,11 +51,11 @@ export function logout(): (store: any) => void {
     }
 }
 
-export function getCurrentUser(): (store: any) => void {
+export function getCurrentAuth(): (store: any) => void {
     return (store: any) => {
         store.dispatch({
             type: GET_CURRENT_USUARIO,
-            usuario: firebase.getCurrentUser()
+            usuario: firebase.getCurrentAuth()
         })
     }
 }
@@ -64,22 +64,19 @@ export function isLogged(): (store: any) => void {
     return (store: any) => {
         store.dispatch({
             type: USUARIO_IS_LOGGED,
-            usuario: firebase.getCurrentUser()
+            usuario: firebase.getCurrentAuth()
         })
-    }
-}
-
-export function redirectIfLogged(history: any): (store: any) => void {
-    return (_store: any) => {
-        setTimeout(() => {
-            if (firebase.isLogged()) {
-                history.push('/');
-            }
-        }, 1000);
     }
 }
 
 function userLogin() {
     return fetch(`http://${getHostBackend()}/api/login`,
-        { method: 'POST', body: JSON.stringify({ nome: firebase.getCurrentUser()?.displayName }), headers: { "Content-Type": "application/json" } })
+        { method: 'POST', body: JSON.stringify({ nome: firebase.getCurrentAuth()?.currentUser?.displayName }), headers: { "Content-Type": "application/json" } })
+}
+
+export function onUserInit(): (store: any) => void {
+    return (store: any) => {
+        userLogin().then(() => {
+        })
+    }
 }

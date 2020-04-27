@@ -1,24 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { redirectIfLogged, signInWithEmailAndPassword, signInWithGoogleAccount } from "../actions/usuario-actions";
+import { signInWithEmailAndPassword, signInWithGoogleAccount, onUserInit } from "../actions/usuario-actions";
+import { FirebaseContext } from "../environment/context";
 
 
 export function LoginComponent({ history }: any) {
 
-    const usuarioState = useSelector((store: any) => store.usuario);
+    const authState = useSelector((store: any) => store.auth.auth);
 
-    const [usuario, setUsuario] = useState(usuarioState.usuario);
+    const [user, setUser] = useState(authState.currentUser);
+
+    const firebase = useContext(FirebaseContext)
+
+    useEffect(() => {
+        const subscriber = firebase.getCurrentAuth().onAuthStateChanged((user) => setUser(user))
+        return subscriber;
+    })
+
+    useEffect(() => {
+        if (isLogged()) {
+            history.push('/')
+            dispatch(onUserInit())
+        }
+    })
+
+    function isLogged() {
+        return user !== null && user !== undefined;
+    }
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(redirectIfLogged(history));
-    }, [history, dispatch]);
-
-
-
     function onChanceValueForm(event: any) {
-        setUsuario({ ...usuario, [event.target.name]: event.target.value });
+        setUser({ ...user, [event.target.name]: event.target.value });
     }
 
     return (
@@ -26,7 +39,7 @@ export function LoginComponent({ history }: any) {
             <h1>Fazer Login</h1>
             <input name="nome" placeholder="Usuario" onChange={(e) => onChanceValueForm(e.nativeEvent)}></input>
             <input name="senha" placeholder="Senha" onChange={(e) => onChanceValueForm(e.nativeEvent)} type="password"></input>
-            <button onClick={() => dispatch(signInWithEmailAndPassword(usuario.nome, usuario.senha))}>Entrar</button>
+            <button onClick={() => dispatch(signInWithEmailAndPassword(user.nome, user.senha))}>Entrar</button>
             <button onClick={() => dispatch(signInWithGoogleAccount())}>Entrar usando o google</button>
         </div>
     );

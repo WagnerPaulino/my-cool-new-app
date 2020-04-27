@@ -17,12 +17,11 @@ export const USUARIO_LOGOUT = 'USUARIO_LOGOUT';
 
 interface UsuarioLogin {
     type?: typeof USUARIO_CREATE | typeof USUARIO_LOGIN_GOOGLE | typeof USUARIO_LOGIN_USERNAME_PASSWORD | typeof USUARIO_LOGOUT | typeof GET_CURRENT_USUARIO | typeof USUARIO_IS_LOGGED;
-    usuario?: Usuario;
+    auth?: Usuario;
 }
 
 export interface UsuarioLoginState {
-    usuario?: Usuario | any;
-    logged?: boolean;
+    auth?: Usuario | any;
 }
 
 export type UsuarioLoginType = UsuarioLogin;

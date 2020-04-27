@@ -15,7 +15,10 @@ const ListaDesejoSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    usuario: Usuario.schema
+    usuario: {
+        type: Usuario.schema,
+        required: true
+    }
 });
 
 ListaDesejoSchema.pre('save', function (next) {

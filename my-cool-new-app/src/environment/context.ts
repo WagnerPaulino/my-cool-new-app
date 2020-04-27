@@ -34,12 +34,8 @@ class Firebase {
         return this.auth.signOut();
     }
 
-    getCurrentUser(): app.User | null {
-        return this.auth.currentUser;
-    }
-
-    isLogged() {
-        return !!this.getCurrentUser();
+    getCurrentAuth(): app.auth.Auth {
+        return this.auth;
     }
 
 }

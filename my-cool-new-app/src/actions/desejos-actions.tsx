@@ -6,7 +6,7 @@ const firebase = new Firebase()
 export function findAll(): (store: any) => void {
     return (store: any) => {
         fetch(`http://${getHostBackend()}/api/lista-desejos/findAll`,
-            { method: 'POST', body: JSON.stringify({ nome: firebase.getCurrentUser()?.displayName }), headers: { "Content-Type": "application/json" } })
+            { method: 'POST', body: JSON.stringify({ nome: firebase.getCurrentAuth()?.currentUser?.displayName }), headers: { "Content-Type": "application/json" } })
             .then(response => response.json().then(value => store.dispatch(
                 {
                     listaDesejos: value,
@@ -28,7 +28,7 @@ export function findOne(key: number): (store: any) => void {
 }
 
 export function save(desejo: ListaDesejos, history: any): (store: any) => void {
-    const obj = { desejo: desejo, usuario: { nome: firebase.getCurrentUser()?.displayName } }
+    const obj = { desejo: desejo, usuario: { nome: firebase.getCurrentAuth()?.currentUser?.displayName } }
     return (store: any) => {
         fetch(`http://${getHostBackend()}/api/lista-desejos/`, { method: 'POST', body: JSON.stringify(obj), headers: { "Content-Type": "application/json" } }).then(response => response.json().then(value => {
             store.dispatch({
