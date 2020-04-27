@@ -8,7 +8,7 @@ export function LoginComponent({ history }: any) {
 
     const authState = useSelector((store: any) => store.auth.auth);
 
-    const [user, setUser] = useState(authState.currentUser);
+    const [user, setUser] = useState(authState?.currentUser);
 
     const firebase = useContext(FirebaseContext)
 

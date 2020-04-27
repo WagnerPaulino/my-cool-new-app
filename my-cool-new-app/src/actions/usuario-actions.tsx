@@ -45,7 +45,7 @@ export function logout(): (store: any) => void {
         firebase.doLogout().then(() => {
             store.dispatch({
                 type: USUARIO_LOGOUT,
-                usuario: new Usuario()
+                usuario: undefined
             })
         })
     }
