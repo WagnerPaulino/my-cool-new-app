@@ -1,6 +1,5 @@
 import Firebase from "../environment/context";
 import { USUARIO_CREATE, USUARIO_LOGIN_USERNAME_PASSWORD, USUARIO_LOGIN_GOOGLE, USUARIO_LOGOUT, GET_CURRENT_USUARIO, USUARIO_IS_LOGGED } from "./usuarios-types";
-import { Usuario } from "../models/Usuario";
 import { getHostBackend } from "../environment/environment";
 
 const firebase = new Firebase();

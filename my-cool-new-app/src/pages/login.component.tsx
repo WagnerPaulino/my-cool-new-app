@@ -9,26 +9,26 @@ export function LoginComponent({ history }: any) {
     const authState = useSelector((store: any) => store.auth.auth);
 
     const [user, setUser] = useState(authState?.currentUser);
-
+    const dispatch = useDispatch();
+    
     const firebase = useContext(FirebaseContext)
 
     useEffect(() => {
-        const subscriber = firebase.getCurrentAuth().onAuthStateChanged((user) => setUser(user))
+        const subscriber = firebase.getCurrentAuth().onAuthStateChanged((user) => setUser(user));
         return subscriber;
-    })
+    });
 
     useEffect(() => {
         if (isLogged()) {
-            history.push('/')
-            dispatch(onUserInit())
+            history.push('/');
+            dispatch(onUserInit());
         }
-    })
+    });
 
     function isLogged() {
         return user !== null && user !== undefined;
     }
 
-    const dispatch = useDispatch();
 
     function onChanceValueForm(event: any) {
         setUser({ ...user, [event.target.name]: event.target.value });
