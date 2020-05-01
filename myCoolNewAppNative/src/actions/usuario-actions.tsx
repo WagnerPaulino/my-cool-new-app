@@ -30,7 +30,8 @@ export function signInWithEmailAndPassword(username: string, password: string): 
 export function signInWithGoogleAccount(): (store: any) => void {
     return async (store: any) => {
         const result: any = await logInAsync({
-            clientId: `68291789329-rislgkrhh0em55guhrk29oh2v0oik4vk.apps.googleusercontent.com`
+            androidClientId: `466887974288-9f33qjakr0b85f7rdgsi01070mjk4u1k.apps.googleusercontent.com`,
+            scopes: ['profile', 'email']
         });
 
         if (result.type === 'success') {

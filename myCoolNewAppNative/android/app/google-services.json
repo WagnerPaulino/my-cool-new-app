@@ -8,12 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:466887974288:android:886f01387aa90449da6715",
+        "mobilesdk_app_id": "1:466887974288:android:66221976edfd27ebda6715",
         "android_client_info": {
           "package_name": "com.mycoolnewappnative"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "466887974288-9f33qjakr0b85f7rdgsi01070mjk4u1k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycoolnewappnative",
+            "certificate_hash": "c86a2a52a80f605f65906bbc04da04feba3a9d48"
+          }
+        },
         {
           "client_id": "466887974288-ck4nck6gaac71fecmlnasoup3mhtgq9h.apps.googleusercontent.com",
           "client_type": 3
