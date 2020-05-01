@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { ListaDesejos } from '../models/ListaDesejos';
-import { findAll } from '../actions/actions';
+import { findAll } from '../actions/desejos-actions';
 
 export function DesejosList() {
 

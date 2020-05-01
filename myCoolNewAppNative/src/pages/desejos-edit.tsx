@@ -1,23 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Text, View, StyleSheet, TextInput, Button } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { excluir, save } from '../actions/desejos-actions';
 import { ListaDesejos } from '../models/ListaDesejos';
-import { findOne, save, excluir } from '../actions/actions';
-import { Actions } from 'react-native-router-flux';
-
-interface State {
-  listaDesejo: ListaDesejos;
-  isNew: boolean;
-}
-
-interface Props {
-  listaDesejo: ListaDesejos;
-  findOne: typeof findOne;
-  save: typeof save;
-  excluir: typeof excluir;
-  match: any;
-  history: any;
-}
 
 export function DesejosEdit({ listaDesejo }: any) {
 

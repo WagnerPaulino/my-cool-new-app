@@ -7,12 +7,13 @@
     "test": "jest"
   },
   "dependencies": {
-    "firebase": "~7.14.0",
     "expo": "~36.0.0",
+    "firebase": "~7.14.2",
     "react": "16.9.0",
     "react-dom": "16.9.0",
     "react-native": "0.61.4",
     "react-native-gesture-handler": "~1.6.0",
+    "react-native-google-signin": "~2.1.1",
     "react-native-reanimated": "~1.7.0",
     "react-native-router-flux": "~4.2.0",
     "react-native-screens": "~2.2.0",

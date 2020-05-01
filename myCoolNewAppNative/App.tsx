@@ -2,16 +2,20 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Router, Scene, Actions } from 'react-native-router-flux'
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { listaDesejosList, listaDesejosEdit } from './src/reducers/reducers';
 import { Button } from 'react-native';
 import { ListaDesejos } from './src/models/ListaDesejos';
 import { DesejosList } from './src/pages/desejos-list';
 import { DesejosEdit } from './src/pages/desejos-edit';
 import customMiddleware from './src/commons/custom-middleware';
+import { authReducer } from './src/reducers/usuarios-reducers';
+import { listaDesejosList, listaDesejosEdit } from './src/reducers/desejos-reducers';
+import { LoginComponent } from './src/pages/login.component';
+import Firebase, { FirebaseContext } from './src/environment/context';
 
 const rootReducer = combineReducers({
   listaDesejos: listaDesejosList,
-  desejo: listaDesejosEdit
+  desejo: listaDesejosEdit,
+  auth: authReducer
 })
 
 export const store = createStore(rootReducer, applyMiddleware(customMiddleware))
@@ -26,8 +30,9 @@ const RouterDefinition = () => {
   return (
     <Router>
       <Scene key="root">
-        <Scene key="desejos" component={DesejosList} title="Lista de Desejos" initial={true} renderRightButton={ButtomBar} />
+        <Scene key="desejos" component={DesejosList} title="Lista de Desejos" renderRightButton={ButtomBar} />
         <Scene key="desejo-edit" component={DesejosEdit} title="Desejos" />
+        <Scene key="login" component={LoginComponent} title="Autenticação" initial={true} />
       </Scene>
     </Router>
   )
@@ -35,9 +40,11 @@ const RouterDefinition = () => {
 
 const App = () => {
   return (
-    <Provider store={store}>
-      <RouterDefinition />
-    </Provider>
+    <FirebaseContext.Provider value={new Firebase()}>
+      <Provider store={store}>
+        <RouterDefinition />
+      </Provider>
+    </FirebaseContext.Provider>
   );
 }
 
