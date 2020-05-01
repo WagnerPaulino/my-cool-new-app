@@ -10,7 +10,7 @@ export function getFirebaseConfig() {
         projectId: "my-cool-new-app-94ac1",
         storageBucket: "my-cool-new-app-94ac1.appspot.com",
         messagingSenderId: "466887974288",
-        appId: "1:466887974288:web:3c5b2f278313acadda6715",
+        appId: "1:466887974288:android:886f01387aa90449da6715",
         measurementId: "G-8CL21547L3"
     };
 }

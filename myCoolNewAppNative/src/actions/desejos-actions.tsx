@@ -3,6 +3,7 @@ import { ListaDesejos } from '../models/ListaDesejos';
 import { LISTA_DESEJOS_DELETE, LISTA_DESEJOS_EDIT, LISTA_DESEJOS_LIST, LISTA_DESEJOS_LOAD } from "./desejos-types";
 import Firebase from "../environment/context";
 import { Actions } from "react-native-router-flux";
+
 const firebase = new Firebase();
 
 function refreshPages() {
