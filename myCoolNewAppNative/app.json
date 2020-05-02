@@ -11,6 +11,18 @@
       "ios",
       "android",
       "web"
-    ]
+    ],
+    "ios": {
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.68291789329-c14iu97bbfm7og9antj64f5ims9kmca9"
+        }
+      },
+      "bundleIdentifier": "com.mycoolnewappnative"
+    },
+    "android": {
+      "package": "com.mycoolnewappnative",
+      "googleServicesFile": "./google-services.json"
+    }
   }
 }

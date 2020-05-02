@@ -1,7 +1,7 @@
 import Firebase from "../environment/context";
 import { USUARIO_CREATE, USUARIO_LOGIN_USERNAME_PASSWORD, USUARIO_LOGIN_GOOGLE, USUARIO_LOGOUT, GET_CURRENT_USUARIO, USUARIO_IS_LOGGED } from "./usuarios-types";
 import { getHostBackend } from "../environment/environment";
-import {logInAsync} from 'expo-google-app-auth';
+import * as Google from 'expo-google-app-auth';
 
 const firebase = new Firebase();
 
@@ -29,20 +29,16 @@ export function signInWithEmailAndPassword(username: string, password: string): 
 
 export function signInWithGoogleAccount(): (store: any) => void {
     return async (store: any) => {
-        const result: any = await logInAsync({
-            androidClientId: `466887974288-9f33qjakr0b85f7rdgsi01070mjk4u1k.apps.googleusercontent.com`,
-            scopes: ['profile', 'email']
-        });
 
-        if (result.type === 'success') {
-            console.log(result.user);
-            store.dispatch({
-                type: USUARIO_LOGIN_GOOGLE,
-                usuario: result.user
-            })
-        } else {
-            console.log(result);
-        }
+        console.log("antes initAsync");
+        const result: any = await Google.logInAsync({
+            androidClientId: `466887974288-9f33qjakr0b85f7rdgsi01070mjk4u1k.apps.googleusercontent.com`,
+            clientId: `466887974288-9f33qjakr0b85f7rdgsi01070mjk4u1k.apps.googleusercontent.com`,
+        });
+        store.dispatch({
+            type: USUARIO_LOGIN_GOOGLE,
+            usuario: result.user
+        });
     }
 }
 
