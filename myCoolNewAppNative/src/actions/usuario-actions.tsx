@@ -1,9 +1,20 @@
 import Firebase from "../environment/context";
 import { USUARIO_CREATE, USUARIO_LOGIN_USERNAME_PASSWORD, USUARIO_LOGIN_GOOGLE, USUARIO_LOGOUT, GET_CURRENT_USUARIO, USUARIO_IS_LOGGED } from "./usuarios-types";
 import { getHostBackend } from "../environment/environment";
-import * as Google from 'expo-google-app-auth';
+import {
+    GoogleSignin,
+    GoogleSigninButton,
+    statusCodes,
+} from '@react-native-community/google-signin';
 
 const firebase = new Firebase();
+
+GoogleSignin.configure({
+    scopes: ['email', 'profile'], // what API you want to access on behalf of the user, default is email and profile
+    webClientId: '466887974288-9f33qjakr0b85f7rdgsi01070mjk4u1k.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+    offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+    forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
+});
 
 export function createUserWithEmailAndPassword(username: string, password: string): (store: any) => void {
     return (store: any) => {
@@ -29,16 +40,16 @@ export function signInWithEmailAndPassword(username: string, password: string): 
 
 export function signInWithGoogleAccount(): (store: any) => void {
     return async (store: any) => {
-
-        console.log("antes initAsync");
-        const result: any = await Google.logInAsync({
-            androidClientId: `466887974288-9f33qjakr0b85f7rdgsi01070mjk4u1k.apps.googleusercontent.com`,
-            clientId: `466887974288-9f33qjakr0b85f7rdgsi01070mjk4u1k.apps.googleusercontent.com`,
-        });
-        store.dispatch({
-            type: USUARIO_LOGIN_GOOGLE,
-            usuario: result.user
-        });
+        try {
+            await GoogleSignin.hasPlayServices();
+            const userInfo = await GoogleSignin.signIn();
+            store.dispatch({
+                type: USUARIO_LOGIN_GOOGLE,
+                usuario: userInfo
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 
