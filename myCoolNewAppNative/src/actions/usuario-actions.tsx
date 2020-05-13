@@ -4,12 +4,13 @@ import { getHostBackend } from "../environment/environment";
 import {
     GoogleSignin
 } from '@react-native-community/google-signin';
+import { Actions } from "react-native-router-flux";
 
 const firebase = new Firebase();
 
 GoogleSignin.configure({
     scopes: ['email', 'profile'], // what API you want to access on behalf of the user, default is email and profile
-    webClientId: '466887974288-9f33qjakr0b85f7rdgsi01070mjk4u1k.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+    webClientId: '466887974288-ck4nck6gaac71fecmlnasoup3mhtgq9h.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
     offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
     forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
 });
@@ -41,6 +42,7 @@ export function signInWithGoogleAccount(): (store: any) => void {
         try {
             await GoogleSignin.hasPlayServices();
             const userInfo = await GoogleSignin.signIn();
+            Actions.push('desejos');
             store.dispatch({
                 type: USUARIO_LOGIN_GOOGLE,
                 usuario: userInfo

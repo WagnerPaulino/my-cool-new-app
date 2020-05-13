@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "466887974288-9f33qjakr0b85f7rdgsi01070mjk4u1k.apps.googleusercontent.com",
+          "client_id": "466887974288-jsd20iobnfmt077o1eui8njd3pufojvk.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.mycoolnewappnative",
-            "certificate_hash": "c86a2a52a80f605f65906bbc04da04feba3a9d48"
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
