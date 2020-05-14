@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import Firebase from "../environment/context";
 import { USUARIO_CREATE, USUARIO_LOGIN_USERNAME_PASSWORD, USUARIO_LOGIN_GOOGLE, USUARIO_LOGOUT, GET_CURRENT_USUARIO, USUARIO_IS_LOGGED } from "./usuarios-types";
 import { getHostBackend } from "../environment/environment";
@@ -42,7 +43,7 @@ export function signInWithGoogleAccount(): (store: any) => void {
         try {
             await GoogleSignin.hasPlayServices();
             const userInfo = await GoogleSignin.signIn();
-            Actions.push('desejos');
+            AsyncStorage.setItem('@userInfo', JSON.stringify(userInfo)).then(() => Actions.push('desejos'));
             store.dispatch({
                 type: USUARIO_LOGIN_GOOGLE,
                 usuario: userInfo

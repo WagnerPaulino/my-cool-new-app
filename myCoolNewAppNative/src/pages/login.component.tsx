@@ -1,32 +1,24 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { View, Button } from 'react-native';
-import { signInWithGoogleAccount, logout } from '../actions/usuario-actions';
-import { FirebaseContext } from '../environment/context';
+import AsyncStorage from '@react-native-community/async-storage';
+import React, { useEffect } from 'react';
+import { Button, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { useDispatch } from "react-redux";
+import { logout, signInWithGoogleAccount } from '../actions/usuario-actions';
+
 export function LoginComponent() {
 
     const dispatch = useDispatch();
-    const authState = useSelector((store: any) => store.auth.auth);
-
-    const [user, setUser] = useState(authState?.currentUser);
-
-    const firebase = useContext(FirebaseContext);
 
     useEffect(() => {
-        const subscriber = firebase.getCurrentAuth().onAuthStateChanged((user) => setUser(user));
-        return subscriber;
-    });
-
-    useEffect(() => {
-        if (isLogged()) {
-            Actions.push('desejos')
+        const getUser = () => {
+            AsyncStorage.getItem('@userInfo').then((userInfo) => {
+                if (userInfo !== null && userInfo !== undefined) {
+                    Actions.push('desejos')
+                }
+            })
         }
-    })
-
-    function isLogged() {
-        return user !== null && user !== undefined;
-    }
+        getUser();
+    });
 
     return (
         <View>

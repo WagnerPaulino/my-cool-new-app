@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import { getHostBackend } from "../environment/environment";
 import { ListaDesejos } from '../models/ListaDesejos';
 import { LISTA_DESEJOS_DELETE, LISTA_DESEJOS_EDIT, LISTA_DESEJOS_LIST, LISTA_DESEJOS_LOAD } from "./desejos-types";
@@ -17,14 +18,16 @@ function back() {
 
 export function findAll(): (store: any) => void {
     return (store: any) => {
-        fetch(`http://${getHostBackend()}/api/lista-desejos/findAll`,
-            { method: 'POST', body: JSON.stringify({ nome: firebase.getCurrentAuth()?.currentUser?.displayName }), headers: { "Content-Type": "application/json" } })
-            .then(response => response.json().then(value => store.dispatch(
-                {
-                    listaDesejos: value,
-                    type: LISTA_DESEJOS_LIST
-                }
-            )));
+        AsyncStorage.getItem('@userInfo').then(userInfo => {
+            fetch(`http://${getHostBackend()}/api/lista-desejos/findAll`,
+                { method: 'POST', body: JSON.stringify({ nome: JSON.parse(userInfo).user?.name }), headers: { "Content-Type": "application/json" } })
+                .then(response => response.json().then(value => store.dispatch(
+                    {
+                        listaDesejos: value,
+                        type: LISTA_DESEJOS_LIST
+                    }
+                )));
+        })
     }
 }
 
@@ -40,16 +43,18 @@ export function findOne(key: number): (store: any) => void {
 }
 
 export function save(desejo: ListaDesejos): (store: any) => void {
-    const obj = { desejo: desejo, usuario: { nome: firebase.getCurrentAuth()?.currentUser?.displayName } }
     return (store: any) => {
-        fetch(`http://${getHostBackend()}/api/lista-desejos/`, { method: 'POST', body: JSON.stringify(obj), headers: { "Content-Type": "application/json" } }).then(response => response.json().then(value => {
-            refreshPages();
-            back();
-            store.dispatch({
-                type: LISTA_DESEJOS_EDIT,
-                listaDesejo: value
-            })
-        }))
+        AsyncStorage.getItem('@userInfo').then(userInfo => {
+            const obj = { desejo: desejo, usuario: { nome: JSON.parse(userInfo).user?.name } }
+            fetch(`http://${getHostBackend()}/api/lista-desejos/`, { method: 'POST', body: JSON.stringify(obj), headers: { "Content-Type": "application/json" } }).then(response => response.json().then(value => {
+                refreshPages();
+                back();
+                store.dispatch({
+                    type: LISTA_DESEJOS_EDIT,
+                    listaDesejo: value
+                })
+            }))
+        })
     }
 }
 

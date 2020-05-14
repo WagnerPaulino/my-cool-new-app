@@ -7,10 +7,11 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "~1.10.1",
     "@react-native-community/google-signin": "~4.0.1",
     "expo": "~36.0.0",
     "expo-google-app-auth": "~8.1.0",
-    "expo-google-sign-in": "^8.1.0",
+    "expo-google-sign-in": "~8.1.0",
     "firebase": "~7.14.2",
     "react": "16.11.0",
     "react-dom": "16.9.0",
