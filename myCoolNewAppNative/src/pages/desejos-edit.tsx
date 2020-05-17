@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useForm } from "react-hook-form";
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { excluir, save } from '../actions/desejos-actions';
@@ -13,21 +14,29 @@ export function DesejosEdit({ listaDesejo }: any) {
     }
   }, [listaDesejo])
 
+  const { register, handleSubmit, errors, setValue } = useForm<ListaDesejos>({ defaultValues: desejo });
   const dispatch = useDispatch();
 
-  function handleChange(value, field) {
-    setDesejo({ ...desejo, [field]: value });
+  useEffect(() => {
+    register("nome", {required: true})
+    register("preco", {required: true});
+  })
+
+  const onSubmit = (data: ListaDesejos) => {
+    dispatch(save(data))
   }
 
   return (
     <View style={styles.container}>
       <Text>Desejo</Text>
-      <TextInput key="nome" value={desejo?.nome} onChangeText={e => handleChange(e, 'nome')}></TextInput>
+      <TextInput key="nome" defaultValue={desejo?.nome} onChangeText={(value) => setValue("nome", value)}></TextInput>
+      {errors.nome && <Text>O campo nome é obrigatorio</Text>}
       <Text>Preço</Text>
-      <TextInput key="preço" value={desejo?.preco?.toString()} onChangeText={e => handleChange(e, 'preco')}></TextInput>
+      <TextInput key="preço" defaultValue={desejo?.preco?.toString()} onChangeText={(value) => setValue("preco", value)}></TextInput>
+      {errors.preco && <Text>O campo preço é obrigatorio</Text>}
       {
         !desejo?._id ?
-          <Button onPress={() => dispatch(save(desejo))} title="Salvar"></Button>
+          <Button onPress={handleSubmit(onSubmit)} title="Salvar"></Button>
           :
           <Button onPress={() => dispatch(excluir(desejo))} title="Realizado"></Button>
       }
