@@ -14,7 +14,7 @@ export function ListaDesejosEditComponent({ match, history }: any) {
     const [desejo, setDesejo] = useState(listaDesejo);
     let id = match?.params?.key ? match?.params?.key : undefined;
 
-    const { register, handleSubmit, errors } = useForm<ListaDesejos>({ defaultValues: desejo });
+    const { register, handleSubmit, errors, setValue } = useForm<ListaDesejos>({ defaultValues: desejo });
 
     const onSubmit = (data: ListaDesejos) => {
         dispatch(save(data, history))
@@ -27,16 +27,28 @@ export function ListaDesejosEditComponent({ match, history }: any) {
     }, [id, dispatch])
 
     useEffect(() => {
+      register({ name: "nome", required: true });
+      register({ name: "preco", required: true });
+    }, [register])
+
+    useEffect(() => {
         setDesejo(listaDesejo);
     }, [listaDesejo]);
+
+    function handleChange(e: any) {
+        let obj = Object.assign(desejo, desejo);
+        obj[e.target.name] = e.target.value;
+        setDesejo({...obj});
+        setValue(e.target.name, e.target.value);
+    }
 
     return (
         <div>
             <Container maxWidth="sm">
                 <h3>Desejo</h3>
-                <TextField style={inputStyle} name="nome" label="Nome" value={desejo?.nome} inputRef={register({ required: true })}></TextField>
+                <TextField style={inputStyle} name="nome" label="Nome" value={desejo?.nome} onChange={(e) => handleChange(e)}></TextField>
                 {errors.nome && <span>O campo nome é obrigatorio</span>}
-                <TextField style={inputStyle} name="preco" label="Preço" value={desejo?.preco} inputRef={register({ required: true })}></TextField>
+                <TextField style={inputStyle} name="preco" label="Preço" value={desejo?.preco} onChange={(e) => handleChange(e)}></TextField>
                 {errors.preco && <span>O campo preço é obrigatorio</span>}
                 {
                     !desejo._id ?
