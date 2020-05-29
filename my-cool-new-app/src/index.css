@@ -14,8 +14,8 @@ code {
 
 .card-top {
   display: flex;
-  place-content: space-around;
-  background-color: red;
+  place-content: space-between;
+  background-color: #3f51b5;
   height: 50px;
   align-items: center;
 }

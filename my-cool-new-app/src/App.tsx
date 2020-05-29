@@ -12,6 +12,7 @@ import { LoginComponent } from './pages/login.component';
 import { listaDesejosEdit, listaDesejosList } from './reducers/desejos-reducers';
 import { authReducer } from './reducers/usuarios-reducers';
 import { logout } from './actions/usuario-actions';
+import Button from '@material-ui/core/Button/Button';
 
 const rootReducer = combineReducers({
   listaDesejos: listaDesejosList,
@@ -47,7 +48,7 @@ const RouterDefinitions = () => {
       <div>
         <div className="card-top">
           <Link className="text-card" to="/">Lista de Desejos {isLogged() ? <span>- {user?.displayName}</span> : <span></span>}</Link>
-          {isLogged() ? <button onClick={sair}>Sair</button> : <span></span>}
+          {isLogged() ? <Button variant="contained" color="primary" onClick={sair}>Sair</Button> : <span></span>}
         </div>
         <Switch>
           <PrivateRoute predicate={() => isLogged()} path="/" component={ListaDesejosListComponent} exact></PrivateRoute>

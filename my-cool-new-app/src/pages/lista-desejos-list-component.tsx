@@ -1,3 +1,8 @@
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
@@ -15,20 +20,22 @@ export function ListaDesejosListComponent() {
 
   const lista = listaDesejos.map((desejo: ListaDesejos) =>
     <NavLink key={desejo._id} to={`/desejo/${desejo._id}`} >
-      <li>
-        {desejo.nome}
-      </li>
+      <ListItem button>
+        <ListItemText primary={desejo.nome} />
+      </ListItem>
     </NavLink>
   );
   return (
     <div>
-      <h1>Desejos</h1>
-      <ul>
-        {lista}
-      </ul>
-      <NavLink to={`/desejo`} >
-        <button>Novo</button>
-      </NavLink>
+      <Container maxWidth="sm">
+        <h1>Desejos</h1>
+        <List>
+          {lista}
+        </List>
+        <NavLink to={`/desejo`} >
+          <Button variant="contained" color="primary">Novo</Button>
+        </NavLink>
+      </Container>
     </div>
   );
 }
