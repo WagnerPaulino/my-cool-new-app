@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet, FlatList } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { ListaDesejos } from '../models/ListaDesejos';
 import { findAll } from '../actions/desejos-actions';
 
 export function DesejosList() {
 
-  const listaDesejos = useSelector((state: any) => state.listaDesejos.listaDesejos)
+  const listaDesejos: ListaDesejos[] = useSelector((state: any) => state.listaDesejos.listaDesejos)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -17,12 +17,14 @@ export function DesejosList() {
   function detail(desejo: ListaDesejos) {
     Actions["desejo-edit"]({ listaDesejo: Object.assign({}, desejo) });
   }
-  const lista = listaDesejos.map((desejo) =>
-    <Text key={desejo._id} onPress={() => detail(desejo)}>{desejo.nome}</Text>
-  );
+
   return (
     <View style={styles.container}>
-      {lista}
+      <FlatList
+        data={listaDesejos}
+        renderItem={({ item: desejo }) => <Text key={desejo._id} style={styles.item} onPress={() => detail(desejo)}>{desejo.nome}</Text>}
+        keyExtractor={(_item: ListaDesejos, index: any) => index.toString()}
+      />
     </View>
   );
 }
@@ -33,6 +35,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
+    width: '100%'
+  },
+  item: {
     width: '100%'
   }
 });

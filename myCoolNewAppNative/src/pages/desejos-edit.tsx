@@ -29,10 +29,10 @@ export function DesejosEdit({ listaDesejo }: any) {
   return (
     <View style={styles.container}>
       <Text>Desejo</Text>
-      <TextInput key="nome" defaultValue={desejo?.nome} onChangeText={(value) => setValue("nome", value)}></TextInput>
+      <TextInput style={styles.inputText} key="nome" defaultValue={desejo?.nome} onChangeText={(value) => setValue("nome", value)}></TextInput>
       {errors.nome && <Text>O campo nome é obrigatorio</Text>}
       <Text>Preço</Text>
-      <TextInput key="preço" defaultValue={desejo?.preco?.toString()} onChangeText={(value) => setValue("preco", value)}></TextInput>
+      <TextInput style={styles.inputText} key="preço" defaultValue={desejo?.preco?.toString()} onChangeText={(value) => setValue("preco", value)}></TextInput>
       {errors.preco && <Text>O campo preço é obrigatorio</Text>}
       {
         !desejo?._id ?
@@ -51,4 +51,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     width: '100%'
   },
+  inputText: {
+    width: '100%'
+  }
 });
