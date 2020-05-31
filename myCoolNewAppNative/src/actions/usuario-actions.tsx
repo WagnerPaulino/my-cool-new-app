@@ -49,7 +49,7 @@ export function signInWithGoogleAccount(): (store: any) => void {
                 usuario: userInfo
             });
         } catch (error) {
-            console.log({...error});
+            console.log({ ...error });
         }
     }
 }
@@ -57,6 +57,8 @@ export function signInWithGoogleAccount(): (store: any) => void {
 export function logout(): (store: any) => void {
     return (store: any) => {
         firebase.doLogout().then(() => {
+            AsyncStorage.clear();
+            Actions.replace("login");
             store.dispatch({
                 type: USUARIO_LOGOUT,
                 usuario: undefined

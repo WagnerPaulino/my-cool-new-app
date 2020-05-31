@@ -2,6 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Router, Scene, Actions } from 'react-native-router-flux'
 import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { useDispatch } from 'react-redux';
 import { Button } from 'react-native';
 import { ListaDesejos } from './src/models/ListaDesejos';
 import { DesejosList } from './src/pages/desejos-list';
@@ -11,6 +12,7 @@ import { authReducer } from './src/reducers/usuarios-reducers';
 import { listaDesejosList, listaDesejosEdit } from './src/reducers/desejos-reducers';
 import { LoginComponent } from './src/pages/login.component';
 import Firebase, { FirebaseContext } from './src/environment/context';
+import { logout } from './src/actions/usuario-actions';
 
 const rootReducer = combineReducers({
   listaDesejos: listaDesejosList,
@@ -27,10 +29,18 @@ function ButtomBar() {
 }
 
 const RouterDefinition = () => {
+
+  const dispatch = useDispatch();
+
+  function sair() {
+    dispatch(logout());
+  }
+
   return (
     <Router>
       <Scene key="root">
-        <Scene key="desejos" component={DesejosList} title="Lista de Desejos" renderRightButton={ButtomBar} />
+        <Scene key="desejos" component={DesejosList} title="Lista de Desejos"
+          renderLeftButton={() => <Button title="Sair" onPress={sair}></Button>} renderRightButton={ButtomBar} />
         <Scene key="desejo-edit" component={DesejosEdit} title="Desejos" />
         <Scene key="login" component={LoginComponent} title="Autenticação" initial={true} />
       </Scene>
