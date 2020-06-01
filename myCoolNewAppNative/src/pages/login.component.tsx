@@ -1,11 +1,9 @@
-import AsyncStorage from '@react-native-community/async-storage';
 import React, { useEffect } from 'react';
-import { Button, View } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import { Button, View, AsyncStorage } from 'react-native';
 import { useDispatch } from "react-redux";
-import { logout, signInWithGoogleAccount } from '../actions/usuario-actions';
+import { signInWithGoogleAccount } from '../actions/usuario-actions';
 
-export function LoginComponent() {
+export function LoginComponent({ navigation }) {
 
     const dispatch = useDispatch();
 
@@ -13,12 +11,16 @@ export function LoginComponent() {
         const getUser = () => {
             AsyncStorage.getItem('@userInfo').then((userInfo) => {
                 if (userInfo !== null && userInfo !== undefined) {
-                    Actions.push('desejos')
+                    navigation.replace('desejos');
                 }
             })
         }
         getUser();
     });
+
+    function sigin() {
+        dispatch(signInWithGoogleAccount(navigation));
+    }
 
     return (
         <View>
@@ -27,8 +29,7 @@ export function LoginComponent() {
                 size={GoogleSigninButton.Size.Wide}
                 color={GoogleSigninButton.Color.Dark}
                 onPress={() => dispatch(signInWithGoogleAccount())}/> */}
-            <Button onPress={() => dispatch(signInWithGoogleAccount())} title="Entrar com Google"></Button>
-            <Button onPress={() => dispatch(logout())} title="Sair"></Button>
+            <Button onPress={sigin} title="Entrar com Google"></Button>
         </View>
     )
 }

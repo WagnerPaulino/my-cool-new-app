@@ -5,7 +5,9 @@ import { useDispatch } from 'react-redux';
 import { excluir, save } from '../actions/desejos-actions';
 import { ListaDesejos } from '../models/ListaDesejos';
 
-export function DesejosEdit({ listaDesejo }: any) {
+export function DesejosEdit({ route, navigation }) {
+
+  const { listaDesejo } = route?.params;
 
   const [desejo, setDesejo] = useState(new ListaDesejos());
   useEffect(() => {
@@ -18,12 +20,16 @@ export function DesejosEdit({ listaDesejo }: any) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    register("nome", {required: true})
-    register("preco", {required: true});
+    register("nome", { required: true })
+    register("preco", { required: true });
   })
 
   const onSubmit = (data: ListaDesejos) => {
-    dispatch(save(data))
+    dispatch(save(data, navigation.goBack));
+  }
+
+  const onExcluir = () => {
+    dispatch(excluir(desejo, navigation.goBack))
   }
 
   return (
@@ -32,13 +38,13 @@ export function DesejosEdit({ listaDesejo }: any) {
       <TextInput style={styles.inputText} key="nome" defaultValue={desejo?.nome} onChangeText={(value) => setValue("nome", value)}></TextInput>
       {errors.nome && <Text>O campo nome é obrigatorio</Text>}
       <Text>Preço</Text>
-      <TextInput style={styles.inputText} key="preço" defaultValue={desejo?.preco?.toString()} onChangeText={(value) => setValue("preco", value)}></TextInput>
+      <TextInput style={styles.inputText} key="preco" defaultValue={desejo?.preco?.toString()} onChangeText={(value) => setValue("preco", value)}></TextInput>
       {errors.preco && <Text>O campo preço é obrigatorio</Text>}
       {
         !desejo?._id ?
           <Button onPress={handleSubmit(onSubmit)} title="Salvar"></Button>
           :
-          <Button onPress={() => dispatch(excluir(desejo))} title="Realizado"></Button>
+          <Button onPress={onExcluir} title="Realizado"></Button>
       }
     </View>
   );

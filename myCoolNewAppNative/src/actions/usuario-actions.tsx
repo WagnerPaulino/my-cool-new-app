@@ -5,7 +5,6 @@ import { getHostBackend } from "../environment/environment";
 import {
     GoogleSignin
 } from '@react-native-community/google-signin';
-import { Actions } from "react-native-router-flux";
 
 const firebase = new Firebase();
 
@@ -38,12 +37,13 @@ export function signInWithEmailAndPassword(username: string, password: string): 
     }
 }
 
-export function signInWithGoogleAccount(): (store: any) => void {
+export function signInWithGoogleAccount(navigation: any): (store: any) => void {
     return async (store: any) => {
         try {
             await GoogleSignin.hasPlayServices();
             const userInfo = await GoogleSignin.signIn();
-            AsyncStorage.setItem('@userInfo', JSON.stringify(userInfo)).then(() => Actions.push('desejos'));
+            await AsyncStorage.setItem('@userInfo', JSON.stringify(userInfo));
+            navigation.replace('desejos')
             store.dispatch({
                 type: USUARIO_LOGIN_GOOGLE,
                 usuario: userInfo
@@ -54,15 +54,15 @@ export function signInWithGoogleAccount(): (store: any) => void {
     }
 }
 
-export function logout(): (store: any) => void {
+export function logout(callback = () => { }): (store: any) => void {
     return (store: any) => {
-        firebase.doLogout().then(() => {
-            AsyncStorage.clear();
-            Actions.replace("login");
+        firebase.doLogout().then(async () => {
+            await AsyncStorage.clear();
             store.dispatch({
                 type: USUARIO_LOGOUT,
                 usuario: undefined
             })
+            callback();
         })
     }
 }

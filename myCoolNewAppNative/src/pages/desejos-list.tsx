@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Text, View, StyleSheet, FlatList } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import { Text, View, StyleSheet, FlatList, Button } from 'react-native';
 import { ListaDesejos } from '../models/ListaDesejos';
 import { findAll } from '../actions/desejos-actions';
+import { logout } from '../actions/usuario-actions';
 
-export function DesejosList() {
+export function DesejosList({ navigation }) {
 
   const listaDesejos: ListaDesejos[] = useSelector((state: any) => state.listaDesejos.listaDesejos)
   const dispatch = useDispatch()
@@ -15,8 +15,17 @@ export function DesejosList() {
   }, [dispatch])
 
   function detail(desejo: ListaDesejos) {
-    Actions["desejo-edit"]({ listaDesejo: Object.assign({}, desejo) });
+    navigation.navigate('desejo-edit', {
+      listaDesejo: Object.assign({}, desejo)
+    });
   }
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      dispatch(findAll());
+    });
+    return unsubscribe;
+  })
 
   return (
     <View style={styles.container}>
