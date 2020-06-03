@@ -38,6 +38,7 @@ export function DesejosEdit({ route, navigation }) {
       <Input
         key="nome"
         placeholder="Desejo"
+        defaultValue={desejo?.nome}
         style={styles.inputText}
         onChangeText={(value) => setValue("nome", value)}
       />
@@ -45,6 +46,7 @@ export function DesejosEdit({ route, navigation }) {
       <Input
         key="preco"
         placeholder="Preço"
+        defaultValue={desejo?.preco?.toString()}
         style={styles.inputText}
         onChangeText={(value) => setValue("preco", value)}
       />
