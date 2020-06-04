@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { StyleSheet, Text, View } from 'react-native';
-import { Input, Button } from 'react-native-elements';
+import { Input, Button, Card } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { excluir, save } from '../actions/desejos-actions';
 import { ListaDesejos } from '../models/ListaDesejos';
@@ -34,7 +34,7 @@ export function DesejosEdit({ route, navigation }) {
   }
 
   return (
-    <View style={styles.container}>
+    <Card containerStyle={{ padding: 0, margin: 0 }}>
       <Input
         key="nome"
         placeholder="Desejo"
@@ -57,7 +57,7 @@ export function DesejosEdit({ route, navigation }) {
           :
           <Button type="outline" onPress={onExcluir} title="Realizado"></Button>
       }
-    </View>
+    </Card>
   );
 }
 const styles = StyleSheet.create({

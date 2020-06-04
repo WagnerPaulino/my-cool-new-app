@@ -4,6 +4,7 @@ import { Text, View, StyleSheet, FlatList, Button } from 'react-native';
 import { ListaDesejos } from '../models/ListaDesejos';
 import { findAll } from '../actions/desejos-actions';
 import { logout } from '../actions/usuario-actions';
+import { ListItem } from 'react-native-elements';
 
 export function DesejosList({ navigation }) {
 
@@ -29,11 +30,19 @@ export function DesejosList({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={listaDesejos}
-        renderItem={({ item: desejo }) => <Text key={desejo._id} style={styles.item} onPress={() => detail(desejo)}>{desejo.nome}</Text>}
-        keyExtractor={(_item: ListaDesejos, index: any) => index.toString()}
-      />
+      {
+        listaDesejos.map((desejo, i) => (
+          <ListItem
+            style={styles.item}
+            key={i}
+            title={desejo?.nome}
+            subtitle={desejo?.preco?.toString()}
+            bottomDivider={true}
+            chevron={true}
+            onPress={() => detail(desejo)}
+          />
+        ))
+      }
     </View>
   );
 }

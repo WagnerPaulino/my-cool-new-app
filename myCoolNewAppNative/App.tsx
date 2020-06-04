@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements';
 import { Provider } from 'react-redux';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import customMiddleware from './src/commons/custom-middleware';
@@ -60,7 +60,12 @@ const RouterDefinition = () => {
     return (
       <Button type="outline" onPress={() => {
         dispatch(logout(navigationRef.current.resetRoot))
-      }} title="Sair" ></Button>
+      }} icon={
+        <Icon
+          name="exit-to-app"
+          size={20}
+        />
+      }></Button>
     );
   }
 
