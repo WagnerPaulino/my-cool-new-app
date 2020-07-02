@@ -16,7 +16,7 @@ export function ListaDesejosEditComponent({ match, history }: any) {
 
     const { register, handleSubmit, errors, setValue } = useForm<ListaDesejos>({ defaultValues: desejo });
 
-    const onSubmit = (data: ListaDesejos) => {
+    const onSubmit = (data: ListaDesejos | any) => {
         dispatch(save(data, history));
     }
 

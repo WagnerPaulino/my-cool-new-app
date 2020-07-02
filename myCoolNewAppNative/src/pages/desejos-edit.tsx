@@ -25,7 +25,7 @@ export function DesejosEdit({ route, navigation }) {
     register("preco", { required: true });
   })
 
-  const onSubmit = (data: ListaDesejos) => {
+  const onSubmit = (data: ListaDesejos | any) => {
     dispatch(save(data, navigation.goBack));
   }
 
