@@ -10,35 +10,37 @@ import Button from '@material-ui/core/Button/Button';
 export function ListaDesejosEditComponent({ match, history }: any) {
 
     const listaDesejo = useSelector((state: any) => state.desejo.listaDesejo);
-    const dispatch = useDispatch()
-    const [desejo, setDesejo] = useState(listaDesejo);
+    const dispatch = useDispatch();
+    const [desejo, setDesejo] = useState(new ListaDesejos());
     let id = match?.params?.key ? match?.params?.key : undefined;
 
     const { register, handleSubmit, errors, setValue } = useForm<ListaDesejos>({ defaultValues: desejo });
 
     const onSubmit = (data: ListaDesejos) => {
-        dispatch(save(data, history))
+        dispatch(save(data, history));
     }
 
     useEffect(() => {
         if (id) {
             dispatch(findOne(id));
         }
-    }, [id, dispatch])
+    }, [id, dispatch]);
 
     useEffect(() => {
-      register({ name: "nome", required: true });
-      register({ name: "preco", required: true });
-    }, [register])
+        register({ name: "nome", required: true });
+        register({ name: "preco", required: true });
+    }, [register]);
 
     useEffect(() => {
-        setDesejo(listaDesejo);
+        if (listaDesejo?._id) {
+            setDesejo(listaDesejo);
+        }
     }, [listaDesejo]);
 
     function handleChange(e: any) {
-        let obj = Object.assign(desejo, desejo);
+        let obj: any = Object.assign(desejo, desejo);
         obj[e.target.name] = e.target.value;
-        setDesejo({...obj});
+        setDesejo({ ...obj });
         setValue(e.target.name, e.target.value);
     }
 
