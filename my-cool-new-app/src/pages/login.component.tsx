@@ -20,8 +20,8 @@ export function LoginComponent({ history }: any) {
 
     useEffect(() => {
         if (isLogged()) {
-            history.push('/');
             dispatch(onUserInit());
+            history.push('/');
         }
     });
 
