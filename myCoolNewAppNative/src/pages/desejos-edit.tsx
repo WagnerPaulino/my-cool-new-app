@@ -1,29 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from "react-hook-form";
+import { useForm, FieldError, Controller } from "react-hook-form";
 import { StyleSheet, Text, View } from 'react-native';
 import { Input, Button, Card } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { excluir, save } from '../actions/desejos-actions';
 import { ListaDesejos } from '../models/ListaDesejos';
+import { FieldsErrors } from '../components/FieldsErrors';
 
 export function DesejosEdit({ route, navigation }) {
 
   const { listaDesejo } = route?.params;
 
-  const [desejo, setDesejo] = useState(new ListaDesejos());
+  const [desejo, setDesejo] = useState<ListaDesejos>(listaDesejo);
   useEffect(() => {
     if (listaDesejo?._id) {
       setDesejo(listaDesejo);
     }
   }, [listaDesejo])
 
-  const { register, handleSubmit, errors, setValue } = useForm<ListaDesejos>({ defaultValues: desejo });
+  const { control, handleSubmit, errors } = useForm<ListaDesejos>({ defaultValues: desejo, reValidateMode: 'onChange' });
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    register("nome", { required: true })
-    register("preco", { required: true });
-  })
 
   const onSubmit = (data: ListaDesejos | any) => {
     dispatch(save(data, navigation.goBack));
@@ -35,22 +31,45 @@ export function DesejosEdit({ route, navigation }) {
 
   return (
     <Card containerStyle={{ padding: 0, margin: 0 }}>
-      <Input
-        key="nome"
-        placeholder="Desejo"
-        defaultValue={desejo?.nome}
-        style={styles.inputText}
-        onChangeText={(value) => setValue("nome", value)}
-      />
-      {errors.nome && <Text>O campo nome é obrigatorio</Text>}
-      <Input
-        key="preco"
-        placeholder="Preço"
-        defaultValue={desejo?.preco?.toString()}
-        style={styles.inputText}
-        onChangeText={(value) => setValue("preco", value)}
-      />
-      {errors.preco && <Text>O campo preço é obrigatorio</Text>}
+      {/* Nome */}
+      <Controller control={control} defaultValue={desejo?.nome} rules={{
+        required: {
+          value: true,
+          message: "O campo nome é obrigatorio"
+        }
+      }} name="nome" render={({ onChange, onBlur, value }) => (
+        <Input
+          key="nome"
+          placeholder="Desejo"
+          onBlur={onBlur}
+          defaultValue={value}
+          style={styles.inputText}
+          onChangeText={value => onChange(value)}
+        />
+      )
+      } />
+      <FieldsErrors field={errors.nome} />
+      {/* Preço */}
+      <Controller control={control} defaultValue={desejo?.preco} rules={{
+        required: {
+          value: true,
+          message: "O campo preço é obrigatorio"
+        },
+        pattern: {
+          value: /^[0-9]+$/,
+          message: 'O campo preço é numerico'
+        }
+      }} name="preco" render={({ onChange, onBlur, value }) => (
+        <Input
+          key="preco"
+          placeholder="Preço"
+          onBlur={onBlur}
+          defaultValue={value?.toString()}
+          style={styles.inputText}
+          onChangeText={value => onChange(value)}
+        />
+      )} />
+      <FieldsErrors field={errors.preco} />
       {
         !desejo?._id ?
           <Button onPress={handleSubmit(onSubmit)} title="Salvar"></Button>

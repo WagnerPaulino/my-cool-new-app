@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Button, View, AsyncStorage } from 'react-native';
 import { useDispatch } from "react-redux";
-import { signInWithGoogleAccount } from '../actions/usuario-actions';
+import { signInWithGoogleAccount, onUserInit } from '../actions/usuario-actions';
 
 export function LoginComponent({ navigation }) {
 
@@ -11,6 +11,7 @@ export function LoginComponent({ navigation }) {
         const getUser = () => {
             AsyncStorage.getItem('@userInfo').then((userInfo) => {
                 if (userInfo !== null && userInfo !== undefined) {
+                    dispatch(onUserInit());
                     navigation.replace('desejos');
                 }
             })
