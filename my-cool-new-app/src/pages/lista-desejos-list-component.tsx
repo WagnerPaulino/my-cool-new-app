@@ -11,7 +11,7 @@ import { ListaDesejos } from '../models/ListaDesejos';
 
 export function ListaDesejosListComponent() {
 
-  const listaDesejos = useSelector((store: any) => store.listaDesejos.listaDesejos)
+  const listaDesejos: ListaDesejos[] = useSelector((store: any) => store.listaDesejos.listaDesejos)
   const dispatch = useDispatch()
 
   useEffect(() => {

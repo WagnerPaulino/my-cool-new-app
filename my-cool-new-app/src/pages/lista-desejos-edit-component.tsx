@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { findOne, save, excluir } from '../actions/desejos-actions';
+import { findOne, save, excluir, exist } from '../actions/desejos-actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller } from "react-hook-form";
 import { ListaDesejos } from '../models/ListaDesejos';
@@ -10,7 +10,7 @@ import { FieldsErrors } from '../components/FieldsErrors';
 
 export function ListaDesejosEditComponent({ match, history }: any) {
 
-    const listaDesejo = useSelector((state: any) => state.desejo.listaDesejo);
+    const listaDesejo: ListaDesejos = useSelector((state: any) => state.desejo.listaDesejo);
     const dispatch = useDispatch();
     const [desejo, setDesejo] = useState<ListaDesejos>(listaDesejo);
     let id = match?.params?.key ? match?.params?.key : undefined;
@@ -34,6 +34,14 @@ export function ListaDesejosEditComponent({ match, history }: any) {
         }
     }, [listaDesejo, setDesejo, reset]);
 
+    async function validateNome(nome: string) {
+        if (nome.trim().length > 0) {
+            return await exist(nome) ? 'Desejo com esse nome já existe' : true
+        } else {
+            return true;
+        }
+    }
+
     return (
         <div>
             <Container maxWidth="sm">
@@ -43,7 +51,8 @@ export function ListaDesejosEditComponent({ match, history }: any) {
                     required: {
                         value: true,
                         message: "O campo nome é obrigatorio"
-                    }
+                    },
+                    validate: async (value) => await validateNome(value)
                 }} name="nome" render={({ onChange, onBlur, value }) => (
                     <TextField style={inputStyle} name="nome" label="Nome" value={value} onChange={onChange} onBlur={onBlur}></TextField>
                 )

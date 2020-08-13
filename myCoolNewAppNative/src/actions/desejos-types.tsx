@@ -2,6 +2,8 @@ import { ListaDesejos } from "../models/ListaDesejos"
 
 export const LISTA_DESEJOS_LIST = 'LISTA_DESEJOS_LIST'
 
+export const LISTA_DESEJOS_LIST_SEARCH = 'LISTA_DESEJOS_LIST_SEARCH'
+
 export const LISTA_DESEJOS_EDIT = 'LISTA_DESEJOS_EDIT'
 
 export const LISTA_DESEJOS_LOAD = 'LISTA_DESEJOS_LOAD'
@@ -9,7 +11,7 @@ export const LISTA_DESEJOS_LOAD = 'LISTA_DESEJOS_LOAD'
 export const LISTA_DESEJOS_DELETE = 'LISTA_DESEJOS_DELETE'
 
 interface ListaDesejosList {
-    type?: typeof LISTA_DESEJOS_LIST
+    type?: typeof LISTA_DESEJOS_LIST | typeof LISTA_DESEJOS_LIST_SEARCH;
     listaDesejos?: Array<ListaDesejos>
 }
 

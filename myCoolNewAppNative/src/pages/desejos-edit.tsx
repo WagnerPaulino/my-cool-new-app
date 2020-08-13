@@ -1,25 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import { useForm, FieldError, Controller } from "react-hook-form";
-import { StyleSheet, Text, View } from 'react-native';
-import { Input, Button, Card } from 'react-native-elements';
-import { useDispatch } from 'react-redux';
-import { excluir, save } from '../actions/desejos-actions';
-import { ListaDesejos } from '../models/ListaDesejos';
+import { Controller, useForm } from "react-hook-form";
+import { StyleSheet } from 'react-native';
+import { Button, Card, Input } from 'react-native-elements';
+import { useDispatch, useSelector } from 'react-redux';
+import { excluir, exist, save, findOne } from '../actions/desejos-actions';
 import { FieldsErrors } from '../components/FieldsErrors';
+import { ListaDesejos } from '../models/ListaDesejos';
 
 export function DesejosEdit({ route, navigation }) {
 
   const { listaDesejo } = route?.params;
+  const listaDesejoOriginal: ListaDesejos = useSelector((state: any) => state.desejo.listaDesejo);
+  const [desejo, setDesejo] = useState<ListaDesejos>(listaDesejoOriginal);
+  const { control, handleSubmit, errors, reset } = useForm<ListaDesejos>({ defaultValues: desejo, reValidateMode: 'onChange' });
+  const dispatch = useDispatch();
 
-  const [desejo, setDesejo] = useState<ListaDesejos>(listaDesejo);
   useEffect(() => {
     if (listaDesejo?._id) {
-      setDesejo(listaDesejo);
+      dispatch(findOne(listaDesejo?._id));
     }
   }, [listaDesejo])
 
-  const { control, handleSubmit, errors } = useForm<ListaDesejos>({ defaultValues: desejo, reValidateMode: 'onChange' });
-  const dispatch = useDispatch();
+  useEffect(() => {
+    if (listaDesejoOriginal?._id) {
+      setDesejo(listaDesejoOriginal);
+      reset(listaDesejoOriginal);
+    }
+  }, [listaDesejoOriginal, setDesejo, reset]);
+
 
   const onSubmit = (data: ListaDesejos | any) => {
     dispatch(save(data, navigation.goBack));
@@ -29,6 +37,14 @@ export function DesejosEdit({ route, navigation }) {
     dispatch(excluir(desejo, navigation.goBack))
   }
 
+  async function validateNome(nome: string) {
+    if (nome.trim().length > 0) {
+      return await exist(nome) ? 'Desejo com esse nome já existe' : true
+    } else {
+      return true;
+    }
+  }
+
   return (
     <Card containerStyle={{ padding: 0, margin: 0 }}>
       {/* Nome */}
@@ -36,7 +52,8 @@ export function DesejosEdit({ route, navigation }) {
         required: {
           value: true,
           message: "O campo nome é obrigatorio"
-        }
+        },
+        validate: async (value) => await validateNome(value)
       }} name="nome" render={({ onChange, onBlur, value }) => (
         <Input
           key="nome"
