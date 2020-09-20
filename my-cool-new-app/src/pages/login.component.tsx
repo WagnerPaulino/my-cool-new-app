@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signInWithGoogleAccount, onUserInit } from "../actions/usuario-actions";
 import { FirebaseContext } from "../environment/context";
+import { Container, Button } from "@material-ui/core";
 
 
 export function LoginComponent({ history }: any) {
@@ -10,7 +11,7 @@ export function LoginComponent({ history }: any) {
 
     const [user, setUser] = useState(authState?.currentUser);
     const dispatch = useDispatch();
-    
+
     const firebase = useContext(FirebaseContext)
 
     useEffect(() => {
@@ -31,11 +32,10 @@ export function LoginComponent({ history }: any) {
 
     return (
         <div>
-            <h1>Fazer Login</h1>
-            {/* <input name="nome" placeholder="Usuario" onChange={(e) => onChanceValueForm(e.nativeEvent)}></input>
-            <input name="senha" placeholder="Senha" onChange={(e) => onChanceValueForm(e.nativeEvent)} type="password"></input>
-            <button onClick={() => dispatch(signInWithEmailAndPassword(user.nome, user.senha))}>Entrar</button> */}
-            <button onClick={() => dispatch(signInWithGoogleAccount())}>Entrar usando o google</button>
+            <Container maxWidth="sm">
+                <h1>Fazer Login</h1>
+                <Button variant="contained" onClick={() => dispatch(signInWithGoogleAccount())}>Entrar usando o google</Button>
+            </Container>
         </div>
     );
 }
