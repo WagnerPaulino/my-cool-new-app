@@ -58,6 +58,7 @@ export function DesejosEdit({ route, navigation }) {
         <Input
           key="nome"
           placeholder="Desejo"
+          autoFocus
           onBlur={onBlur}
           defaultValue={value}
           style={styles.inputText}

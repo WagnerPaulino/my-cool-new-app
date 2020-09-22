@@ -54,7 +54,7 @@ export function ListaDesejosEditComponent({ match, history }: any) {
                     },
                     validate: async (value) => await validateNome(value)
                 }} name="nome" render={({ onChange, onBlur, value }) => (
-                    <TextField style={inputStyle} name="nome" label="Nome" value={value} onChange={onChange} onBlur={onBlur}></TextField>
+                    <TextField autoFocus style={inputStyle} name="nome" label="Nome" value={value} onChange={onChange} onBlur={onBlur}></TextField>
                 )
                 } />
                 <FieldsErrors field={errors.nome} />
