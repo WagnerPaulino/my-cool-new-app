@@ -1,4 +1,4 @@
-import { createMuiTheme } from "@material-ui/core";
+import { createMuiTheme, makeStyles } from "@material-ui/core";
 import { deepPurple } from "@material-ui/core/colors";
 
 export const mainTheme = createMuiTheme({
@@ -9,3 +9,9 @@ export const mainTheme = createMuiTheme({
         },
     },
 })
+
+export const appbarStyles = makeStyles((theme) => ({
+    title: {
+        flexGrow: 1,
+    },
+}));
