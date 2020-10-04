@@ -1,7 +1,10 @@
+import { IconButton, ThemeProvider } from '@material-ui/core';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import React, { useContext, useEffect, useState } from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import { applyMiddleware, combineReducers, createStore } from 'redux';
+import { logout } from './actions/usuario-actions';
 import './App.css';
 import customMiddleware from './commons/custom-middleware';
 import PrivateRoute from './commons/private-router';
@@ -11,8 +14,7 @@ import { ListaDesejosListComponent } from './pages/lista-desejos-list-component'
 import { LoginComponent } from './pages/login.component';
 import { listaDesejosEdit, listaDesejosList } from './reducers/desejos-reducers';
 import { authReducer } from './reducers/usuarios-reducers';
-import { logout } from './actions/usuario-actions';
-import Button from '@material-ui/core/Button/Button';
+import { mainTheme } from './themes/themes';
 
 const rootReducer = combineReducers({
   listaDesejos: listaDesejosList,
@@ -48,7 +50,7 @@ const RouterDefinitions = () => {
       <div>
         <div className="card-top">
           <Link className="text-card" to="/">Lista de Desejos {isLogged() ? <span>- {user?.displayName}</span> : <span></span>}</Link>
-          {isLogged() ? <Button variant="contained" color="primary" onClick={sair}>Sair</Button> : <span></span>}
+          {isLogged() ? <IconButton onClick={sair} color="default"><ExitToAppIcon /></IconButton> : <span></span>}
         </div>
         <Switch>
           <PrivateRoute predicate={() => isLogged()} path="/" component={ListaDesejosListComponent} exact></PrivateRoute>
@@ -64,7 +66,9 @@ const App = () => {
   return (
     <FirebaseContext.Provider value={new Firebase()}>
       <Provider store={store}>
-        <RouterDefinitions />
+        <ThemeProvider theme={mainTheme}>
+          <RouterDefinitions />
+        </ThemeProvider>
       </Provider>
     </FirebaseContext.Provider>
   )
