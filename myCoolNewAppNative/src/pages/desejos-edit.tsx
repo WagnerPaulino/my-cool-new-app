@@ -48,7 +48,7 @@ export function DesejosEdit({ route, navigation }) {
   return (
     <Card containerStyle={{ padding: 0, margin: 0 }}>
       {/* Nome */}
-      <Controller control={control} defaultValue={desejo?.nome} rules={{
+      <Controller control={control} defaultValue={desejo?.nome || null} rules={{
         required: {
           value: true,
           message: "O campo nome é obrigatorio"
@@ -68,7 +68,7 @@ export function DesejosEdit({ route, navigation }) {
       } />
       <FieldsErrors field={errors.nome} />
       {/* Preço */}
-      <Controller control={control} defaultValue={desejo?.preco} rules={{
+      <Controller control={control} defaultValue={desejo?.preco || null} rules={{
         required: {
           value: true,
           message: "O campo preço é obrigatorio"
