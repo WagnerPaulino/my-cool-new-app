@@ -1,4 +1,4 @@
-from mongo:bionic
+from mongo:4.4.2-bionic
 ENV MONGO_INITDB_ROOT_USERNAME=myuser
 ENV MONGO_INITDB_ROOT_PASSWORD=myuser
 ENV MONGO_INITDB_DATABASE=mydb

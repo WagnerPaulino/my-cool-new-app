@@ -21,11 +21,6 @@ const ListaDesejoSchema = new mongoose.Schema({
     }
 });
 
-ListaDesejoSchema.pre('save', function (next) {
-    console.log(this);
-    next();
-})
-
 const ListaDesejo = mongoose.model('ListaDesejo', ListaDesejoSchema);
 
 export default ListaDesejo;
