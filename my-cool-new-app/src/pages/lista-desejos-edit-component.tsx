@@ -66,7 +66,7 @@ export function ListaDesejosEditComponent({ match, history }: any) {
                     },
                     validate: async (value) => await validateNome(value)
                 }} name="nome" render={({ onChange, onBlur, value }) => (
-                    <TextField autoFocus style={inputStyle} name="nome" label="Nome" value={value} onChange={onChange} onBlur={onBlur}></TextField>
+                    <TextField autoFocus style={fullWidthStyle} name="nome" label="Nome" value={value} onChange={onChange} onBlur={onBlur}></TextField>
                 )
                 } />
                 <FieldsErrors field={errors.nome} />
@@ -81,11 +81,11 @@ export function ListaDesejosEditComponent({ match, history }: any) {
                         message: 'O campo preço é numerico'
                     }
                 }} name="preco" render={({ onChange, onBlur, value }) => (
-                    <TextField style={inputStyle} name="preco" label="Preço" value={value?.toString()} onChange={onChange} onBlur={onBlur}></TextField>
+                    <TextField style={fullWidthStyle} name="preco" label="Preço" value={value?.toString()} onChange={onChange} onBlur={onBlur}></TextField>
                 )
                 } />
                 <FieldsErrors field={errors.preco} />
-                <Button color="primary" style={inputStyle} onClick={onOpenLojaEditDialog}>Adicionar Loja</Button>
+                <Button color="primary" style={fullWidthStyle} onClick={onOpenLojaEditDialog}>Adicionar Loja</Button>
                 <LojaEditDialog open={openLojaEditDialog} onClose={onCloseLojaEditDialog}></LojaEditDialog>
                 {
                     !desejo?._id ?
@@ -103,7 +103,7 @@ export function ListaDesejosEditComponent({ match, history }: any) {
     )
 }
 
-const inputStyle = {
+const fullWidthStyle = {
     width: '100%'
 };
 
