@@ -7,7 +7,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { excluir, exist, findOne, save } from '../actions/desejos-actions';
 import { FieldsErrors } from '../components/FieldsErrors';
 import { ListaDesejos } from '../models/ListaDesejos';
-import { LojaEditDialog } from './loja-edit-dialog';
+import { LojaEditDialog } from '../components/loja-edit-dialog';
+import { Loja } from '../models/Loja';
+import { LojaDefaultDataTable } from '../components/loja-default-data-table';
 
 export function ListaDesejosEditComponent({ match, history }: any) {
 
@@ -20,7 +22,7 @@ export function ListaDesejosEditComponent({ match, history }: any) {
     const { control, handleSubmit, errors, reset } = useForm<ListaDesejos>({ defaultValues: desejo, reValidateMode: 'onChange' });
 
     const onSubmit = (data: ListaDesejos | any) => {
-        dispatch(save(data, history));
+        dispatch(save({ ...data, lojas: desejo.lojas }, history));
     }
 
     useEffect(() => {
@@ -45,13 +47,16 @@ export function ListaDesejosEditComponent({ match, history }: any) {
     }
 
     const onOpenLojaEditDialog = () => {
-        console.log("abriu");
         setOpenLojaEditDialog(true);
     }
 
-    const onCloseLojaEditDialog = (value?: string) => {
-        console.log("fechou", value);
+    const onCloseLojaEditDialog = (value?: Loja) => {
         setOpenLojaEditDialog(false);
+        if (value?.nome) {
+            const lojas = Object.assign([], desejo.lojas || []);
+            lojas.push(value);
+            setDesejo(Object.assign({}, { ...desejo, lojas: lojas }));
+        }
     }
 
     return (
@@ -87,6 +92,7 @@ export function ListaDesejosEditComponent({ match, history }: any) {
                 <FieldsErrors field={errors.preco} />
                 <Button color="primary" style={fullWidthStyle} onClick={onOpenLojaEditDialog}>Adicionar Loja</Button>
                 <LojaEditDialog open={openLojaEditDialog} onClose={onCloseLojaEditDialog}></LojaEditDialog>
+                <LojaDefaultDataTable lojas={desejo.lojas || []}></LojaDefaultDataTable>
                 {
                     !desejo?._id ?
                         <Button style={buttonStyle} variant="contained" color="primary" onClick={handleSubmit(onSubmit)}>

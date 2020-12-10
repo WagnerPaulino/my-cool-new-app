@@ -3,7 +3,7 @@ import Dialog from '@material-ui/core/Dialog';
 import React, { useState } from 'react';
 import { Loja } from '../models/Loja';
 import { useForm, Controller } from 'react-hook-form';
-import { FieldsErrors } from '../components/FieldsErrors';
+import { FieldsErrors } from './FieldsErrors';
 
 export function LojaEditDialog(props: { onClose: (value?: any) => void, open: boolean }) {
     const { onClose, open } = props;
