@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import { Button, Container } from "@material-ui/core";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { signInWithGoogleAccount, onUserInit } from "../actions/usuario-actions";
+import { onUserInit, signInWithGoogleAccount } from "../actions/usuario-actions";
 import { FirebaseContext } from "../environment/context";
-import { Container, Button } from "@material-ui/core";
 
 
 export function LoginComponent({ history }: any) {

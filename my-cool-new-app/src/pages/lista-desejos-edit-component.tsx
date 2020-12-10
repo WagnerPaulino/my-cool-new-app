@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { findOne, save, excluir, exist } from '../actions/desejos-actions';
-import { useDispatch, useSelector } from 'react-redux';
-import { useForm, Controller } from "react-hook-form";
-import { ListaDesejos } from '../models/ListaDesejos';
+import Button from '@material-ui/core/Button/Button';
 import Container from '@material-ui/core/Container/Container';
 import TextField from '@material-ui/core/TextField/TextField';
-import Button from '@material-ui/core/Button/Button';
+import React, { useEffect, useState } from 'react';
+import { Controller, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from 'react-redux';
+import { excluir, exist, findOne, save } from '../actions/desejos-actions';
 import { FieldsErrors } from '../components/FieldsErrors';
+import { ListaDesejos } from '../models/ListaDesejos';
+import { LojaEditDialog } from './loja-edit-dialog';
 
 export function ListaDesejosEditComponent({ match, history }: any) {
 
+    const [openLojaEditDialog, setOpenLojaEditDialog] = React.useState(false);
     const listaDesejo: ListaDesejos = useSelector((state: any) => state.desejo.listaDesejo);
     const dispatch = useDispatch();
     const [desejo, setDesejo] = useState<ListaDesejos>(listaDesejo);
@@ -40,6 +42,16 @@ export function ListaDesejosEditComponent({ match, history }: any) {
         } else {
             return true;
         }
+    }
+
+    const onOpenLojaEditDialog = () => {
+        console.log("abriu");
+        setOpenLojaEditDialog(true);
+    }
+
+    const onCloseLojaEditDialog = (value?: string) => {
+        console.log("fechou", value);
+        setOpenLojaEditDialog(false);
     }
 
     return (
@@ -73,6 +85,8 @@ export function ListaDesejosEditComponent({ match, history }: any) {
                 )
                 } />
                 <FieldsErrors field={errors.preco} />
+                <Button color="primary" style={inputStyle} onClick={onOpenLojaEditDialog}>Adicionar Loja</Button>
+                <LojaEditDialog open={openLojaEditDialog} onClose={onCloseLojaEditDialog}></LojaEditDialog>
                 {
                     !desejo?._id ?
                         <Button style={buttonStyle} variant="contained" color="primary" onClick={handleSubmit(onSubmit)}>

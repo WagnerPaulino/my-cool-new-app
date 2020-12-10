@@ -1,4 +1,5 @@
 import { Usuario } from "./Usuario";
+import { Loja } from "./Loja";
 
 export class ListaDesejos {
     _id?: number;
@@ -6,4 +7,5 @@ export class ListaDesejos {
     preco?: string;
     createdAt?: Date;
     usuario?: Usuario;
+    lojas?: Loja[] = [];
 }
