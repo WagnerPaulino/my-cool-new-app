@@ -90,7 +90,12 @@ export function ListaDesejosEditComponent({ match, history }: any) {
                 )
                 } />
                 <FieldsErrors field={errors.preco} />
-                <Button color="primary" style={fullWidthStyle} onClick={onOpenLojaEditDialog}>Adicionar Loja</Button>
+                {
+                    !desejo?._id ?
+                        <Button color="primary" style={fullWidthStyle} onClick={onOpenLojaEditDialog}>Adicionar Loja</Button>
+                        : <></>
+
+                }
                 <LojaEditDialog open={openLojaEditDialog} onClose={onCloseLojaEditDialog}></LojaEditDialog>
                 <LojaDefaultDataTable lojas={desejo.lojas || []}></LojaDefaultDataTable>
                 {
