@@ -59,7 +59,10 @@ const RouterDefinition = () => {
   const ButtomBarLeft = () => {
     return (
       <Button type="outline" onPress={() => {
-        dispatch(logout(navigationRef.current.resetRoot))
+        dispatch(logout(() => navigationRef.current?.resetRoot({
+          index: 0,
+          routes: [{ name: 'login' }],
+        })))
       }} icon={
         <Icon
           name="exit-to-app"
