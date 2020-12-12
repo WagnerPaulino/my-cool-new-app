@@ -8,6 +8,7 @@ import { FieldsErrors } from '../components/FieldsErrors';
 import { ListaDesejos } from '../models/ListaDesejos';
 import { LojaEditDialog } from '../components/loja-edit-dialog';
 import { Loja } from '../models/Loja';
+import { LojaDefaultDataTable } from '../components/loja-default-data-table';
 
 export function DesejosEdit({ route, navigation }) {
 
@@ -110,6 +111,7 @@ export function DesejosEdit({ route, navigation }) {
           : <></>
       }
       <LojaEditDialog open={openLojaEditDialog} onClose={onCloseLojaEditDialog}></LojaEditDialog>
+      <LojaDefaultDataTable lojas={desejo.lojas || []} />
       {
         !desejo?._id ?
           <Button onPress={handleSubmit(onSubmit)} title="Salvar"></Button>
