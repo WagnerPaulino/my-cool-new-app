@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { excluir, exist, save, findOne } from '../actions/desejos-actions';
 import { FieldsErrors } from '../components/FieldsErrors';
 import { ListaDesejos } from '../models/ListaDesejos';
+import { LojaEditDialog } from '../components/loja-edit-dialog';
+import { Loja } from '../models/Loja';
 
 export function DesejosEdit({ route, navigation }) {
 
@@ -14,6 +16,7 @@ export function DesejosEdit({ route, navigation }) {
   const [desejo, setDesejo] = useState<ListaDesejos>(listaDesejoOriginal);
   const { control, handleSubmit, errors, reset } = useForm<ListaDesejos>({ defaultValues: desejo, reValidateMode: 'onChange' });
   const dispatch = useDispatch();
+  const [openLojaEditDialog, setOpenLojaEditDialog] = React.useState(false);
 
   useEffect(() => {
     if (listaDesejo?._id) {
@@ -30,11 +33,24 @@ export function DesejosEdit({ route, navigation }) {
 
 
   const onSubmit = (data: ListaDesejos | any) => {
-    dispatch(save(data, navigation.goBack));
+    dispatch(save({ ...data, lojas: desejo.lojas }, navigation.goBack));
   }
 
   const onExcluir = () => {
     dispatch(excluir(desejo, navigation.goBack))
+  }
+
+  const onOpenLojaEditDialog = () => {
+    setOpenLojaEditDialog(true);
+  }
+
+  const onCloseLojaEditDialog = (value?: Loja) => {
+    setOpenLojaEditDialog(false);
+    if (value?.nome) {
+      const lojas = Object.assign([], desejo.lojas || []);
+      lojas.push(value);
+      setDesejo(Object.assign({}, { ...desejo, lojas: lojas }));
+    }
   }
 
   async function validateNome(nome: string) {
@@ -61,7 +77,7 @@ export function DesejosEdit({ route, navigation }) {
           autoFocus
           onBlur={onBlur}
           defaultValue={value}
-          style={styles.inputText}
+          style={styles.fullwidth}
           onChangeText={value => onChange(value)}
         />
       )
@@ -83,11 +99,17 @@ export function DesejosEdit({ route, navigation }) {
           placeholder="Preço"
           onBlur={onBlur}
           defaultValue={value?.toString()}
-          style={styles.inputText}
+          style={styles.fullwidth}
           onChangeText={value => onChange(value)}
         />
       )} />
       <FieldsErrors field={errors.preco} />
+      {
+        !desejo?._id ?
+          <Button type="outline" onPress={onOpenLojaEditDialog} title="Adicionar Loja"></Button>
+          : <></>
+      }
+      <LojaEditDialog open={openLojaEditDialog} onClose={onCloseLojaEditDialog}></LojaEditDialog>
       {
         !desejo?._id ?
           <Button onPress={handleSubmit(onSubmit)} title="Salvar"></Button>
@@ -105,7 +127,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     width: '100%'
   },
-  inputText: {
+  fullwidth: {
     width: '100%'
   }
 });
