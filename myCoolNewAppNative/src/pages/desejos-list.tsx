@@ -35,12 +35,14 @@ export function DesejosList({ navigation }) {
           <ListItem
             style={styles.item}
             key={i}
-            title={desejo?.nome}
-            subtitle={desejo?.preco?.toString()}
             bottomDivider={true}
-            chevron={true}
             onPress={() => detail(desejo)}
-          />
+          >
+            <ListItem.Content>
+              <ListItem.Title>{desejo?.nome}</ListItem.Title>
+              <ListItem.Subtitle>{desejo?.preco?.toString()}</ListItem.Subtitle>
+            </ListItem.Content>
+          </ListItem>
         ))
       }
     </View>

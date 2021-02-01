@@ -12,8 +12,12 @@ export function LojaDefaultDataTable({ lojas }: Props) {
         <View>
             {
                 lojas.map((item, i) => (
-                    <ListItem key={i} title={item.nome}
-                        subtitle={item.url} bottomDivider />
+                    <ListItem key={i} bottomDivider>
+                        <ListItem.Content>
+                            <ListItem.Title>{item.nome}</ListItem.Title>
+                            <ListItem.Subtitle>{item.url}</ListItem.Subtitle>
+                        </ListItem.Content>
+                    </ListItem>
                 ))
             }
         </View>
