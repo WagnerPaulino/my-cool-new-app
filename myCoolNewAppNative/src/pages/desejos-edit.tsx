@@ -15,7 +15,8 @@ export function DesejosEdit({ route, navigation }) {
   const { listaDesejo } = route?.params;
   const listaDesejoOriginal: ListaDesejos = useSelector((state: any) => state.desejo.listaDesejo);
   const [desejo, setDesejo] = useState<ListaDesejos>(listaDesejoOriginal);
-  const { control, handleSubmit, errors, reset } = useForm<ListaDesejos>({ defaultValues: desejo, reValidateMode: 'onChange' });
+  const { control, handleSubmit, formState, reset } = useForm<ListaDesejos>({ defaultValues: desejo, reValidateMode: 'onChange' });
+  const { errors } = formState
   const dispatch = useDispatch();
   const [openLojaEditDialog, setOpenLojaEditDialog] = React.useState(false);
 
@@ -71,17 +72,20 @@ export function DesejosEdit({ route, navigation }) {
           message: "O campo nome é obrigatorio"
         },
         validate: async (value) => await validateNome(value)
-      }} name="nome" render={({ onChange, onBlur, value }) => (
-        <Input
-          key="nome"
-          placeholder="Desejo"
-          autoFocus
-          onBlur={onBlur}
-          defaultValue={value}
-          style={styles.fullwidth}
-          onChangeText={value => onChange(value)}
-        />
-      )
+      }} name="nome" render={({ field }) => {
+        const { onBlur, onChange, value } = field
+        return (
+          <Input
+            key="nome"
+            placeholder="Desejo"
+            autoFocus
+            onBlur={onBlur}
+            defaultValue={value}
+            style={styles.fullwidth}
+            onChangeText={value => onChange(value)}
+          />
+        )
+      }
       } />
       <FieldsErrors field={errors.nome} />
       {/* Preço */}
@@ -94,16 +98,19 @@ export function DesejosEdit({ route, navigation }) {
           value: /^[0-9]+$/,
           message: 'O campo preço é numerico'
         }
-      }} name="preco" render={({ onChange, onBlur, value }) => (
-        <Input
-          key="preco"
-          placeholder="Preço"
-          onBlur={onBlur}
-          defaultValue={value?.toString()}
-          style={styles.fullwidth}
-          onChangeText={value => onChange(value)}
-        />
-      )} />
+      }} name="preco" render={({ field }) => {
+        const { onBlur, onChange, value } = field
+        return (
+          <Input
+            key="preco"
+            placeholder="Preço"
+            onBlur={onBlur}
+            defaultValue={value?.toString()}
+            style={styles.fullwidth}
+            onChangeText={value => onChange(value)}
+          />
+        )
+      }} />
       <FieldsErrors field={errors.preco} />
       {
         !desejo?._id ?

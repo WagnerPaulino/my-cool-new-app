@@ -9,7 +9,7 @@ export function LojaEditDialog(props: { onClose: (value?: any) => void, open: bo
 
     const [loja, setLoja] = useState(new Loja());
 
-    const { control, handleSubmit, errors, reset } = useForm<Loja>({ defaultValues: loja, reValidateMode: 'onChange' });
+    const { control, handleSubmit } = useForm<Loja>({ defaultValues: loja, reValidateMode: 'onChange' });
 
     const onSubmit = (data: Loja | any) => {
         if (onClose) {
@@ -26,28 +26,34 @@ export function LojaEditDialog(props: { onClose: (value?: any) => void, open: bo
                         value: true,
                         message: "O campo nome é obrigatorio"
                     }
-                }} name="nome" render={({ onChange, onBlur, value }) => (
-                    <Input
-                        key="nome"
-                        placeholder="Desejo"
-                        autoFocus
-                        onBlur={onBlur}
-                        defaultValue={value}
-                        style={styles.fullwidth}
-                        onChangeText={value => onChange(value)}
-                    />
-                )
+                }} name="nome" render={({ field }) => {
+                    const { onBlur, onChange, value } = field
+                    return (
+                        <Input
+                            key="nome"
+                            placeholder="Desejo"
+                            autoFocus
+                            onBlur={onBlur}
+                            defaultValue={value}
+                            style={styles.fullwidth}
+                            onChangeText={value => onChange(value)}
+                        />
+                    )
+                }
                 } />
-                <Controller control={control} defaultValue={loja?.url || null} name="url" render={({ onChange, onBlur, value }) => (
-                    <Input
-                        key="url"
-                        placeholder="Url"
-                        onBlur={onBlur}
-                        defaultValue={value}
-                        style={styles.fullwidth}
-                        onChangeText={value => onChange(value)}
-                    />
-                )
+                <Controller control={control} defaultValue={loja?.url || null} name="url" render={({ field }) => {
+                    const { onBlur, onChange, value } = field
+                    return (
+                        <Input
+                            key="url"
+                            placeholder="Url"
+                            onBlur={onBlur}
+                            defaultValue={value}
+                            style={styles.fullwidth}
+                            onChangeText={value => onChange(value)}
+                        />
+                    )
+                }
                 } />
                 <Button onPress={handleSubmit(onSubmit)} title="Salvar"></Button>
             </View>
