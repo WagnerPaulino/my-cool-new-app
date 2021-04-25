@@ -1,19 +1,18 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Text, View, StyleSheet, FlatList, Button } from 'react-native';
-import { ListaDesejos } from '../models/ListaDesejos';
-import { findAll } from '../actions/desejos-actions';
-import { logout } from '../actions/usuario-actions';
+import { StyleSheet, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import { useDispatch, useSelector } from 'react-redux';
+import { findAll } from '../actions/desejos-actions';
+import { ListaDesejos } from '../models/ListaDesejos';
 
 export function DesejosList({ navigation }) {
 
-  const listaDesejos: ListaDesejos[] = useSelector((state: any) => state.listaDesejos.listaDesejos)
-  const dispatch = useDispatch()
+  const listaDesejos: ListaDesejos[] = useSelector((state: any) => state.listaDesejos.listaDesejos);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(findAll());
-  }, [dispatch])
+  }, [dispatch]);
 
   function detail(desejo: ListaDesejos) {
     navigation.navigate('desejo-edit', {

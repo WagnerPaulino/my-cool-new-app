@@ -16,7 +16,7 @@ export function DesejosEdit({ route, navigation }) {
   const listaDesejoOriginal: ListaDesejos = useSelector((state: any) => state.desejo.listaDesejo);
   const [desejo, setDesejo] = useState<ListaDesejos>(listaDesejoOriginal);
   const { control, handleSubmit, formState, reset } = useForm<ListaDesejos>({ defaultValues: desejo, reValidateMode: 'onChange' });
-  const { errors } = formState
+  const { errors } = formState;
   const dispatch = useDispatch();
   const [openLojaEditDialog, setOpenLojaEditDialog] = React.useState(false);
 
@@ -39,7 +39,7 @@ export function DesejosEdit({ route, navigation }) {
   }
 
   const onExcluir = () => {
-    dispatch(excluir(desejo, navigation.goBack))
+    dispatch(excluir(desejo, navigation.goBack));
   }
 
   const onOpenLojaEditDialog = () => {
@@ -57,7 +57,7 @@ export function DesejosEdit({ route, navigation }) {
 
   async function validateNome(nome: string) {
     if (nome.trim().length > 0) {
-      return await exist(nome) ? 'Desejo com esse nome já existe' : true
+      return await exist(nome) ? 'Desejo com esse nome já existe' : true;
     } else {
       return true;
     }
@@ -73,7 +73,7 @@ export function DesejosEdit({ route, navigation }) {
         },
         validate: async (value) => await validateNome(value)
       }} name="nome" render={({ field }) => {
-        const { onBlur, onChange, value } = field
+        const { onBlur, onChange, value } = field;
         return (
           <Input
             key="nome"
@@ -99,7 +99,7 @@ export function DesejosEdit({ route, navigation }) {
           message: 'O campo preço é numerico'
         }
       }} name="preco" render={({ field }) => {
-        const { onBlur, onChange, value } = field
+        const { onBlur, onChange, value } = field;
         return (
           <Input
             key="preco"

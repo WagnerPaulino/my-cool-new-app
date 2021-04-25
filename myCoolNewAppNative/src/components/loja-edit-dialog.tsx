@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, View, Button } from 'react-native';
-import { Overlay, Input } from 'react-native-elements';
+import { Controller, useForm } from 'react-hook-form';
+import { Button, StyleSheet, Text, View } from 'react-native';
+import { Input, Overlay } from 'react-native-elements';
 import { Loja } from '../models/Loja';
-import { useForm, Controller } from 'react-hook-form';
 
 export function LojaEditDialog(props: { onClose: (value?: any) => void, open: boolean }) {
     const { onClose, open } = props;
@@ -27,7 +27,7 @@ export function LojaEditDialog(props: { onClose: (value?: any) => void, open: bo
                         message: "O campo nome é obrigatorio"
                     }
                 }} name="nome" render={({ field }) => {
-                    const { onBlur, onChange, value } = field
+                    const { onBlur, onChange, value } = field;
                     return (
                         <Input
                             key="nome"
@@ -42,7 +42,7 @@ export function LojaEditDialog(props: { onClose: (value?: any) => void, open: bo
                 }
                 } />
                 <Controller control={control} defaultValue={loja?.url || null} name="url" render={({ field }) => {
-                    const { onBlur, onChange, value } = field
+                    const { onBlur, onChange, value } = field;
                     return (
                         <Input
                             key="url"

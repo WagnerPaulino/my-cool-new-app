@@ -1,8 +1,8 @@
 import { Button, DialogActions, DialogContent, DialogTitle, TextField } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import React, { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { Loja } from '../models/Loja';
-import { useForm, Controller } from 'react-hook-form';
 import { FieldsErrors } from './FieldsErrors';
 
 export function LojaEditDialog(props: { onClose: (value?: any) => void, open: boolean }) {
@@ -10,7 +10,8 @@ export function LojaEditDialog(props: { onClose: (value?: any) => void, open: bo
 
     const [loja, setLoja] = useState<Loja>(new Loja());
 
-    const { control, handleSubmit, errors, reset } = useForm<Loja>({ defaultValues: loja, reValidateMode: 'onChange' });
+    const { control, handleSubmit, formState, reset } = useForm<Loja>({ defaultValues: loja, reValidateMode: 'onChange' });
+    const { errors } = formState;
 
     const handleClose = (data: any | Loja) => {
         if (onClose) {
@@ -27,14 +28,20 @@ export function LojaEditDialog(props: { onClose: (value?: any) => void, open: bo
                         value: true,
                         message: "O campo nome é obrigatorio"
                     },
-                }} name="nome" render={({ onChange, onBlur, value }) => (
-                    <TextField autoFocus style={fullWidthStyle} name="nome" label="Nome" value={value} onChange={onChange} onBlur={onBlur}></TextField>
-                )
+                }} name="nome" render={({ field }) => {
+                    const { onBlur, onChange, value } = field;
+                    return (
+                        <TextField autoFocus style={fullWidthStyle} name="nome" label="Nome" value={value} onChange={onChange} onBlur={onBlur}></TextField>
+                    )
+                }
                 } />
                 <FieldsErrors field={errors.nome} />
-                <Controller control={control} defaultValue={loja?.url} name="url" render={({ onChange, onBlur, value }) => (
-                    <TextField style={fullWidthStyle} name="url" label="Url" value={value} onChange={onChange} onBlur={onBlur}></TextField>
-                )
+                <Controller control={control} defaultValue={loja?.url} name="url" render={({ field }) => {
+                    const { onBlur, onChange, value } = field;
+                    return (
+                        <TextField style={fullWidthStyle} name="url" label="Url" value={value} onChange={onChange} onBlur={onBlur}></TextField>
+                    )
+                }
                 } />
                 <FieldsErrors field={errors.url} />
             </DialogContent>

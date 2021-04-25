@@ -19,7 +19,8 @@ export function ListaDesejosEditComponent({ match, history }: any) {
     const [desejo, setDesejo] = useState<ListaDesejos>(listaDesejo);
     let id = match?.params?.key ? match?.params?.key : undefined;
 
-    const { control, handleSubmit, errors, reset } = useForm<ListaDesejos>({ defaultValues: desejo, reValidateMode: 'onChange' });
+    const { control, handleSubmit, formState, reset } = useForm<ListaDesejos>({ defaultValues: desejo, reValidateMode: 'onChange' });
+    const { errors } = formState;
 
     const onSubmit = (data: ListaDesejos | any) => {
         dispatch(save({ ...data, lojas: desejo.lojas }, history));
@@ -70,9 +71,12 @@ export function ListaDesejosEditComponent({ match, history }: any) {
                         message: "O campo nome é obrigatorio"
                     },
                     validate: async (value) => await validateNome(value)
-                }} name="nome" render={({ onChange, onBlur, value }) => (
-                    <TextField autoFocus style={fullWidthStyle} name="nome" label="Nome" value={value} onChange={onChange} onBlur={onBlur}></TextField>
-                )
+                }} name="nome" render={({ field }) => {
+                    const { onBlur, onChange, value } = field;
+                    return (
+                        <TextField autoFocus style={fullWidthStyle} name="nome" label="Nome" value={value} onChange={onChange} onBlur={onBlur}></TextField>
+                    )
+                }
                 } />
                 <FieldsErrors field={errors.nome} />
                 {/* Preço */}
@@ -85,9 +89,12 @@ export function ListaDesejosEditComponent({ match, history }: any) {
                         value: /^[0-9]+$/,
                         message: 'O campo preço é numerico'
                     }
-                }} name="preco" render={({ onChange, onBlur, value }) => (
-                    <TextField style={fullWidthStyle} name="preco" label="Preço" value={value?.toString()} onChange={onChange} onBlur={onBlur}></TextField>
-                )
+                }} name="preco" render={({ field }) => {
+                    const { onBlur, onChange, value } = field;
+                    return (
+                        <TextField style={fullWidthStyle} name="preco" label="Preço" value={value?.toString()} onChange={onChange} onBlur={onBlur}></TextField>
+                    )
+                }
                 } />
                 <FieldsErrors field={errors.preco} />
                 {
