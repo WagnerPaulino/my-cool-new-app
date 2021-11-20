@@ -10,20 +10,23 @@ import { ListaDesejos } from '../models/ListaDesejos';
 import { LojaEditDialog } from '../components/loja-edit-dialog';
 import { Loja } from '../models/Loja';
 import { LojaDefaultDataTable } from '../components/loja-default-data-table';
+import { useNavigate, useParams } from 'react-router';
 
-export function ListaDesejosEditComponent({ match, history }: any) {
+export function ListaDesejosEditComponent() {
 
     const [openLojaEditDialog, setOpenLojaEditDialog] = React.useState(false);
     const listaDesejo: ListaDesejos = useSelector((state: any) => state.desejo.listaDesejo);
     const dispatch = useDispatch();
     const [desejo, setDesejo] = useState<ListaDesejos>(listaDesejo);
-    let id = match?.params?.key ? match?.params?.key : undefined;
+    const navigate = useNavigate();
+    const match = useParams<string>();
+    let id = match?.key ? match.key : undefined;
 
     const { control, handleSubmit, formState, reset } = useForm<ListaDesejos>({ defaultValues: desejo, reValidateMode: 'onChange' });
     const { errors } = formState;
 
     const onSubmit = (data: ListaDesejos | any) => {
-        dispatch(save({ ...data, lojas: desejo.lojas }, history));
+        dispatch(save({ ...data, lojas: desejo.lojas }, navigate));
     }
 
     useEffect(() => {
@@ -70,7 +73,7 @@ export function ListaDesejosEditComponent({ match, history }: any) {
                         value: true,
                         message: "O campo nome é obrigatorio"
                     },
-                    validate: async (value) => await validateNome(value)
+                    validate: async (value) => value ? await validateNome(value) : false
                 }} name="nome" render={({ field }) => {
                     const { onBlur, onChange, value } = field;
                     return (
@@ -111,7 +114,7 @@ export function ListaDesejosEditComponent({ match, history }: any) {
                             Salvar
                         </Button>
                         : <div>
-                            <Button style={buttonStyle} variant="outlined" color="primary" onClick={() => dispatch(excluir(desejo, history))}>
+                            <Button style={buttonStyle} variant="outlined" color="primary" onClick={() => dispatch(excluir(desejo, navigate))}>
                                 Realizado
                             </Button>
                         </div>

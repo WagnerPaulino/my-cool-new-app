@@ -1,22 +1,6 @@
-import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
-export default function PrivateRoute({ component: Component, predicate, ...rest }: any) {
-    return (
-        <Route
-            {...rest}
-            render={(props) =>
-                predicate() ?
-                    <Component {...props} />
-                    : (
-                        <Redirect
-                            to={{
-                                pathname: "/login",
-                                state: { from: props.location }
-                            }}
-                        />
-                    )
-            }
-        />
-    );
+export default function PrivateRoute({ children, predicate }: any) {
+    let isAuthenticated = predicate();
+    return isAuthenticated ? children : <Navigate to={"/login"} />;
 }

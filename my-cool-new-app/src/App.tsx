@@ -2,7 +2,7 @@ import { AppBar, IconButton, ThemeProvider, Toolbar, Typography } from '@materia
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import React, { useContext, useEffect, useState } from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { logout } from './actions/usuario-actions';
 import './App.css';
@@ -56,11 +56,33 @@ const RouterDefinitions = () => {
           {isLogged() ? <IconButton onClick={sair} edge="end" color="inherit"><ExitToAppIcon /></IconButton> : <span></span>}
         </Toolbar>
       </AppBar>
-      <Switch>
-        <PrivateRoute predicate={() => isLogged()} path="/" component={ListaDesejosListComponent} exact></PrivateRoute>
-        <Route path="/login" component={LoginComponent} />
-        <PrivateRoute predicate={() => isLogged()} path="/desejo/:key?" component={ListaDesejosEditComponent} ></PrivateRoute>
-      </Switch>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <PrivateRoute predicate={() => isLogged()}>
+              <ListaDesejosListComponent />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/login" element={<LoginComponent />} />
+        <Route
+          path="/desejo/"
+          element={
+            <PrivateRoute predicate={() => isLogged()}>
+              <ListaDesejosEditComponent />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/desejo/:key"
+          element={
+            <PrivateRoute predicate={() => isLogged()}>
+              <ListaDesejosEditComponent />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
     </Router >
   )
 }

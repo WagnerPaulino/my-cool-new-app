@@ -1,16 +1,18 @@
 import { Button, Container } from "@material-ui/core";
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { onUserInit, signInWithGoogleAccount } from "../actions/usuario-actions";
 import { FirebaseContext } from "../environment/context";
 
 
-export function LoginComponent({ history }: any) {
+export function LoginComponent() {
 
     const authState = useSelector((store: any) => store.auth.auth);
 
     const [user, setUser] = useState(authState?.currentUser);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const firebase = useContext(FirebaseContext)
 
@@ -22,7 +24,7 @@ export function LoginComponent({ history }: any) {
     useEffect(() => {
         if (isLogged()) {
             dispatch(onUserInit());
-            history.push('/');
+            navigate('/');
         }
     });
 

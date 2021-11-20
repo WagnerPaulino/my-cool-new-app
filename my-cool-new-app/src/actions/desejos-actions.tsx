@@ -30,7 +30,7 @@ export function findByName(nome: string): (store: any) => void {
     }
 }
 
-export function findOne(key: number): (store: any) => void {
+export function findOne(key: string): (store: any) => void {
     return (store: any) => {
         fetch(`http://${getHostBackend()}/api/lista-desejos/${key}`).then(response => response.json().then(value => store.dispatch(
             {
@@ -49,7 +49,7 @@ export function save(desejo: ListaDesejos, history: any): (store: any) => void {
                 type: LISTA_DESEJOS_EDIT,
                 listaDesejo: value
             })
-            history.push('/')
+            history('/')
         }))
     }
 }
@@ -57,7 +57,7 @@ export function save(desejo: ListaDesejos, history: any): (store: any) => void {
 export function excluir(desejo: ListaDesejos, history: any): (store: any) => void {
     return (store: any) => {
         fetch(`http://${getHostBackend()}/api/lista-desejos/${desejo._id}`, { method: 'DELETE' }).then(() => {
-            history.push('/')
+            history('/')
             store.dispatch({
                 type: LISTA_DESEJOS_DELETE,
                 listaDesejo: new ListaDesejos()

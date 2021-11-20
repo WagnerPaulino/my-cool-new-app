@@ -1,5 +1,5 @@
 export function getHostDataBase(): string {
-    return `db:27017`;
+    return `localhost:27017`;
 }
 
 export function getFirebaseConfig() {
