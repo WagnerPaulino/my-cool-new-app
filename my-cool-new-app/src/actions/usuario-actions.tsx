@@ -1,6 +1,6 @@
 import Firebase from "../environment/context";
 import { USUARIO_CREATE, USUARIO_LOGIN_USERNAME_PASSWORD, USUARIO_LOGIN_GOOGLE, USUARIO_LOGOUT, GET_CURRENT_USUARIO, USUARIO_IS_LOGGED } from "./usuarios-types";
-import { getHostBackend } from "../environment/environment";
+import { getAxios, getHostBackend } from "../environment/environment";
 
 const firebase = new Firebase();
 
@@ -69,8 +69,7 @@ export function isLogged(): (store: any) => void {
 }
 
 function userLogin() {
-    return fetch(`http://${getHostBackend()}/api/login`,
-        { method: 'POST', body: JSON.stringify({ nome: firebase.getCurrentAuth()?.currentUser?.displayName }), headers: { "Content-Type": "application/json" } })
+    return getAxios().post('/login', { nome: firebase.getCurrentAuth()?.currentUser?.displayName });
 }
 
 export function onUserInit(): (store: any) => void {
