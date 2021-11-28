@@ -33,7 +33,6 @@ export function DesejosEdit({ route, navigation }) {
     }
   }, [listaDesejoOriginal, setDesejo, reset]);
 
-
   const onSubmit = (data: ListaDesejos | any) => {
     dispatch(save({ ...data, lojas: desejo.lojas }, navigation.goBack));
   }

@@ -1,5 +1,13 @@
+import axios, { AxiosInstance } from "axios";
+
 export function getHostBackend(): string {
     return `10.0.2.2:3000`;
+}
+
+export function getAxios(): AxiosInstance {
+    return axios.create({
+        baseURL: `http://${getHostBackend()}/api`
+    });
 }
 
 export function getFirebaseConfig() {

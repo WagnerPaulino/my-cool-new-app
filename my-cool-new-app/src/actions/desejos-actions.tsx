@@ -1,7 +1,7 @@
-import { getAxios, getHostBackend } from "../environment/environment";
-import { ListaDesejos } from '../models/ListaDesejos';
-import { LISTA_DESEJOS_DELETE, LISTA_DESEJOS_EDIT, LISTA_DESEJOS_LIST, LISTA_DESEJOS_LOAD, LISTA_DESEJOS_LIST_SEARCH } from "./desejos-types";
 import Firebase from "../environment/context";
+import { getAxios } from "../environment/environment";
+import { ListaDesejos } from '../models/ListaDesejos';
+import { LISTA_DESEJOS_DELETE, LISTA_DESEJOS_EDIT, LISTA_DESEJOS_LIST, LISTA_DESEJOS_LIST_SEARCH, LISTA_DESEJOS_LOAD } from "./desejos-types";
 const firebase = new Firebase()
 export function findAll(): (store: any) => void {
     return (store: any) => {
@@ -28,12 +28,12 @@ export function findByName(nome: string): (store: any) => void {
 
 export function findOne(key: string): (store: any) => void {
     return (store: any) => {
-        fetch(`http://${getHostBackend()}/api/lista-desejos/${key}`).then(response => response.json().then(value => store.dispatch(
+        getAxios().get(`/lista-desejos/${key}`).then(value => store.dispatch(
             {
-                type: LISTA_DESEJOS_LOAD,
-                listaDesejo: value
+                listaDesejo: value.data,
+                type: LISTA_DESEJOS_LOAD
             }
-        )));
+        ));
     }
 }
 
