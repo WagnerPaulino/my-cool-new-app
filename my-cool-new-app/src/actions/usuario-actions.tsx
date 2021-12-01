@@ -1,6 +1,6 @@
 import Firebase from "../environment/context";
-import { USUARIO_CREATE, USUARIO_LOGIN_USERNAME_PASSWORD, USUARIO_LOGIN_GOOGLE, USUARIO_LOGOUT, GET_CURRENT_USUARIO, USUARIO_IS_LOGGED } from "./usuarios-types";
-import { getAxios, getHostBackend } from "../environment/environment";
+import { getAxios } from "../environment/environment";
+import { GET_CURRENT_USUARIO, USUARIO_CREATE, USUARIO_IS_LOGGED, USUARIO_LOGIN_GOOGLE, USUARIO_LOGIN_USERNAME_PASSWORD, USUARIO_LOGOUT } from "./usuarios-types";
 
 const firebase = new Firebase();
 
