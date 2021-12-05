@@ -8,9 +8,9 @@ import { FieldsErrors } from './FieldsErrors';
 export function LojaEditDialog(props: { onClose: (value?: any) => void, open: boolean }) {
     const { onClose, open } = props;
 
-    const [loja, setLoja] = useState<Loja>(new Loja());
+    const [loja] = useState<Loja>(new Loja());
 
-    const { control, handleSubmit, formState, reset } = useForm<Loja>({ defaultValues: loja, reValidateMode: 'onChange' });
+    const { control, handleSubmit, formState } = useForm<Loja>({ defaultValues: loja, reValidateMode: 'onChange' });
     const { errors } = formState;
 
     const handleClose = (data: any | Loja) => {
